@@ -1,0 +1,272 @@
+be|быть
+have|иметь
+do|делать
+say|сказать
+go|идти
+get|получать
+make|делать, создавать
+know|знать
+think|думать
+take|брать
+see|видеть
+come|приходить
+want|хотеть
+look|смотреть
+use|использовать
+find|находить
+give|давать
+tell|рассказывать
+work|работать
+call|звонить, звать
+try|пытаться
+ask|спрашивать
+need|нуждаться
+feel|чувствовать
+become|становиться
+leave|покидать, уходить
+put|класть
+mean|означать
+keep|хранить, держать
+let|позволять
+begin|начинать
+seem|казаться
+help|помогать
+talk|разговаривать
+turn|поворачивать
+start|начинать, старт
+show|показывать
+hear|слышать
+play|играть
+run|бежать
+move|двигаться
+like|нравиться
+live|жить
+believe|верить
+hold|держать
+bring|приносить
+happen|случаться
+write|писать
+provide|обеспечивать
+sit|сидеть
+stand|стоять
+lose|терять
+pay|платить
+meet|встречать
+include|включать
+continue|продолжать
+set|устанавливать
+learn|учить, узнавать
+change|менять
+lead|вести
+understand|понимать
+watch|наблюдать
+follow|следовать
+stop|останавливать
+create|создавать
+speak|говорить
+read|читать
+allow|разрешать
+add|добавлять
+spend|тратить
+grow|расти
+open|открывать
+walk|гулять, ходить
+win|побеждать
+offer|предлагать
+remember|помнить
+love|любить
+consider|рассматривать
+appear|появляться
+buy|покупать
+wait|ждать
+serve|обслуживать
+die|умирать
+send|отправлять
+expect|ожидать
+build|строить
+stay|оставаться
+fall|падать
+cut|резать
+reach|достигать
+kill|убивать
+remain|оставаться
+suggest|предлагать, советовать
+raise|поднимать
+pass|проходить
+sell|продавать
+require|требовать
+report|сообщать, отчёт
+decide|решать
+pull|тянуть
+time|время
+year|год
+people|люди
+way|путь, способ
+day|день
+man|мужчина
+thing|вещь
+woman|женщина
+life|жизнь
+child|ребёнок
+world|мир
+school|школа
+state|состояние, штат
+family|семья
+student|студент
+group|группа
+country|страна
+problem|проблема
+hand|рука, кисть
+part|часть
+place|место
+case|случай
+week|неделя
+company|компания
+system|система
+program|программа
+question|вопрос
+government|правительство
+number|число, номер
+night|ночь
+point|точка, смысл
+home|дом, родной
+water|вода
+room|комната
+mother|мать
+area|область, район
+money|деньги
+story|история, рассказ
+fact|факт
+month|месяц
+lot|множество
+right|право, правый
+study|изучать, учёба
+book|книга
+eye|глаз
+job|работа
+word|слово
+business|бизнес, дело
+issue|вопрос, проблема
+side|сторона
+kind|вид, добрый
+head|голова
+house|дом
+service|услуга, служба
+friend|друг
+father|отец
+power|сила, власть
+hour|час
+game|игра
+line|линия
+end|конец
+member|член, участник
+law|закон
+car|машина
+city|город
+community|сообщество
+name|имя
+president|президент
+team|команда
+minute|минута
+idea|идея
+kid|ребёнок, малыш
+body|тело
+information|информация
+back|спина, назад
+parent|родитель
+face|лицо
+others|другие
+level|уровень
+office|офис
+door|дверь
+health|здоровье
+person|человек
+art|искусство
+war|война
+history|история (наука)
+party|вечеринка, партия
+result|результат
+morning|утро
+reason|причина
+research|исследование
+girl|девочка, девушка
+guy|парень
+moment|момент
+air|воздух
+teacher|учитель
+force|сила
+education|образование
+foot|ступня, фут
+boy|мальчик
+age|возраст
+policy|политика, правила
+music|музыка
+market|рынок
+sense|чувство, смысл
+nation|нация
+plan|план
+college|колледж
+interest|интерес
+death|смерть
+experience|опыт
+effect|эффект, влияние
+class|класс
+control|контроль
+care|забота
+field|поле
+development|развитие
+role|роль
+effort|усилие
+rate|ставка, темп
+heart|сердце
+drug|лекарство, наркотик
+leader|лидер
+light|свет, лёгкий
+voice|голос
+wife|жена
+police|полиция
+mind|разум
+price|цена
+bed|кровать
+picture|картина, изображение
+paper|бумага
+news|новости
+table|стол, таблица
+food|еда
+land|земля, суша
+street|улица
+language|язык (речь)
+behavior|поведение
+pain|боль
+color|цвет
+air force|военно-воздушные силы
+good|хороший
+new|новый
+first|первый
+last|последний
+long|длинный
+great|великий, отличный
+little|маленький
+own|собственный
+other|другой
+old|старый
+big|большой
+high|высокий
+different|разный
+small|маленький, небольшой
+large|крупный
+next|следующий
+early|ранний
+young|молодой
+important|важный
+few|немногие
+public|общественный
+bad|плохой
+same|тот же самый
+able|способный
+free|свободный, бесплатный
+sure|уверенный
+better|лучше
+real|настоящий
+best|лучший
+whole|целый

@@ -1,0 +1,264 @@
+industry|промышленность
+economy|экономика
+tax|налог
+cash|наличные
+coin|монета
+bill|счёт, законопроект
+budget|бюджет
+cost of living|стоимость жизни
+profit|прибыль
+income|доход
+salary|зарплата
+debt|долг
+loan|заём, кредит
+credit|кредит
+account|счёт (в банке)
+payment|платёж
+sale|продажа
+product|продукт
+goods|товары
+brand|бренд
+advertisement|реклама
+contract|контракт
+deal|сделка
+firm|фирма
+factory|завод
+office worker|офисный работник
+staff|персонал
+employee|сотрудник
+employer|работодатель
+career|карьера
+interview|собеседование
+meeting|встреча, собрание
+conference|конференция
+project|проект
+task|задача
+duty|обязанность
+responsibility|ответственность
+authority|власть, полномочие
+rule|правило
+right away|сразу
+crime|преступление
+court|суд
+prison|тюрьма
+justice|справедливость
+evidence|доказательство
+victim|жертва
+murder|убийство
+gun|ружьё, пистолет
+weapon|оружие
+army|армия
+battle|битва
+enemy forces|вражеские силы
+victory|победа
+defeat|поражение
+danger|опасность
+risk|риск
+safety|безопасность
+security|безопасность, охрана
+threat|угроза
+accident|авария, несчастный случай
+emergency|чрезвычайная ситуация
+event|событие
+situation|ситуация
+condition|условие, состояние
+position|положение, должность
+status|статус
+relationship|отношения
+connection|связь
+difference|различие
+distance|расстояние
+direction|направление
+size|размер
+shape|форма
+weight|вес
+height|высота, рост
+length|длина
+width|ширина
+depth|глубина
+amount|количество
+quantity|количество
+quality|качество
+value|ценность
+total|итог, общий
+percent|процент
+degree|степень, градус
+unit|единица
+piece|кусок
+bit|кусочек, немного
+pair|пара
+couple|пара, несколько
+dozen|дюжина
+series|серия
+set of|набор
+sort|сорт, сортировать
+style|стиль
+method|метод
+process|процесс
+technique|техника
+technology|технология
+computer|компьютер
+phone|телефон
+screen|экран
+keyboard|клавиатура
+internet|интернет
+website|веб-сайт
+email|электронная почта
+software|программное обеспечение
+data|данные
+network|сеть
+file|файл
+machine|машина, механизм
+engine|двигатель
+tool|инструмент
+device|устройство
+equipment|оборудование
+battery|батарея
+wire|провод
+electricity|электричество
+energy|энергия
+gas|газ, бензин
+fuel|топливо
+metal|металл
+iron|железо, утюг
+gold|золото
+silver|серебро
+steel|сталь
+plastic|пластик
+material|материал
+cloth|ткань
+cotton|хлопок
+wool|шерсть
+leather|кожа (материал)
+box|коробка
+package|посылка, пакет
+container|контейнер
+basket|корзина
+bucket|ведро
+toy|игрушка
+gift|подарок
+present|подарок, настоящий
+ball|мяч
+card|карточка
+photo|фотография
+camera|камера
+image|изображение
+video|видео
+film|фильм, плёнка
+movie|кинофильм
+song|песня
+band|группа (муз.)
+concert|концерт
+instrument|инструмент (муз.)
+piano|пианино
+guitar|гитара
+drum|барабан
+noise|шум
+sound|звук
+silence|тишина
+radio|радио
+television|телевидение
+magazine|журнал
+newspaper|газета
+article|статья
+media|СМИ
+channel|канал
+sport|спорт
+football|футбол
+match|матч, спичка
+race|гонка, раса
+competition|соревнование
+prize|приз
+medal|медаль
+score|счёт (в игре)
+champion|чемпион
+exercise|упражнение
+gym|спортзал
+hobby|хобби
+fun|веселье
+joke|шутка
+story time|время сказок
+adventure|приключение
+mystery|тайна
+magic|волшебство
+birthday|день рождения
+festival|фестиваль
+celebration|празднование
+ceremony|церемония
+invitation|приглашение
+surprise|сюрприз
+visitor|посетитель
+tourist|турист
+traffic|дорожное движение
+accident report|отчёт об аварии
+speed|скорость
+wheel|колесо
+seat|сиденье
+pool|бассейн
+field trip|экскурсия
+view|вид, взгляд
+scene|сцена
+stage|сцена, этап
+step|шаг
+level up|повысить уровень
+floor plan|план этажа
+space|пространство, космос
+universe|вселенная
+surface|поверхность
+edge|край
+hole|дыра
+line up|выстраиваться
+circle|круг
+triangle|треугольник
+point of view|точка зрения
+angle|угол
+border|граница
+limit|предел
+range|диапазон
+region|регион
+zone|зона
+district|район
+province|провинция
+territory|территория
+continent|континент
+coast|побережье
+valley|долина
+desert|пустыня
+field of study|область знаний
+farm|ферма
+crop|урожай
+harvest|жатва, урожай
+soil|почва
+dust|пыль
+mud|грязь
+wave|волна, махать
+flood|наводнение
+fog|туман
+shadow|тень
+shade|тень, оттенок
+light bulb|лампочка
+candle|свеча
+mirror|зеркало
+picture frame|рамка
+blanket|одеяло
+pillow|подушка
+towel|полотенце
+soap|мыло
+brush|щётка, кисть
+comb|расчёска
+shower|душ
+bath|ванна
+toilet|туалет
+sink|раковина, тонуть
+fridge|холодильник
+oven|духовка
+pan|сковорода
+pot|кастрюля, горшок
+kettle|чайник
+furniture|мебель
+shelf|полка
+drawer|ящик (стола)
+cupboard|шкаф (для посуды)
+wardrobe|платяной шкаф
+carpet|ковёр
+curtain|штора

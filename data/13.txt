@@ -1,0 +1,289 @@
+can|мочь, уметь
+will|будет (вспом.), воля
+would|бы (вспом.)
+should|следует, должен
+must|должен
+might|мог бы, возможно
+shall|буду, будем (вспом.)
+could|мог, могли бы
+as|как, в качестве
+such|такой
+another|другой, ещё один
+either|любой из двух, тоже (в отриц.)
+neither|ни один из двух
+far|далеко
+excuse|извинять, оправдание
+anymore|больше (не)
+cannot|не может
+whose|чей
+whom|кого, кому
+several|несколько
+upon|на, по
+due|должный, из-за
+besides|кроме того
+onto|на (движение)
+lately|в последнее время
+barely|едва
+carefully|осторожно
+basically|в основном
+honestly|честно
+truly|по-настоящему
+perfectly|отлично, идеально
+deeply|глубоко
+quietly|тихо
+previously|ранее
+heavily|сильно, тяжело
+hopefully|надеюсь
+incredibly|невероятно
+terribly|ужасно
+precisely|точно
+practically|практически
+officially|официально
+softly|мягко, тихо
+someday|когда-нибудь
+anytime|в любое время
+nearby|поблизости
+meantime|тем временем
+beneath|под, внизу
+aboard|на борту
+whoever|кто бы ни
+oh|ох, о
+yeah|ага, да
+hey|эй
+hi|привет
+wow|ух ты
+bye|пока
+dad|папа
+mom|мама
+sir|сэр
+boyfriend|парень (друг)
+cop|коп, полицейский
+fool|дурак
+club|клуб
+dollar|доллар
+sake|ради (for the sake)
+darling|дорогой, любимый
+idiot|идиот
+monster|чудовище
+criminal|преступник
+devil|дьявол
+divorce|развод
+angel|ангел
+murderer|убийца
+cigarette|сигарета
+reporter|репортёр
+pizza|пицца
+photograph|фотография
+route|маршрут
+row|ряд
+servant|слуга
+neighborhood|район, окрестности
+mask|маска
+mercy|милосердие
+toast|тост
+insult|оскорблять
+apology|извинение
+intelligence|интеллект, разведка
+warrior|воин
+destiny|судьба
+fate|рок, судьба
+terrorist|террорист
+cave|пещера
+coward|трус
+robbery|ограбление
+maid|горничная
+costume|костюм
+tattoo|татуировка
+delivery|доставка
+glory|слава
+knight|рыцарь
+pet|домашнее животное
+ton|тонна
+gear|снаряжение, передача
+dealer|торговец, дилер
+sheet|простыня, лист
+flesh|плоть
+hostage|заложник
+fighter|боец
+garbage|мусор
+closet|шкаф, чулан
+inch|дюйм
+policeman|полицейский
+rumor|слух
+shell|раковина, снаряд
+skull|череп
+clown|клоун
+couch|диван
+outfit|наряд
+corpse|труп
+producer|продюсер
+motive|мотив
+dancer|танцор
+baseball|бейсбол
+turtle|черепаха
+patrol|патруль
+cabin|хижина, каюта
+confession|признание
+trunk|багажник, ствол
+bible|Библия
+rocket|ракета
+golf|гольф
+routine|распорядок
+personality|личность
+principal|директор школы, главный
+scar|шрам
+shield|щит
+rage|ярость
+greeting|приветствие
+jet|реактивный самолёт
+headquarters|штаб
+surgeon|хирург
+pirate|пират
+widow|вдова
+compromise|компромисс
+guilt|вина
+survivor|выживший
+instinct|инстинкт
+paradise|рай
+circus|цирк
+underwear|нижнее бельё
+romance|роман, романтика
+pearl|жемчуг
+privilege|привилегия
+engagement|помолвка
+palm|ладонь, пальма
+humanity|человечество
+loyalty|верность
+alley|переулок
+necklace|ожерелье
+oxygen|кислород
+galaxy|галактика
+civilian|мирный житель
+academy|академия
+badge|значок
+weakness|слабость
+suitcase|чемодан
+warehouse|склад
+dessert|десерт
+trauma|травма
+ambassador|посол
+speaker|оратор, динамик
+corn|кукуруза
+jazz|джаз
+teach|учить, преподавать
+quit|бросать, увольняться
+regret|сожалеть
+drag|тащить
+bleed|кровоточить
+kidnap|похищать
+abandon|бросать, покидать
+curse|проклятие, ругаться
+betray|предавать
+torture|пытать
+embarrass|смущать
+scratch|царапать
+stab|колоть ножом
+chat|болтать
+snap|щёлкать, ломать
+starve|голодать
+spit|плевать
+smash|разбивать
+skip|пропускать
+gamble|играть в азартные игры
+register|регистрировать
+sneak|красться
+surrender|сдаваться
+leak|утечка, протекать
+locate|находить (местоположение)
+reckon|считать, полагать
+testify|давать показания
+crawl|ползать
+rub|тереть
+misunderstand|неправильно понимать
+shave|бриться
+flee|бежать, спасаться
+fascinate|очаровывать
+declare|объявлять
+fetch|сходить за, принести
+toss|подбрасывать
+squeeze|сжимать
+distract|отвлекать
+interfere|вмешиваться
+obey|подчиняться
+haunt|преследовать (о призраке)
+execute|казнить, выполнять
+relieve|облегчать
+humiliate|унижать
+dismiss|отпускать, увольнять
+vanish|исчезать
+await|ожидать
+eliminate|устранять
+chew|жевать
+withdraw|снимать (деньги), отзывать
+retreat|отступать
+impossible|невозможный
+weird|странный, чудной
+mad|безумный, злой
+dumb|тупой, немой
+jealous|ревнивый
+tiny|крошечный
+insane|безумный
+responsible|ответственный
+super|супер
+fake|поддельный
+gorgeous|великолепный
+precious|драгоценный
+sexy|сексуальный
+scary|страшный
+unbelievable|невероятный
+merry|весёлый
+emotional|эмоциональный
+extraordinary|необычайный
+terrific|потрясающий
+pathetic|жалкий
+mighty|могучий
+selfish|эгоистичный
+filthy|грязный, мерзкий
+superior|превосходящий
+loyal|верный
+rotten|гнилой
+uncomfortable|неудобный
+stubborn|упрямый
+creepy|жуткий
+worthy|достойный
+southern|южный
+northern|северный
+sacred|священный
+distant|далёкий
+plain|простой, равнина
+actual|фактический
+classic|классический
+royal|королевский
+sexual|сексуальный, половой
+English|английский
+American|американский
+British|британский
+French|французский
+German|немецкий
+Russian|русский
+Chinese|китайский
+Spanish|испанский
+Italian|итальянский
+Japanese|японский
+fourth|четвёртый
+fifth|пятый
+sixth|шестой
+tenth|десятый
+evidence|улика
+detective|сыщик
+upstairs|наверх
+anybody|кто-нибудь (любой)
+alright|в порядке
+totally|полностью
+kinda|вроде, как бы
+sweetheart|милый, дорогая
+grandma|бабушка (разг.)
+grandpa|дедушка (разг.)
+buddy|приятель
+dude|чувак
+guy|парень

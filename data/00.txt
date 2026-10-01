@@ -1,0 +1,229 @@
+I|я
+you|ты, вы
+he|он
+she|она
+it|оно, это
+we|мы
+they|они
+me|меня, мне
+him|его, ему
+her|её, ей
+us|нас, нам
+them|их, им
+my|мой
+your|твой, ваш
+his|его (притяж.)
+our|наш
+their|их (притяж.)
+this|этот
+that|тот, что
+these|эти
+those|те
+what|что
+who|кто
+which|который
+where|где
+when|когда
+why|почему
+how|как
+all|все, весь
+some|некоторые
+any|любой, какой-нибудь
+many|много (исчисл.)
+much|много (неисч.)
+more|больше
+most|наиболее
+each|каждый
+every|каждый, всякий
+both|оба
+no|нет
+not|не
+only|только
+also|также
+very|очень
+just|просто, только что
+well|хорошо
+even|даже
+still|всё ещё
+now|сейчас
+then|тогда, затем
+here|здесь
+there|там
+again|снова
+never|никогда
+always|всегда
+often|часто
+already|уже
+ever|когда-либо
+too|слишком, тоже
+so|так
+really|действительно
+almost|почти
+together|вместе
+yet|ещё, пока
+away|прочь, далеко
+today|сегодня
+yesterday|вчера
+tomorrow|завтра
+however|однако
+perhaps|возможно
+maybe|может быть
+quite|довольно
+rather|скорее
+sometimes|иногда
+usually|обычно
+probably|вероятно
+soon|скоро
+later|позже
+once|однажды, один раз
+twice|дважды
+enough|достаточно
+less|меньше
+least|наименее
+else|ещё, иначе
+instead|вместо
+about|о, около
+after|после
+before|перед, до
+between|между
+under|под
+over|над
+through|через
+without|без
+within|в пределах
+during|во время
+against|против
+among|среди
+around|вокруг
+behind|позади
+below|ниже
+above|выше
+across|поперёк, через
+along|вдоль
+toward|по направлению к
+near|около, рядом
+beside|рядом с
+into|в (внутрь)
+from|из, от
+with|с
+for|для
+of|из, о
+to|к
+in|в
+on|на
+at|у, в
+by|около, посредством
+up|вверх
+down|вниз
+out|наружу
+off|прочь, выключено
+since|с тех пор
+until|до тех пор пока
+because|потому что
+if|если
+though|хотя
+although|несмотря на то что
+unless|если не
+while|пока
+whether|ли
+than|чем
+and|и
+but|но
+or|или
+nor|ни
+one|один
+two|два
+three|три
+four|четыре
+five|пять
+six|шесть
+seven|семь
+eight|восемь
+nine|девять
+ten|десять
+eleven|одиннадцать
+twelve|двенадцать
+thirteen|тринадцать
+fourteen|четырнадцать
+fifteen|пятнадцать
+sixteen|шестнадцать
+seventeen|семнадцать
+eighteen|восемнадцать
+nineteen|девятнадцать
+twenty|двадцать
+thirty|тридцать
+forty|сорок
+fifty|пятьдесят
+sixty|шестьдесят
+seventy|семьдесят
+eighty|восемьдесят
+ninety|девяносто
+hundred|сто
+thousand|тысяча
+million|миллион
+billion|миллиард
+second|второй, секунда
+third|третий
+half|половина
+yes|да
+please|пожалуйста
+thanks|спасибо
+hello|привет
+goodbye|до свидания
+sorry|извините
+okay|хорошо, ладно
+something|что-то
+nothing|ничего
+everything|всё
+anything|что-нибудь
+someone|кто-то
+everyone|все (люди)
+anyone|кто-нибудь
+nobody|никто
+somebody|кто-то, некто
+everybody|каждый, все
+myself|себя, сам
+yourself|себя, сам (ты)
+himself|себя, сам (он)
+herself|себя, сама (она)
+itself|себя, само
+themselves|себя, сами
+ourselves|себя, сами (мы)
+mine|мой (без сущ.)
+yours|твой (без сущ.)
+hers|её (без сущ.)
+ours|наш (без сущ.)
+theirs|их (без сущ.)
+somewhere|где-то
+anywhere|где-нибудь
+everywhere|везде
+nowhere|нигде
+Monday|понедельник
+Tuesday|вторник
+Wednesday|среда
+Thursday|четверг
+Friday|пятница
+Saturday|суббота
+Sunday|воскресенье
+January|январь
+February|февраль
+March|март
+April|апрель
+May|май
+June|июнь
+July|июль
+August|август
+September|сентябрь
+October|октябрь
+November|ноябрь
+December|декабрь
+spring|весна
+summer|лето
+autumn|осень
+winter|зима
+weekend|выходные
+tonight|сегодня вечером
+evening|вечер
+afternoon|день (после полудня)
+noon|полдень
+midnight|полночь

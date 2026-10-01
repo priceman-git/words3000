@@ -1,0 +1,245 @@
+national|национальный
+political|политический
+social|социальный
+human|человеческий
+local|местный
+certain|определённый
+late|поздний
+hard|твёрдый, трудный
+major|главный, крупный
+possible|возможный
+economic|экономический
+strong|сильный
+low|низкий
+clear|ясный, чистый
+full|полный
+special|особый
+easy|лёгкий, простой
+recent|недавний
+white|белый
+black|чёрный
+red|красный
+green|зелёный
+blue|синий
+yellow|жёлтый
+brown|коричневый
+gray|серый
+pink|розовый
+orange|апельсин, оранжевый
+purple|фиолетовый
+private|частный
+past|прошлый, прошлое
+likely|вероятный
+hot|горячий, жаркий
+cold|холодный
+warm|тёплый
+cool|прохладный
+dark|тёмный
+short|короткий
+single|одиночный
+medical|медицинский
+current|текущий
+wrong|неправильный
+military|военный
+simple|простой
+huge|огромный
+close|близкий, закрывать
+common|общий, обычный
+poor|бедный
+natural|естественный
+significant|значительный
+similar|похожий
+serious|серьёзный
+ready|готовый
+personal|личный
+happy|счастливый
+sad|грустный
+final|окончательный
+main|основной
+green light|зелёный свет
+beautiful|красивый
+safe|безопасный
+available|доступный
+difficult|трудный
+financial|финансовый
+entire|весь, целый
+nice|милый, приятный
+fine|прекрасный, штраф
+global|глобальный
+religious|религиозный
+fast|быстрый
+quick|быстрый, скорый
+slow|медленный
+heavy|тяжёлый
+deep|глубокий
+wide|широкий
+narrow|узкий
+tall|высокий (рост)
+thin|тонкий, худой
+thick|толстый
+fat|жирный, толстый
+rich|богатый
+cheap|дешёвый
+expensive|дорогой
+clean|чистый
+dirty|грязный
+empty|пустой
+busy|занятой
+quiet|тихий
+loud|громкий
+soft|мягкий
+wet|мокрый
+dry|сухой
+fresh|свежий
+sweet|сладкий
+bitter|горький
+sick|больной
+healthy|здоровый
+tired|усталый
+hungry|голодный
+angry|сердитый
+afraid|испуганный
+proud|гордый
+glad|довольный, радостный
+kind-hearted|добросердечный
+alone|один, одинокий
+famous|знаменитый
+strange|странный
+dangerous|опасный
+modern|современный
+ancient|древний
+foreign|иностранный
+international|международный
+popular|популярный
+perfect|идеальный
+interesting|интересный
+funny|смешной
+boring|скучный
+excellent|превосходный
+terrible|ужасный
+wonderful|замечательный
+brilliant|блестящий
+necessary|необходимый
+useful|полезный
+correct|правильный
+exact|точный
+general|общий, генерал
+basic|базовый
+central|центральный
+main road|главная дорога
+direct|прямой
+physical|физический
+mental|умственный
+legal|законный
+official|официальный
+original|оригинальный
+various|различный
+additional|дополнительный
+average|средний
+complete|полный, завершать
+huge amount|огромное количество
+key|ключ, ключевой
+top|верх, верхний
+bottom|низ, дно
+front|перед, передний
+middle|середина
+inside|внутри
+outside|снаружи
+north|север
+south|юг
+east|восток
+west|запад
+left|левый
+straight|прямо, прямой
+round|круглый
+square|квадрат, площадь
+flat|плоский, квартира
+equal|равный
+false|ложный
+true|истинный, верный
+live music|живая музыка
+alive|живой
+dead|мёртвый
+blind|слепой
+deaf|глухой
+brave|храбрый
+calm|спокойный
+careful|осторожный
+clever|умный
+smart|умный, элегантный
+stupid|глупый
+crazy|сумасшедший
+lazy|ленивый
+polite|вежливый
+rude|грубый
+honest|честный
+fair|справедливый
+cruel|жестокий
+gentle|нежный
+friendly|дружелюбный
+lucky|удачливый
+nervous|нервный
+upset|расстроенный
+worried|обеспокоенный
+excited|взволнованный
+surprised|удивлённый
+bored|скучающий
+pleased|довольный
+comfortable|удобный
+fit|подходить, в форме
+weak|слабый
+ugly|уродливый
+pretty|симпатичный, довольно
+handsome|красивый (о мужчине)
+lovely|прелестный
+cute|милый
+awful|ужасный
+bright|яркий
+pale|бледный
+sharp|острый
+smooth|гладкий
+rough|грубый, шершавый
+tight|тугой, тесный
+loose|свободный, свисающий
+broken|сломанный
+lost|потерянный
+missing|пропавший
+whole day|целый день
+extra|дополнительный, лишний
+spare|запасной
+daily|ежедневный
+weekly|еженедельный
+monthly|ежемесячный
+annual|ежегодный
+recently|недавно
+finally|наконец
+actually|на самом деле
+especially|особенно
+exactly|точно
+certainly|конечно, несомненно
+clearly|ясно
+simply|просто
+quickly|быстро
+slowly|медленно
+suddenly|внезапно
+immediately|немедленно
+nearly|почти
+hardly|едва
+completely|полностью
+directly|прямо
+easily|легко
+highly|высоко, весьма
+fully|полностью
+generally|в целом
+mostly|в основном
+mainly|главным образом
+largely|в значительной степени
+entirely|целиком
+seriously|серьёзно
+personally|лично
+naturally|естественно
+obviously|очевидно
+apparently|по-видимому
+eventually|в конце концов
+currently|в настоящее время
+originally|изначально

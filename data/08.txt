@@ -1,0 +1,354 @@
+damage|ущерб
+dare|сметь
+darkness|темнота
+date|дата, свидание
+deadline|крайний срок
+deal with|иметь дело с
+dear|дорогой (милый)
+debate|дебаты
+decade|десятилетие
+decline|снижаться, отклонять
+decrease|уменьшаться
+defense|оборона
+define|определять
+definitely|определённо
+definition|определение
+delay|задержка
+deliberately|намеренно
+delicious|вкусный
+delight|восторг
+demand|требование, требовать
+democracy|демократия
+demonstrate|демонстрировать
+department|отдел
+departure|отъезд
+deposit|депозит, залог
+depressed|подавленный
+describe|описывать
+description|описание
+deserve|заслуживать
+design|дизайн, проектировать
+desire|желание
+desperate|отчаянный
+despite|несмотря на
+detail|деталь
+detailed|подробный
+detect|обнаруживать
+determine|определять
+device|устройство
+diet|диета
+difference|разница
+dig|копать
+digital|цифровой
+dinner party|званый ужин
+dirt|грязь
+disadvantage|недостаток
+disagree|не соглашаться
+disappear|исчезать
+disappointed|разочарованный
+disaster|катастрофа
+discount|скидка
+discovery|открытие
+display|показ, отображать
+distinguish|различать
+distribute|распределять
+disturb|беспокоить, мешать
+document|документ
+domestic|домашний, внутренний
+dominate|доминировать
+double|двойной
+doubt|сомнение
+download|загружать
+dozen|дюжина
+draft|черновик
+drama|драма
+dramatic|драматический
+drawing|рисунок
+dream of|мечтать о
+drown|тонуть
+dull|скучный, тусклый
+dump|свалка, сбрасывать
+eager|жаждущий
+earn|зарабатывать
+earthquake|землетрясение
+ease|лёгкость
+eastern|восточный
+edge|край
+edit|редактировать
+edition|издание
+editor|редактор
+educate|обучать
+effective|эффективный
+efficient|действенный
+elderly|пожилой
+elect|избирать
+election|выборы
+electric|электрический
+electronic|электронный
+element|элемент
+elsewhere|в другом месте
+embarrassed|смущённый
+emerge|появляться
+emphasis|акцент
+empire|империя
+employ|нанимать
+employment|занятость
+enable|давать возможность
+encounter|встречать, встреча
+encourage|поощрять
+ending|окончание
+enemy|враг
+engage|вовлекать
+engineering|инженерное дело
+enormous|огромный
+ensure|обеспечивать
+entertainment|развлечение
+enthusiasm|энтузиазм
+entrance|вход
+entry|вход, запись
+envelope|конверт
+episode|эпизод
+equipment|оборудование
+error|ошибка
+essay|эссе
+essential|существенный
+establish|устанавливать
+estate|имение, недвижимость
+estimate|оценивать
+ethnic|этнический
+evaluate|оценивать
+evening|вечер
+eventually|в итоге
+evil|зло, злой
+exactly|именно
+examination|экзамен, осмотр
+examine|осматривать
+example|пример
+exceed|превышать
+except|кроме
+exception|исключение
+excess|избыток
+excitement|волнение
+exciting|захватывающий
+exhibition|выставка
+exist|существовать
+existence|существование
+exit|выход
+expand|расширять
+expectation|ожидание
+expedition|экспедиция
+expense|расход
+experiment|эксперимент
+explanation|объяснение
+explode|взрываться
+explosion|взрыв
+export|экспорт
+expose|разоблачать
+express|выражать
+expression|выражение
+extend|продлевать
+extent|степень
+extreme|крайний
+extremely|чрезвычайно
+fabric|ткань
+facility|объект, удобство
+factor|фактор
+fade|угасать
+fail|проваливаться
+faint|слабый, падать в обморок
+faith|вера
+false|ложный
+familiar|знакомый
+fan|веер, фанат
+fancy|причудливый
+fantastic|фантастический
+fantasy|фантазия
+fashion|мода
+fault|вина, ошибка
+favor|услуга, одолжение
+favorite|любимый
+feature|черта, особенность
+federal|федеральный
+fee|плата, взнос
+feed|кормить
+fellow|товарищ
+female|женский
+fiction|художественная литература
+fight|драться, бой
+figure|фигура, цифра
+final|финальный
+finance|финансы
+finding|находка, вывод
+finger|палец
+finish|заканчивать
+fishing|рыбалка
+fist|кулак
+fix|исправлять
+flag|флаг
+flame|пламя
+flash|вспышка
+flavor|вкус, аромат
+flexible|гибкий
+float|плавать (на поверхности)
+flow|течь, поток
+flu|грипп
+fluid|жидкость
+focus|фокус, сосредоточиться
+folk|народный
+folder|папка
+follower|последователь
+following|следующий
+fond|любящий
+forbid|запрещать
+forecast|прогноз
+forehead|лоб
+forever|навсегда
+form|форма, образовывать
+formal|формальный
+former|бывший
+fortune|удача, состояние
+forward|вперёд
+found|основывать
+foundation|фундамент, фонд
+frame|рамка, каркас
+frankly|откровенно
+freeze|замерзать
+frequent|частый
+frequently|часто
+friendship|дружба
+frighten|пугать
+frightened|напуганный
+frozen|замёрзший
+function|функция
+fund|фонд
+funeral|похороны
+fur|мех
+future|будущее
+gain|получать, прирост
+gallery|галерея
+gap|разрыв, промежуток
+gender|пол (гендер)
+gene|ген
+generate|производить
+generation|поколение
+generous|щедрый
+genius|гений
+genuine|подлинный
+ghost|призрак
+giant|гигант
+girlfriend|девушка (подруга)
+glance|взгляд мельком
+goat|коза
+golden|золотой
+grab|хватать
+grade|оценка, класс
+gradually|постепенно
+graduate|выпускник
+grain|зерно
+grand|великолепный
+grant|грант, предоставлять
+grateful|благодарный
+grave|могила
+greatly|значительно
+grocery|бакалея
+gross|валовой, отвратительный
+growth|рост
+guarantee|гарантия
+guard|охрана, охранять
+guide|гид, руководство
+guilty|виновный
+habit|привычка
+hall|зал, холл
+hammer|молоток
+handle|ручка, справляться
+hang|висеть
+harbor|гавань
+hardly|едва ли
+harm|вред
+hat|шляпа
+headline|заголовок
+heal|заживать
+hearing|слух
+heaven|небеса
+height|высота
+helicopter|вертолёт
+helpful|полезный
+hero|герой
+hesitate|колебаться
+highlight|выделять
+highway|шоссе
+hire|нанимать
+historic|исторический
+hit|удар, хит
+hole|отверстие
+hollow|пустой, полый
+holy|святой
+honey|мёд
+honor|честь
+hook|крючок
+horrible|ужасный
+horror|ужас
+host|хозяин, ведущий
+hostile|враждебный
+household|домашнее хозяйство
+housing|жильё
+hug|объятие
+humor|юмор
+hunt|охотиться
+hunter|охотник
+hurry|спешить
+ideal|идеальный
+identify|опознавать
+identity|личность
+ignore|игнорировать
+illegal|незаконный
+illustrate|иллюстрировать
+imagination|воображение
+impact|воздействие
+imply|подразумевать
+import|импорт
+impose|навязывать
+impress|впечатлять
+impression|впечатление
+impressive|впечатляющий
+incident|инцидент
+income|доход
+incredible|невероятный
+indeed|действительно
+independent|независимый
+index|указатель
+indicate|указывать
+individual|отдельный, личность
+indoor|комнатный
+infant|младенец
+infection|инфекция
+influence|влияние
+inform|информировать
+initial|начальный
+injure|ранить
+ink|чернила
+inner|внутренний
+innocent|невинный
+insect|насекомое
+insist|настаивать
+inspect|инспектировать
+inspire|вдохновлять
+instance|пример, случай
+institution|учреждение
+instruction|инструкция
+insurance|страховка
+intelligent|умный
+intend|намереваться
+intense|интенсивный
+intention|намерение
+internal|внутренний
+interpret|толковать
+interrupt|прерывать
+invent|изобретать
+invention|изобретение
+investigate|расследовать
+investigation|расследование
+investment|инвестиция
+involve|вовлекать
+island|остров
+item|предмет, пункт

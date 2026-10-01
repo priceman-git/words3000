@@ -1,0 +1,335 @@
+rail|рельс, перила
+railway|железная дорога
+rank|звание, ранг
+rapid|быстрый
+rare|редкий
+rarely|редко
+rat|крыса
+raw|сырой
+ray|луч
+react|реагировать
+reaction|реакция
+reader|читатель
+reality|реальность
+reasonable|разумный
+recall|вспоминать
+receipt|квитанция, чек
+reception|приём, стойка регистрации
+recipe|рецепт (блюда)
+recommend|рекомендовать
+record|запись, записывать
+recover|выздоравливать
+reduce|сокращать
+refer|ссылаться
+reflect|отражать
+reform|реформа
+refrigerator|холодильник
+regard|считать, отношение
+regular|регулярный
+regulation|регулирование
+reject|отвергать
+relate|относиться
+relative|родственник
+relax|расслабляться
+release|выпускать, освобождать
+relevant|уместный
+relief|облегчение
+religion|религия
+rely|полагаться
+remark|замечание
+remarkable|замечательный
+remind|напоминать
+remote|удалённый
+remove|удалять
+rent|арендовать, аренда
+replace|заменять
+represent|представлять
+reputation|репутация
+request|просьба
+rescue|спасение
+reserve|бронировать
+resident|житель
+resist|сопротивляться
+resolve|разрешать (проблему)
+resort|курорт
+resource|ресурс
+respond|отвечать
+response|ответ, реакция
+restore|восстанавливать
+restrict|ограничивать
+retire|уходить на пенсию
+reveal|раскрывать
+revenue|доход
+review|обзор
+revolution|революция
+reward|награда
+rhythm|ритм
+rid|избавлять
+ridiculous|нелепый
+rifle|винтовка
+rival|соперник
+roll|катиться, булочка
+romantic|романтичный
+rope|верёвка
+rose|роза
+rubbish|мусор
+rude|невежливый
+ruin|разрушать, руины
+rural|сельский
+rush|спешка, мчаться
+sack|мешок, увольнять
+sacrifice|жертва
+sail|плыть под парусом
+sailor|моряк
+salad|салат
+sample|образец
+satellite|спутник
+satisfaction|удовлетворение
+satisfied|удовлетворённый
+sauce|соус
+scale|масштаб
+scare|пугать
+scared|испуганный
+schedule|расписание
+scheme|схема
+scholar|учёный
+scholarship|стипендия
+scientific|научный
+scissors|ножницы
+scream|кричать
+screw|винт
+script|сценарий
+sculpture|скульптура
+seal|печать, тюлень
+search|искать
+season|сезон
+secondary|вторичный
+section|раздел
+sector|сектор
+secure|надёжный
+seek|стремиться
+select|выбирать
+selection|выбор
+senior|старший
+sensible|разумный
+sensitive|чувствительный
+sequence|последовательность
+session|сессия
+settle|поселиться, улаживать
+severe|суровый
+sew|шить
+sex|пол, секс
+shake|трясти
+shame|стыд
+shape|форма
+sharp|острый
+shelter|убежище
+shift|смена, сдвиг
+shine|сиять
+shock|шок
+shoot|стрелять
+shooting|стрельба
+shore|берег
+shortly|вскоре
+shot|выстрел
+shy|застенчивый
+sight|зрение, вид
+signal|сигнал
+signature|подпись
+silent|молчаливый
+silly|глупый
+similarly|аналогично
+sin|грех
+sincere|искренний
+singer|певец
+site|участок, сайт
+situation|положение
+skill|умение
+skirt|юбка
+slave|раб
+slice|ломтик
+slide|скользить
+slight|небольшой
+slightly|слегка
+slip|поскользнуться
+slope|склон
+smart|умный
+smoke|курить
+snack|перекус
+soap|мыло
+soccer|футбол
+sock|носок
+software|ПО
+soil|почва
+solar|солнечный
+solid|твёрдый
+solution|решение
+somehow|как-то
+somewhat|несколько, отчасти
+sophisticated|сложный, изощрённый
+sore|больной, воспалённый
+sorry|жаль
+source|источник
+spare|лишний
+species|вид (биол.)
+specific|конкретный
+speech|речь
+spell|заклинание
+spice|специя
+spider|паук
+spin|вращаться
+spirit|дух
+spiritual|духовный
+spite|злоба
+split|раскалывать
+spoil|портить
+sponsor|спонсор
+spot|пятно, место
+spread|распространять
+stable|стабильный
+stadium|стадион
+staff|сотрудники
+stair|ступенька
+stake|ставка, доля
+stamp|марка, штамп
+standard|стандарт
+stare|пристально смотреть
+statement|заявление
+statistic|статистика
+statue|статуя
+steady|устойчивый
+steal|красть
+steam|пар
+steep|крутой
+stick|палка, приклеивать
+stiff|жёсткий
+sting|жалить
+stock|запас, акции
+stomach|живот
+stove|плита
+strategy|стратегия
+strength|сила
+stress|стресс
+stretch|растягивать
+strict|строгий
+strike|забастовка, ударять
+string|струна, верёвка
+strip|полоса, раздевать
+stroke|инсульт, поглаживание
+structure|структура
+struggle|бороться
+stuff|вещи, штука
+stupid|тупой
+submit|подавать
+substance|вещество
+suburb|пригород
+succeed|добиваться успеха
+successful|успешный
+sudden|внезапный
+suffer|страдать
+sufficient|достаточный
+suggestion|предложение
+suicide|самоубийство
+suitable|подходящий
+sum|сумма
+summary|краткое изложение
+supper|ужин
+support|поддержка
+suppose|предполагать
+supreme|верховный
+surely|конечно
+surgery|хирургия
+surround|окружать
+surroundings|окрестности
+survey|опрос
+survive|выживать
+suspect|подозревать
+suspicious|подозрительный
+swallow|глотать
+swear|клясться, ругаться
+sweat|пот
+sweep|подметать
+swing|качаться, качели
+switch|выключатель
+sword|меч
+sympathy|сочувствие
+tail|хвост
+tale|сказка
+talented|талантливый
+tank|бак, танк
+tap|кран, постукивать
+tape|лента
+target|цель, мишень
+taste|вкус
+teaching|преподавание
+tear|слеза, рвать
+technical|технический
+teenage|подростковый
+telephone|телефон
+telescope|телескоп
+tend|иметь тенденцию
+tendency|тенденция
+tension|напряжение
+tent|палатка
+term|термин, срок
+terrible|страшный
+terrify|ужасать
+terror|террор, ужас
+thank|благодарить
+theme|тема
+theory|теория
+therapy|терапия
+thereby|тем самым
+therefore|поэтому
+thief|вор
+thirsty|испытывающий жажду
+thorough|тщательный
+thread|нить
+threaten|угрожать
+throughout|повсюду
+thumb|большой палец
+thus|таким образом
+tidy|опрятный
+tight|плотный
+till|до
+tip|кончик, чаевые
+tired|уставший
+tissue|ткань (биол.), салфетка
+tobacco|табак
+toe|палец ноги
+toilet|туалет
+tone|тон
+tongue|язык
+tool|орудие
+topic|тема
+total|общий
+tough|жёсткий
+tour|тур
+tournament|турнир
+towards|к, по направлению
+tower|башня
+track|трек, след
+tradition|традиция
+tragedy|трагедия
+transfer|перевод, передача
+transform|преобразовывать
+transport|транспорт
+trap|ловушка
+trash|мусор
+treasure|сокровище
+treat|обращаться, угощение
+treatment|лечение
+trend|тенденция
+trial|суд, испытание
+tribe|племя
+trick|трюк, хитрость
+troop|войска
+trouble|неприятность
+trust|доверять
+tube|труба, метро
+tune|мелодия
+tunnel|туннель
+twin|близнец
+twist|крутить
+typical|типичный
+tyre|шина

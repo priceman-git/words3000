@@ -1,0 +1,334 @@
+jail|тюрьма
+jam|джем, пробка
+jewel|драгоценность
+joint|совместный, сустав
+journal|журнал, дневник
+journalist|журналист
+jump|прыжок
+jungle|джунгли
+junior|младший
+jury|присяжные
+justify|оправдывать
+keen|увлечённый
+kick|удар ногой
+kilometer|километр
+kingdom|королевство
+knee|колено
+label|ярлык, этикетка
+laboratory|лаборатория
+labor|труд
+lack|нехватка
+ladder|лестница (приставная)
+landscape|пейзаж
+lane|переулок, полоса
+laptop|ноутбук
+largely|в основном
+laser|лазер
+latest|последний (новейший)
+latter|последний (из двух)
+launch|запускать
+lawn|газон
+layer|слой
+leadership|руководство
+league|лига
+lean|наклоняться, худой
+leather|кожа
+lecture|лекция
+legend|легенда
+leisure|досуг
+lesson|урок
+liberal|либеральный
+liberty|свобода
+license|лицензия
+lid|крышка
+lifestyle|образ жизни
+lifetime|целая жизнь
+limited|ограниченный
+link|связь, ссылка
+liquid|жидкость
+listen|слушать
+literally|буквально
+load|груз, загружать
+loan|заём
+location|местоположение
+logic|логика
+logical|логичный
+lonely|одинокий
+loss|потеря
+lovely|чудесный
+lover|любовник, любитель
+luxury|роскошь
+magnificent|великолепный
+mail|почта
+mainly|главным образом
+maintain|поддерживать
+majority|большинство
+male|мужской
+mall|торговый центр
+manner|манера
+manufacture|производить
+margin|поле, край
+mark|отметка
+marketing|маркетинг
+mass|масса
+massive|массивный
+master|мастер, хозяин
+match|совпадать
+mate|приятель
+maximum|максимум
+meaning|значение
+means|средство
+meanwhile|тем временем
+mechanism|механизм
+medium|средний
+melt|таять
+membership|членство
+mental|психический
+menu|меню
+mere|простой, всего лишь
+merely|лишь
+mess|беспорядок
+metal|металл
+meter|метр
+method|способ
+middle|средний
+mild|мягкий
+mile|миля
+mill|мельница
+mineral|минерал
+minimum|минимум
+minister|министр
+minor|незначительный
+minority|меньшинство
+miracle|чудо
+miserable|несчастный
+miss|скучать, промахнуться
+mission|миссия
+mix|смесь
+mobile|мобильный
+model|модель
+moderate|умеренный
+modest|скромный
+monitor|монитор, следить
+mood|настроение
+moral|моральный
+moreover|более того
+mostly|по большей части
+motion|движение
+motor|мотор
+mount|гора, монтировать
+mountain|гора
+movement|движение
+mud|грязь
+murder|убийство
+museum|музей
+musical|музыкальный
+musician|музыкант
+mysterious|таинственный
+myth|миф
+nail|гвоздь, ноготь
+naked|голый
+narrative|повествование
+nasty|противный
+native|родной
+navy|военно-морской флот
+neat|аккуратный
+necessarily|обязательно
+needle|игла
+negative|отрицательный
+neglect|пренебрегать
+negotiate|вести переговоры
+nerve|нерв
+net|сеть
+neutral|нейтральный
+nevertheless|тем не менее
+nightmare|кошмар
+noble|благородный
+nod|кивать
+none|ни один
+nonsense|ерунда
+normal|нормальный
+normally|обычно
+notebook|тетрадь, блокнот
+novel|роман
+nuclear|ядерный
+numerous|многочисленный
+nut|орех, гайка
+object|предмет, возражать
+objective|цель, объективный
+obligation|обязательство
+observation|наблюдение
+observe|наблюдать
+obtain|получать
+obvious|очевидный
+occasion|случай, повод
+occasionally|иногда
+occupy|занимать
+odd|странный, нечётный
+offence|оскорбление, правонарушение
+offend|обижать
+offensive|оскорбительный
+opening|открытие, отверстие
+operate|управлять, оперировать
+operation|операция
+operator|оператор
+opponent|противник
+opportunity|возможность
+oppose|противостоять
+opposite|противоположный
+opposition|оппозиция
+option|вариант
+ordinary|обычный
+organ|орган
+organization|организация
+origin|происхождение
+otherwise|иначе
+ought|следует
+outcome|результат
+outdoor|на открытом воздухе
+output|продукция, вывод
+overall|в целом
+overcome|преодолевать
+overseas|за границей
+owe|быть в долгу
+pace|темп
+pack|упаковывать
+page|страница
+pain|боль
+painful|болезненный
+painter|художник
+painting|живопись, картина
+palace|дворец
+panel|панель
+panic|паника
+parallel|параллельный
+parliament|парламент
+participate|участвовать
+particular|особый
+particularly|особенно
+passage|проход, отрывок
+passenger|пассажир
+passion|страсть
+passport|паспорт
+password|пароль
+patient|терпеливый
+pattern|узор, шаблон
+pause|пауза
+peaceful|мирный
+peak|вершина
+peer|ровесник
+penalty|наказание, пенальти
+pension|пенсия
+per|в, за (каждый)
+perform|выполнять, выступать
+performance|выступление
+period|период
+permanent|постоянный
+permission|разрешение
+permit|разрешать
+persuade|убеждать
+phase|фаза
+phenomenon|явление
+philosophy|философия
+phrase|фраза
+pile|куча
+pill|таблетка
+pin|булавка
+pipe|труба
+pitch|поле, высота звука
+pity|жалость
+platform|платформа
+pleasant|приятный
+pleasure|удовольствие
+plenty|изобилие
+plot|сюжет, заговор
+plus|плюс
+poem|стихотворение
+poet|поэт
+poetry|поэзия
+poison|яд
+pole|столб, полюс
+politician|политик
+politics|политика
+poll|опрос
+pollution|загрязнение
+port|порт
+portion|порция
+portrait|портрет
+positive|положительный
+possess|обладать
+possession|владение
+possibility|возможность
+possibly|возможно
+post|почта, пост
+poster|плакат
+potential|потенциальный
+pound|фунт
+poverty|бедность
+powder|порошок
+powerful|мощный
+practical|практичный
+practice|практика
+praise|хвалить
+pray|молиться
+prayer|молитва
+precise|точный
+predict|предсказывать
+pregnant|беременная
+premises|помещение
+preparation|подготовка
+presence|присутствие
+presentation|презентация
+preserve|сохранять
+press|пресса, нажимать
+pressure|давление
+presumably|предположительно
+pretend|притворяться
+prevent|предотвращать
+previous|предыдущий
+pride|гордость
+priest|священник
+primary|первичный
+prime|главный
+principle|принцип
+priority|приоритет
+prisoner|заключённый
+privacy|частная жизнь
+probability|вероятность
+procedure|процедура
+proceed|продолжать
+production|производство
+profession|профессия
+professional|профессиональный
+profile|профиль
+progress|прогресс
+prohibit|запрещать
+promote|продвигать
+prompt|быстрый, подсказка
+proof|доказательство
+proper|надлежащий
+properly|должным образом
+property|собственность
+proportion|пропорция
+proposal|предложение
+propose|предлагать
+prospect|перспектива
+protection|защита
+protest|протест
+proud of|гордый
+provided|при условии
+psychology|психология
+pub|паб
+publication|публикация
+publish|публиковать
+punish|наказывать
+punishment|наказание
+purchase|покупка
+pure|чистый
+purse|кошелёк
+pursue|преследовать
+puzzle|головоломка
+qualification|квалификация
+qualify|получать квалификацию
+quarter|четверть
+quote|цитировать

@@ -1,0 +1,228 @@
+cabinet|шкаф, кабинет министров
+cable|кабель
+cage|клетка
+calendar|календарь
+camp|лагерь
+campus|кампус
+canal|канал
+candy|конфета
+canvas|холст
+carbon|углерод
+cardboard|картон
+cargo|груз
+carpet|ковёр
+cartoon|мультфильм
+cast|бросать, актёрский состав
+castle|замок
+casual|повседневный
+cattle|скот
+ceiling|потолок
+celebrity|знаменитость
+cemetery|кладбище
+certificate|сертификат
+chalk|мел
+chamber|палата
+channel|канал
+chaos|хаос
+chapter|глава
+charm|обаяние
+charming|очаровательный
+cheerful|весёлый
+chemical|химический
+cherry|вишня
+chess|шахматы
+chin|подбородок
+chop|рубить
+cinema|кино
+circumstance|обстоятельство
+civilization|цивилизация
+clay|глина
+cliff|утёс
+cloudy|облачный
+clue|подсказка, ключ
+coal|уголь
+coast|берег (моря)
+cognitive|когнитивный
+coincidence|совпадение
+collar|воротник
+comedy|комедия
+comfortable|удобный
+compass|компас
+compose|сочинять
+concert|концерт
+confess|признаваться
+congratulate|поздравлять
+conscious|сознательный
+consult|консультироваться
+consume|потреблять
+convenient|удобный
+conversation|беседа
+cook|повар
+copper|медь
+cottage|коттедж
+cough|кашель
+countryside|сельская местность
+courtesy|вежливость
+cow|корова
+crack|трещина
+craft|ремесло
+crash|авария, разбиваться
+cream|сливки, крем
+crew|экипаж
+cricket|крикет, сверчок
+crown|корона
+crucial|решающий
+cruise|круиз
+crush|давить
+cultivate|выращивать
+cupboard|буфет
+curly|кудрявый
+curtain|занавес
+curve|кривая, изгиб
+cushion|подушка (диванная)
+cute|милый
+dairy|молочный
+dam|плотина
+dawn|рассвет
+daylight|дневной свет
+deadly|смертельный
+deaf|глухой
+decent|приличный
+deck|палуба
+decorate|украшать
+deer|олень
+delete|стирать
+dentist|стоматолог
+deputy|заместитель
+descend|спускаться
+destination|пункт назначения
+detective|детектив
+diamond|алмаз
+diary|дневник
+dictionary|словарь
+dinosaur|динозавр
+dirty|грязный
+disability|инвалидность
+dive|нырять
+doll|кукла
+dolphin|дельфин
+donate|жертвовать
+donkey|осёл
+dot|точка
+downstairs|внизу
+downtown|центр города
+dragon|дракон
+drawer|ящик
+drill|дрель, тренировка
+drunk|пьяный
+duck|утка
+eagle|орёл
+eagerly|нетерпеливо
+earring|серьга
+elbow|локоть
+elegant|элегантный
+elevator|лифт
+embassy|посольство
+embrace|обнимать
+emerald|изумруд
+empty|пустой
+endless|бесконечный
+enjoyable|приятный
+envy|зависть
+equator|экватор
+eraser|ластик
+evidently|очевидно
+exhausted|измученный
+eyebrow|бровь
+fairy|фея
+fame|слава
+farewell|прощание
+fasten|застёгивать
+fearful|боязливый
+feather|перо
+fence|ограда
+ferry|паром
+fever|температура, жар
+fierce|свирепый
+fireplace|камин
+firework|фейерверк
+flour|мука
+flute|флейта
+foggy|туманный
+foolish|глупый
+footstep|шаг
+forgetful|забывчивый
+fountain|фонтан
+fragile|хрупкий
+freezer|морозилка
+frog|лягушка
+frost|мороз
+fry|жарить
+garlic|чеснок
+gentle|мягкий, нежный
+geography|география
+glue|клей
+grape|виноград
+grass|трава
+greedy|жадный
+grin|ухмылка
+guest|гость
+hairdresser|парикмахер
+hamburger|гамбургер
+handbag|сумочка
+handkerchief|носовой платок
+harmony|гармония
+headphones|наушники
+hedgehog|ёж
+heel|пятка, каблук
+hen|курица (несушка)
+hint|намёк
+honeymoon|медовый месяц
+hug|обнимать
+ice cream|мороженое
+icy|ледяной
+jar|банка
+jaw|челюсть
+jelly|желе
+kitten|котёнок
+lamb|ягнёнок
+laundry|стирка
+lemonade|лимонад
+lettuce|салат-латук
+lightning|молния
+lizard|ящерица
+lung|лёгкое
+mango|манго
+meadow|луг
+melon|дыня
+mushroom|гриб
+neighbourhood|соседство, район
+nest|гнездо
+owl|сова
+parrot|попугай
+peach|персик
+pear|груша
+pencil|карандаш
+pen|ручка
+penguin|пингвин
+pie|пирог
+pineapple|ананас
+puppy|щенок
+rainbow|радуга
+raincoat|плащ
+sandwich|бутерброд
+sausage|колбаса, сосиска
+shark|акула
+slipper|тапочка
+snail|улитка
+squirrel|белка
+strawberry|клубника
+sunny|солнечный
+swan|лебедь
+thunder|гром
+tortoise|черепаха
+turkey|индейка
+whale|кит
+windy|ветреный
+zebra|зебра
+zoo|зоопарк

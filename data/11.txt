@@ -1,0 +1,270 @@
+ultimate|окончательный
+unable|неспособный
+uncertain|неуверенный
+unclear|неясный
+unconscious|без сознания
+underground|подземный
+underneath|под
+undergo|подвергаться
+unemployed|безработный
+unemployment|безработица
+unexpected|неожиданный
+unfair|несправедливый
+unfortunately|к сожалению
+unhappy|несчастливый
+uniform|форма (одежда)
+union|союз
+unique|уникальный
+united|объединённый
+unity|единство
+universal|всеобщий
+unknown|неизвестный
+unlike|в отличие от
+unlikely|маловероятный
+unpleasant|неприятный
+unusual|необычный
+upper|верхний
+upset|расстраивать
+upstairs|наверху
+urban|городской
+urge|побуждать
+urgent|срочный
+used|использованный
+useless|бесполезный
+user|пользователь
+usual|обычный
+vacuum|пылесос, вакуум
+valid|действительный
+valuable|ценный
+variety|разнообразие
+vary|варьироваться
+vast|обширный
+vehicle|транспортное средство
+venue|место проведения
+version|версия
+vessel|судно, сосуд
+veteran|ветеран
+via|через
+victim|пострадавший
+violence|насилие
+violent|жестокий
+virtual|виртуальный
+virus|вирус
+visible|видимый
+vision|зрение, видение
+visual|зрительный
+vital|жизненно важный
+vitamin|витамин
+volume|объём, громкость
+volunteer|доброволец
+vote|голосовать
+voter|избиратель
+wage|заработная плата
+waist|талия
+wander|бродить
+war|война
+warn|предупреждать
+warning|предупреждение
+wash|стирать
+wealth|богатство
+wealthy|состоятельный
+weapon|оружие
+weather|погода
+web|паутина
+wedding|свадьба
+welcome|добро пожаловать
+welfare|благосостояние
+western|западный
+whatever|что бы ни
+wheel|колесо
+whenever|всякий раз когда
+wherever|где бы ни
+whisper|шептать
+whistle|свисток, свистеть
+widely|широко
+wild|дикий
+wildlife|дикая природа
+willing|готовый (охотно)
+wind|ветер
+wing|крыло
+winner|победитель
+wipe|вытирать
+wire|провод
+wisdom|мудрость
+wise|мудрый
+witness|свидетель
+wonder|удивляться
+wooden|деревянный
+worldwide|всемирный
+worm|червь
+worried|встревоженный
+worse|хуже
+worst|худший
+worth|стоящий
+wound|рана
+wrist|запястье
+writing|письмо, сочинение
+yard|двор, ярд
+youth|молодость
+zero|ноль
+able|способный
+absence|отсутствие
+absent|отсутствующий
+absolute|абсолютный
+absolutely|абсолютно
+absorb|поглощать
+abuse|злоупотребление
+academic|академический
+accent|акцент
+access|доступ
+accommodation|жильё
+accompany|сопровождать
+accomplish|выполнять
+according|согласно
+accurate|точный
+accuse|обвинять
+ache|боль (ноющая)
+acid|кислота
+acknowledge|признавать
+acquire|приобретать
+active|активный
+actor|актёр
+actress|актриса
+adapt|приспосабливаться
+addition|добавление
+adequate|адекватный
+adjust|регулировать
+admission|приём, вход
+adopt|усыновлять, принимать
+advanced|продвинутый
+adventure|приключение
+advertise|рекламировать
+advertising|реклама
+advise|советовать
+affection|привязанность
+afford|позволить (себе)
+aggressive|агрессивный
+agriculture|сельское хозяйство
+ahead|впереди
+aircraft|воздушное судно
+airline|авиакомпания
+alarm clock|будильник
+album|альбом
+alcohol|спиртное
+alive|в живых
+alongside|рядом с
+aloud|вслух
+alphabet|алфавит
+altogether|в целом
+amazed|изумлённый
+ambulance|скорая помощь
+amuse|забавлять
+ancestor|предок
+angle|угол
+ankle|лодыжка
+anniversary|годовщина
+announcement|объявление
+annoyed|раздражённый
+anxious|тревожный
+apartment|квартира
+apparent|явный
+appearance|внешность
+appetite|аппетит
+applause|аплодисменты
+appoint|назначать
+architect|архитектор
+architecture|архитектура
+arise|возникать
+armed|вооружённый
+arrow|стрела
+artificial|искусственный
+artistic|художественный
+ashamed|пристыжённый
+asleep|спящий
+assembly|собрание
+assignment|задание
+association|ассоциация
+assure|уверять
+astonishing|поразительный
+athlete|спортсмен
+attach|прикреплять
+attack|нападение
+attic|чердак
+attorney|адвокат
+autumn|осень
+awake|бодрствующий
+awareness|осознание
+awful|отвратительный
+awkward|неловкий
+backwards|назад, задом
+bacteria|бактерии
+badly|плохо
+baggage|багаж
+bake|печь
+bakery|пекарня
+balcony|балкон
+bald|лысый
+bandage|бинт
+bargain|выгодная покупка
+barrier|барьер
+basement|подвал
+basket|корзина
+bat|летучая мышь, бита
+battery|аккумулятор
+bay|залив
+bean|боб
+beard|борода
+beast|зверь
+bedroom|спальня
+beg|умолять
+behalf|от имени
+being|существо
+belief|убеждение
+bell|колокол, звонок
+belly|живот
+beloved|любимый
+bend|сгибать
+berry|ягода
+bicycle|велосипед
+bin|мусорное ведро
+biography|биография
+birthday|день рождения
+biscuit|печенье
+bishop|епископ
+blade|лезвие
+blank|пустой, бланк
+blanket|плед
+bless|благословлять
+blond|белокурый
+bloody|кровавый
+blossom|цветение
+blouse|блузка
+boil|варить
+bold|смелый
+bolt|болт, засов
+bored|скучающий
+border|рубеж
+borrow|брать взаймы
+boss|шеф
+bounce|отскакивать
+boundary|граница
+bow|поклон, лук (оружие)
+brain|мозг
+brake|тормоз
+brand|марка
+bravery|храбрость
+breast|грудь
+breed|порода, разводить
+breeze|бриз
+bride|невеста
+brilliant|блестящий
+broadcast|трансляция
+brush|кисть
+bubble|пузырь
+bucket|ведро
+budget|бюджет
+bug|жук, ошибка
+bullet|пуля
+bunch|пучок, связка
+burden|бремя
+burglar|грабитель

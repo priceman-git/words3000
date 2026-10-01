@@ -1,0 +1,15 @@
+# Базовая бытовая лексика: включается обязательно (ранг ×0.5), даже если корпусная частота ниже топ-3000
+eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety
+first second third fourth fifth sixth tenth
+Monday Tuesday Wednesday Thursday Friday Saturday Sunday January February March April May June July August September October November December
+spring summer autumn winter
+red blue green yellow brown gray pink orange purple white black
+mother father sister brother son daughter uncle aunt niece nephew cousin grandmother grandfather husband wife
+head face eye ear nose mouth tooth hair neck shoulder arm hand finger thumb elbow wrist leg knee foot ankle back stomach forehead eyebrow waist
+bread butter cheese meat pork beef chicken fish egg rice soup salad sugar salt pepper tomato potato onion carrot garlic mushroom apple banana orange lemon grape strawberry peach pear cookie cake chocolate tea coffee juice milk water sausage
+spoon fork knife plate cup glass bottle kettle oven fridge sofa chair table bed pillow blanket towel soap umbrella pencil pen notebook calendar scissors
+shirt dress skirt coat jacket sweater scarf hat cap shoe boot sock glove belt
+sunny windy cloudy rainbow snow rain wind storm fog
+email website password laptop keyboard download delete software digital
+cafe zoo hobby dentist luggage bicycle stadium polite lazy
+currently generally rarely mainly frequently various effective significant economic cultural visible suitable relevant

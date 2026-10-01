@@ -1,0 +1,217 @@
+accept|принимать
+achievement|достижение
+act|действовать, акт
+action|действие
+activity|деятельность
+actually|на самом деле
+administration|администрация
+admire|восхищаться
+advance|продвигаться
+advantage|преимущество
+affair|дело, роман
+affect|влиять
+afterwards|впоследствии
+agency|агентство
+agent|агент
+ago|назад (о времени)
+aid|помощь
+aim|цель, целиться
+alarm|тревога, будильник
+alcohol|алкоголь
+allowance|пособие, карманные деньги
+ally|союзник
+alternative|альтернатива
+amazing|удивительный
+ambition|амбиция
+amount of|количество
+analysis|анализ
+analyze|анализировать
+announce|объявлять
+annoy|раздражать
+anxiety|тревога
+anyway|в любом случае
+apart|отдельно, врозь
+appeal|обращение, привлекать
+application|заявление, приложение
+apply|применять, подавать заявку
+appointment|встреча (назначенная)
+appreciate|ценить
+approach|подход, приближаться
+appropriate|подходящий
+approve|одобрять
+area code|код города
+army base|военная база
+arrangement|договорённость
+arrest|арестовывать
+arrival|прибытие
+article of|предмет
+aside|в сторону
+asleep|спящий
+aspect|аспект
+assess|оценивать
+assist|помогать
+assistant|помощник
+associate|связывать, ассоциировать
+assume|предполагать
+atmosphere|атмосфера
+attempt|попытка
+attend|посещать
+attitude|отношение (к чему-то)
+attract|привлекать
+attractive|привлекательный
+audience|аудитория, публика
+authorities|власти
+automatic|автоматический
+avoid|избегать
+award|награда
+aware|осведомлённый
+awesome|потрясающий
+background|фон, происхождение
+balance|баланс, равновесие
+ban|запрет
+base|основа, база
+basis|основа
+battle cry|боевой клич
+beat|бить, побеждать
+beauty|красота
+bedroom door|дверь спальни
+beginning|начало
+behave|вести себя
+benefit|польза, выгода
+bet|пари, держать пари
+beyond|за пределами
+bind|связывать
+birth|рождение
+bite|кусать
+blame|винить
+blind spot|слепое пятно
+block|блок, квартал
+blow|дуть, удар
+board|доска, борт
+bomb|бомба
+bond|связь, облигация
+book club|книжный клуб
+border control|пограничный контроль
+bored stiff|до смерти скучно
+bother|беспокоить
+bowl|миска
+brave man|храбрец
+breath|дыхание
+breathe|дышать
+brick|кирпич
+brief|краткий
+broad|широкий
+burn|гореть, жечь
+burst|лопаться
+bury|хоронить
+bush|куст
+calculate|вычислять
+campaign|кампания
+cancel|отменять
+cancer|рак (болезнь)
+candidate|кандидат
+capable|способный
+capacity|вместимость
+captain|капитан
+capture|захватывать
+care about|заботиться о
+careless|небрежный
+category|категория
+cause|причина, вызывать
+celebrate|праздновать
+cell|клетка, ячейка
+century|век, столетие
+chain|цепь
+challenge|вызов
+champion of|сторонник
+channel of|канал для
+character|характер, персонаж
+characteristic|характерный
+charity|благотворительность
+chart|диаграмма
+chase|гнаться
+cheat|обманывать
+cheek|щека
+cheer|приветствовать, ура
+chest pain|боль в груди
+chief|главный, начальник
+childhood|детство
+chip|чипс, фишка
+citizen|гражданин
+civil|гражданский
+claim|утверждать, претензия
+clerk|клерк
+click|щелчок, нажимать
+climate|климат
+clinic|клиника
+clock|часы (настенные)
+coach trip|поездка на автобусе
+code|код
+coffee shop|кофейня
+collapse|рушиться
+colleague|коллега
+collection|коллекция
+column|колонка, столбец
+combination|сочетание
+combine|объединять
+comfort|комфорт, утешать
+command|команда, приказ
+comment|комментарий
+commercial|коммерческий
+commit|совершать
+committee|комитет
+communicate|общаться
+communication|общение, связь
+comparison|сравнение
+compete|соревноваться
+complaint|жалоба
+complex|сложный
+complicated|запутанный
+component|компонент
+concentrate|сосредоточиться
+concept|понятие
+concern|беспокойство, касаться
+conclusion|вывод
+confidence|уверенность
+confident|уверенный
+confirm|подтверждать
+conflict|конфликт
+confuse|путать
+confused|сбитый с толку
+congress|конгресс
+consequence|последствие
+conservative|консервативный
+considerable|значительный
+consist|состоять
+constant|постоянный
+construction|строительство
+consumer|потребитель
+contact|контакт
+content|содержание
+contest|конкурс
+context|контекст
+contribute|вносить вклад
+contribution|вклад
+convince|убеждать
+cooperation|сотрудничество
+cope|справляться
+copy of|копия
+core|ядро, суть
+corporate|корпоративный
+correspond|соответствовать
+council|совет (орган)
+counter|прилавок
+county|округ
+courage|смелость
+cousin of|кузен
+create a|создать
+creative|творческий
+creature|существо
+crisis|кризис
+criticism|критика
+criticize|критиковать
+cultural|культурный
+cure|лечение, вылечивать
+curious|любопытный
+custom|обычай
+cycle|цикл

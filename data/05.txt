@@ -1,0 +1,255 @@
+arm|рука (от плеча)
+leg|нога
+finger|палец
+nose|нос
+mouth|рот
+ear|ухо
+tooth|зуб
+hair|волосы
+skin|кожа
+blood|кровь
+bone|кость
+brain|мозг
+neck|шея
+shoulder|плечо
+knee|колено
+stomach|желудок, живот
+chest|грудь, сундук
+lip|губа
+tongue|язык (орган)
+throat|горло
+muscle|мышца
+illness|болезнь
+disease|заболевание
+medicine|лекарство, медицина
+cold weather|холодная погода
+fever|жар, лихорадка
+headache|головная боль
+injury|травма
+wound|рана
+clothes|одежда
+shirt|рубашка
+dress|платье, одеваться
+skirt|юбка
+coat|пальто
+jacket|куртка
+trousers|брюки
+jeans|джинсы
+sweater|свитер
+hat|шляпа
+cap|кепка
+shoe|туфля, ботинок
+boot|сапог
+sock|носок
+glove|перчатка
+scarf|шарф
+belt|ремень
+pocket|карман
+bag|сумка
+umbrella|зонт
+ring|кольцо, звонить
+watch out|берегись
+wallet|бумажник
+key ring|брелок
+jewelry|ювелирные изделия
+button|кнопка, пуговица
+train|поезд, тренировать
+bus|автобус
+plane|самолёт
+ship|корабль
+boat|лодка
+bike|велосипед
+truck|грузовик
+taxi|такси
+ticket|билет
+trip|поездка
+journey|путешествие
+travel|путешествовать
+flight|рейс, полёт
+passport|паспорт
+luggage|багаж
+map|карта
+tour|тур, экскурсия
+holiday|праздник, отпуск
+vacation|каникулы, отпуск
+visit|посещать, визит
+arrive|прибывать
+return|возвращаться
+enter|входить
+drive|водить, ехать
+ride|ехать верхом, поездка
+cross|пересекать, крест
+climb|взбираться
+jump|прыгать
+swim|плавать
+dance|танцевать
+sing|петь
+laugh|смеяться
+smile|улыбаться
+cry|плакать, кричать
+shout|кричать
+sleep|спать
+wake|просыпаться
+rest|отдыхать, остаток
+lie down|ложиться
+wash|мыть
+clean up|убирать
+cook dinner|готовить ужин
+boil|кипятить
+bake|печь
+fry|жарить
+taste|вкус, пробовать
+smell|запах, пахнуть
+touch|трогать, касание
+kiss|целовать, поцелуй
+hug|обнимать
+marry|жениться, выходить замуж
+born|рождённый
+hate|ненавидеть
+prefer|предпочитать
+enjoy|наслаждаться
+wish|желать, желание
+hope for|надеяться на
+worry|беспокоиться
+forget|забывать
+forgive|прощать
+guess|угадывать
+imagine|представлять
+wonder|интересоваться, чудо
+realize|осознавать
+recognize|узнавать
+notice|замечать
+discover|открывать, обнаруживать
+explore|исследовать
+explain|объяснять
+describe|описывать
+mention|упоминать
+discuss|обсуждать
+argue|спорить
+agree|соглашаться
+refuse|отказываться
+deny|отрицать
+accept|принимать
+admit|признавать
+apologize|извиняться
+complain|жаловаться
+thank|благодарить
+invite|приглашать
+greet|приветствовать
+introduce|представлять, вводить
+answer back|возражать
+reply|отвечать
+repeat|повторять
+translate|переводить
+spell|писать по буквам
+count|считать
+measure|измерять
+weigh|весить
+compare|сравнивать
+choose|выбирать
+select|отбирать
+prepare|готовить(ся)
+plan ahead|планировать заранее
+organize|организовывать
+arrange|устраивать
+manage|управлять, справляться
+control panel|панель управления
+check|проверять
+test drive|тест-драйв
+prove|доказывать
+solve|решать (задачу)
+fix|чинить
+repair|ремонтировать
+break|ломать, перерыв
+destroy|разрушать
+damage|повреждать, ущерб
+hurt|ранить, болеть
+attack|нападать, атака
+defend|защищать
+protect|охранять
+save|спасать, сохранять
+rescue|спасать
+escape|сбегать
+hide|прятать
+seek|искать
+search|поиск, искать
+look for|искать
+catch|ловить
+throw|бросать
+kick|пинать
+hit|ударять
+push|толкать
+drop|ронять, капля
+lift|поднимать, лифт
+carry|нести
+pick|выбирать, срывать
+fill|наполнять
+pour|наливать
+mix|смешивать
+shake|трясти
+fold|складывать
+tie|завязывать, галстук
+wrap|заворачивать
+hang|вешать
+lay|класть
+shut|закрывать
+lock|запирать, замок
+knock|стучать
+ring the bell|звонить в звонок
+draw|рисовать
+paint|красить, краска
+print|печатать
+type|печатать, тип
+copy|копировать
+delete|удалять
+download|скачивать
+upload|загружать
+install|устанавливать
+connect|соединять
+join|присоединяться
+share|делиться
+collect|собирать
+gather|собирать(ся)
+divide|делить
+separate|разделять, отдельный
+attach|прикреплять
+cover|покрывать, обложка
+contain|содержать
+belong|принадлежать
+own up|признаться
+depend|зависеть
+matter|иметь значение, вещество
+exist|существовать
+happen to|случаться с
+occur|происходить
+develop|развивать
+improve|улучшать
+increase|увеличивать
+reduce|уменьшать
+rise|подниматься
+grow up|вырастать
+fail|терпеть неудачу
+succeed|преуспевать
+achieve|достигать
+earn|зарабатывать
+borrow|занимать (брать)
+lend|одалживать
+owe|быть должным
+cost|стоить, стоимость
+afford|позволить себе
+order|заказывать, порядок
+deliver|доставлять
+receive|получать
+produce|производить
+sell out|распродать
+supply|снабжать, запас
+trade|торговля
+exchange|обмен
+invest|инвестировать
+charge|взимать плату, заряд
+waste|тратить впустую, отходы
+fit in|вписываться
+suit|подходить, костюм
+wear|носить (одежду)
+put on|надевать
+take off|снимать, взлетать

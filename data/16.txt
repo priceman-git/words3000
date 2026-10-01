@@ -1,0 +1,464 @@
+extensive|обширный
+psychological|психологический
+baron|барон
+strap|ремешок, пристёгивать
+tempt|искушать
+happily|счастливо, радостно
+tactic|тактика
+initiate|начинать, инициировать
+plague|чума
+regularly|регулярно
+butler|дворецкий
+grief|горе
+suspicion|подозрение
+mid|середина, средний
+legitimate|законный
+chuckle|посмеиваться
+businessman|бизнесмен
+abroad|за границей
+wicked|злой, нечестивый
+sensor|датчик
+inquiry|запрос, расследование
+radical|радикальный
+advocate|защитник, отстаивать
+refugee|беженец
+sucker|простофиля, присоска
+biological|биологический
+verdict|вердикт
+tide|прилив
+wax|воск
+immigrant|иммигрант
+ethic|этика
+substitute|замена, заменять
+legally|юридически, законно
+investigator|следователь
+anonymous|анонимный
+homicide|убийство (юр.)
+identification|опознание, удостоверение
+equip|оснащать
+hut|хижина
+sleeve|рукав
+cigar|сигара
+carve|вырезать, резать
+casualty|жертва, пострадавший
+stunt|трюк
+integrity|честность, целостность
+hence|следовательно
+organic|органический
+gram|грамм
+therapist|психотерапевт
+photography|фотография (искусство)
+stem|стебель, происходить
+prom|выпускной бал
+crook|мошенник
+ridge|хребет
+bachelor|холостяк, бакалавр
+reliable|надёжный
+stripe|полоса
+illusion|иллюзия
+anti|против, анти-
+inspection|осмотр, проверка
+organization|организация
+adorable|очаровательный
+conquer|завоёвывать
+banner|баннер, знамя
+summon|вызывать
+endure|терпеть, выдерживать
+successfully|успешно
+scope|масштаб, охват
+donation|пожертвование
+bra|бюстгальтер
+assemble|собирать
+globe|глобус, земной шар
+prep|подготовка
+disguise|маскировка
+debut|дебют
+gesture|жест
+pursuit|преследование, погоня
+syndrome|синдром
+grind|молоть
+forge|ковать, подделывать
+exploit|эксплуатировать, подвиг
+graduation|выпуск (окончание учёбы)
+transmit|передавать
+gravity|гравитация, серьёзность
+transcript|стенограмма
+setup|настройка, подстава
+dough|тесто
+reflection|отражение, размышление
+currency|валюта
+compel|вынуждать
+nicely|мило, хорошо
+mini|мини
+harsh|суровый, резкий
+eighth|восьмой
+initiative|инициатива
+faithful|верный
+handy|удобный, под рукой
+delta|дельта
+retail|розница
+confusion|путаница, замешательство
+rebuild|восстанавливать
+cite|цитировать, ссылаться
+tin|жесть, банка
+valve|клапан
+hilarious|уморительный
+tease|дразнить
+prescription|рецепт (врача)
+dignity|достоинство
+tub|ванна, кадка
+dynamic|динамичный
+clinical|клинический
+inn|гостиница, трактир
+rehearsal|репетиция
+depart|отправляться
+breakdown|поломка, срыв
+tribute|дань, память
+patent|патент
+overlook|упускать из виду
+soak|замачивать
+glorious|славный
+mechanical|механический
+consciousness|сознание
+dispatch|отправка, диспетчер
+prosecutor|прокурор
+streak|полоса (везения), прожилка
+mug|кружка
+trainer|тренер
+ratio|соотношение
+adore|обожать
+archive|архив
+freshman|первокурсник
+grill|гриль
+contrast|контраст
+brace|скоба, готовиться
+wit|остроумие
+sober|трезвый
+gently|мягко, осторожно
+elementary|элементарный, начальный
+equivalent|эквивалент
+tuck|заправлять, подворачивать
+reverend|преподобный
+prosecution|обвинение
+slaughter|резня
+scrap|обрывок, лом
+invade|вторгаться
+inherit|наследовать
+bloom|цвести
+theft|кража
+involvement|участие
+fundamental|фундаментальный
+swamp|болото
+rot|гнить
+vein|вена
+goddess|богиня
+peel|кожура, чистить
+cord|шнур
+lance|копьё
+Swiss|швейцарский
+Egyptian|египетский
+nickname|прозвище
+fare|плата за проезд
+kindly|любезно
+disk|диск
+butterfly|бабочка
+mortal|смертный
+charter|устав, хартия
+motivate|мотивировать
+blend|смешивать
+viewer|зритель
+naval|военно-морской
+comrade|товарищ
+smack|шлепок
+tab|счёт (в баре), вкладка
+grid|сетка
+orbit|орбита
+assumption|предположение
+acceptable|приемлемый
+corruption|коррупция
+publicity|реклама, огласка
+tense|напряжённый
+starter|закуска, стартёр
+semi|полу-
+arena|арена
+bomber|бомбардировщик
+lame|хромой, неубедительный
+elite|элита
+erase|стирать
+correctly|правильно
+poke|тыкать
+particle|частица
+tolerate|терпеть
+whereas|тогда как
+contractor|подрядчик
+evaluation|оценка
+bruise|синяк
+petty|мелкий
+Easter|Пасха
+oath|присяга
+bait|приманка
+extract|извлекать, экстракт
+intervention|вмешательство
+mistress|любовница, хозяйка
+external|внешний
+knot|узел
+whiskey|виски
+traitor|предатель
+ego|эго
+scatter|разбрасывать
+stalk|преследовать, стебель
+tremendous|огромный
+motel|мотель
+ballet|балет
+generator|генератор
+incorporate|включать
+marker|маркер
+ingredient|ингредиент
+essentially|по сути
+merit|заслуга
+delicate|деликатный, хрупкий
+probe|зонд, расследование
+straw|солома, трубочка
+dialogue|диалог
+devastate|опустошать
+refresh|освежать
+gulf|залив
+counselor|консультант, советник
+unnecessary|ненужный
+modify|изменять
+athletic|спортивный
+supporter|сторонник
+pumpkin|тыква
+reign|правление
+insight|понимание, озарение
+deploy|развёртывать
+flirt|флиртовать
+brutal|жестокий
+upside|верхняя сторона, плюс
+vet|ветеринар, ветеран
+input|ввод, вклад
+jurisdiction|юрисдикция
+chapel|часовня
+psychiatrist|психиатр
+identical|идентичный
+insert|вставлять
+mentally|мысленно, психически
+capability|способность
+prop|реквизит, подпирать
+monsieur|месье
+nowadays|в наши дни
+govern|управлять
+contemporary|современный
+butcher|мясник
+roar|рёв, реветь
+intimate|интимный, близкий
+groom|жених, ухаживать
+potentially|потенциально
+perfume|духи
+presume|предполагать
+messenger|посыльный
+pony|пони
+villa|вилла
+consultant|консультант
+fatal|смертельный
+vest|жилет
+kindness|доброта
+canyon|каньон
+scrub|тереть, скрести
+forum|форум
+antique|антикварный
+commerce|торговля
+vocal|вокальный, голосовой
+utility|полезность, коммунальные услуги
+suspension|подвеска, отстранение
+surgical|хирургический
+toxic|токсичный
+whatsoever|вообще, никакой
+gasp|ахнуть
+plea|мольба
+fingerprint|отпечаток пальца
+reunion|воссоединение, встреча
+immigration|иммиграция
+marble|мрамор
+picnic|пикник
+defender|защитник
+rapidly|быстро
+roller|ролик, каток
+chant|скандировать
+semester|семестр
+psychic|экстрасенс
+mansion|особняк
+scam|афера
+pinch|щипок, щипать
+amber|янтарь
+revolutionary|революционный
+marijuana|марихуана
+prophet|пророк
+occupation|профессия, оккупация
+perception|восприятие
+diagnosis|диагноз
+fiber|волокно
+renew|возобновлять
+shaft|шахта, вал
+curiosity|любопытство
+trim|подрезать
+specialize|специализироваться
+absurd|абсурдный
+analyst|аналитик
+collector|коллекционер
+app|приложение
+commence|начинать
+classical|классический
+effectively|эффективно
+rental|прокат, аренда
+manipulate|манипулировать
+pond|пруд
+tumor|опухоль
+composition|композиция, состав
+misery|страдание
+franchise|франшиза
+pancake|блин
+horizon|горизонт
+advisor|советник
+representation|представительство
+oral|устный
+blog|блог
+subtle|тонкий
+crab|краб
+expansion|расширение
+nun|монахиня
+visa|виза
+vomit|рвота, тошнить
+claw|коготь
+lounge|гостиная, зал ожидания
+banker|банкир
+substantial|существенный
+newly|недавно, заново
+outline|план, контур
+terminate|прекращать
+preliminary|предварительный
+protective|защитный
+provision|обеспечение, положение
+dental|зубной
+shotgun|дробовик
+feast|пир
+instantly|мгновенно
+automobile|автомобиль
+blink|моргать
+exclude|исключать
+supervisor|руководитель, надзиратель
+efficiency|эффективность
+chronic|хронический
+fortunately|к счастью
+submarine|подводная лодка
+donor|донор
+creator|создатель
+ape|обезьяна (человекообразная)
+experimental|экспериментальный
+fulfill|выполнять
+segment|сегмент
+strategic|стратегический
+domain|область, домен
+merchant|торговец
+orphan|сирота
+heroin|героин
+virtue|добродетель
+herb|трава (пряная)
+handful|горсть
+tricky|хитрый, сложный
+Turkish|турецкий
+stumble|спотыкаться
+zip|застёжка-молния
+virtually|практически
+federation|федерация
+playoff|плей-офф
+instructor|инструктор
+inventory|инвентарь, опись
+minus|минус
+facial|лицевой
+coffin|гроб
+summit|вершина, саммит
+roughly|примерно, грубо
+rug|коврик
+hunger|голод
+nude|обнажённый
+cocaine|кокаин
+shepherd|пастух
+drone|дрон
+shallow|мелкий
+touchdown|тачдаун, посадка
+madness|безумие
+designate|назначать
+arch|арка
+vent|вентиляция, выпустить пар
+vibe|атмосфера, настроение
+alternate|чередовать
+tenant|арендатор
+ninth|девятый
+scramble|карабкаться, взбалтывать
+bizarre|странный, причудливый
+evacuate|эвакуировать
+instruct|инструктировать
+initially|изначально
+cue|реплика, сигнал
+realm|царство, сфера
+tow|буксировать
+equation|уравнение
+dice|кости (игральные)
+limb|конечность
+holder|держатель
+attribute|приписывать, свойство
+emotionally|эмоционально
+adoption|усыновление, принятие
+par|номинал, норма
+thigh|бедро
+fortunate|удачливый
+swap|обменивать
+format|формат
+nominate|выдвигать
+crow|ворона
+rating|рейтинг
+perceive|воспринимать
+mint|мята
+carriage|карета, вагон
+nickel|никель, пятицентовик
+bundle|связка, пачка
+terrorism|терроризм
+researcher|исследователь
+partial|частичный
+gossip|сплетни
+weep|плакать
+economics|экономика (наука)
+clearance|разрешение, распродажа
+dime|десятицентовик
+partly|частично
+primarily|главным образом
+differ|отличаться
+marathon|марафон
+passionate|страстный
+indication|признак, указание
+parole|условно-досрочное освобождение
+dye|краска, красить
+competitor|конкурент
+drip|капать
+herd|стадо
+workshop|мастерская, семинар
+keeper|хранитель, вратарь
+porch|крыльцо
+grasp|хватать, понимать
+sadly|к сожалению, грустно
+specimen|образец
+yoga|йога
+treasury|казначейство
+legendary|легендарный
+awhile|некоторое время
+strengthen|укреплять
+separation|разделение, разлука
+risky|рискованный
+lottery|лотерея
+yacht|яхта
+shipment|партия (груза)
+pickup|пикап, забор (груза)
+prey|добыча
+corporal|капрал
+scent|аромат, запах

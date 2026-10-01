@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+# Исходные частотные списки (5,9 МБ) не публикуем: SUBTLEX-US — только для некоммерческого использования,
+# остальные легко скачать заново (см. README → «Словарь»). Готовый результат — words.js и data/freq/course1.txt.
+data/freq/subtlex_us_pos.tsv
+data/freq/wordfreq_en.tsv
+data/freq/lemma.txt

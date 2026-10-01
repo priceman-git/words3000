@@ -1,0 +1,303 @@
+son|сын
+daughter|дочь
+brother|брат
+sister|сестра
+husband|муж
+baby|младенец
+uncle|дядя
+aunt|тётя
+cousin|двоюродный брат, кузен
+grandmother|бабушка
+grandfather|дедушка
+nephew|племянник
+niece|племянница
+wedding|свадьба
+marriage|брак
+neighbor|сосед
+guest|гость
+stranger|незнакомец
+enemy|враг
+partner|партнёр
+boss|начальник
+customer|клиент
+client|клиент, заказчик
+doctor|врач
+nurse|медсестра
+patient|пациент, терпеливый
+lawyer|юрист
+judge|судья
+officer|офицер
+soldier|солдат
+king|король
+queen|королева
+prince|принц
+princess|принцесса
+driver|водитель
+pilot|пилот
+farmer|фермер
+worker|рабочий
+engineer|инженер
+scientist|учёный
+artist|художник
+writer|писатель
+author|автор
+actor|актёр
+singer|певец
+player|игрок
+coach|тренер
+manager|менеджер
+director|директор, режиссёр
+secretary|секретарь
+chef|шеф-повар
+cook|готовить, повар
+waiter|официант
+police officer|полицейский
+thief|вор
+hero|герой
+owner|владелец
+expert|эксперт
+professor|профессор
+pupil|ученик
+head teacher|директор школы
+lady|дама
+gentleman|джентльмен
+adult|взрослый
+teenager|подросток
+crowd|толпа
+population|население
+public holiday|государственный праздник
+society|общество
+culture|культура
+tradition|традиция
+religion|религия
+church|церковь
+god|бог
+heaven|рай, небеса
+hell|ад
+soul|душа
+spirit|дух
+dream|мечта, сон
+memory|память, воспоминание
+thought|мысль
+feeling|чувство
+emotion|эмоция
+fear|страх
+hope|надежда
+joy|радость
+anger|гнев
+happiness|счастье
+peace|мир (покой)
+freedom|свобода
+truth|правда
+lie|ложь, лежать
+secret|секрет
+mistake|ошибка
+chance|шанс
+luck|удача
+success|успех
+failure|неудача
+goal|цель
+purpose|цель, назначение
+choice|выбор
+decision|решение
+opinion|мнение
+advice|совет
+answer|ответ
+knowledge|знание
+skill|навык
+ability|способность
+talent|талант
+habit|привычка
+attention|внимание
+patience|терпение
+respect|уважение
+trust|доверие
+promise|обещание
+agreement|соглашение
+argument|спор, довод
+discussion|обсуждение
+conversation|разговор
+message|сообщение
+letter|письмо, буква
+note|заметка
+list|список
+sign|знак, подписывать
+symbol|символ
+address|адрес
+title|название, заголовок
+page|страница
+chapter|глава
+sentence|предложение
+text|текст
+dictionary|словарь
+grammar|грамматика
+lesson|урок
+exam|экзамен
+test|тест, проверять
+homework|домашнее задание
+course|курс
+subject|предмет, тема
+science|наука
+math|математика
+physics|физика
+chemistry|химия
+biology|биология
+geography|география
+literature|литература
+university|университет
+library|библиотека
+classroom|класс (комната)
+desk|письменный стол
+chair|стул
+sofa|диван
+lamp|лампа
+window|окно
+wall|стена
+floor|пол, этаж
+ceiling|потолок
+roof|крыша
+stairs|лестница
+kitchen|кухня
+bedroom|спальня
+bathroom|ванная
+garden|сад
+yard|двор
+garage|гараж
+fence|забор
+gate|ворота
+building|здание
+apartment|квартира
+hotel|гостиница
+hospital|больница
+bank|банк, берег
+shop|магазин
+store|магазин, хранить
+restaurant|ресторан
+cafe|кафе
+bar|бар
+museum|музей
+theater|театр
+cinema|кинотеатр
+park|парк
+airport|аэропорт
+station|станция, вокзал
+village|деревня
+town|городок
+capital|столица
+center|центр
+square meter|квадратный метр
+bridge|мост
+road|дорога
+path|тропа
+corner|угол
+river|река
+lake|озеро
+sea|море
+ocean|океан
+beach|пляж
+island|остров
+mountain|гора
+hill|холм
+forest|лес
+tree|дерево
+flower|цветок
+grass|трава
+leaf|лист
+plant|растение, сажать
+seed|семя
+root|корень
+branch|ветка, филиал
+wood|дерево (материал), лес
+stone|камень
+rock|скала
+sand|песок
+earth|земля
+ground|земля, почва
+sky|небо
+sun|солнце
+moon|луна
+star|звезда
+planet|планета
+cloud|облако
+rain|дождь
+snow|снег
+wind|ветер
+storm|шторм
+weather|погода
+temperature|температура
+ice|лёд
+fire|огонь, пожар
+smoke|дым
+heat|жара, тепло
+nature|природа
+environment|окружающая среда
+animal|животное
+dog|собака
+cat|кошка
+horse|лошадь
+cow|корова
+pig|свинья
+sheep|овца
+chicken|курица
+bird|птица
+fish|рыба
+mouse|мышь
+rabbit|кролик
+bear|медведь
+wolf|волк
+fox|лиса
+lion|лев
+tiger|тигр
+elephant|слон
+monkey|обезьяна
+snake|змея
+insect|насекомое
+fly|летать, муха
+bee|пчела
+duck|утка
+egg|яйцо
+milk|молоко
+bread|хлеб
+butter|масло (сливочное)
+cheese|сыр
+meat|мясо
+beef|говядина
+pork|свинина
+rice|рис
+soup|суп
+salad|салат
+sugar|сахар
+salt|соль
+pepper|перец
+oil|масло, нефть
+fruit|фрукт
+apple|яблоко
+banana|банан
+lemon|лимон
+potato|картофель
+tomato|помидор
+onion|лук
+carrot|морковь
+vegetable|овощ
+cake|торт
+cookie|печенье
+chocolate|шоколад
+tea|чай
+coffee|кофе
+juice|сок
+wine|вино
+beer|пиво
+drink|пить, напиток
+eat|есть (кушать)
+breakfast|завтрак
+lunch|обед
+dinner|ужин
+meal|приём пищи
+dish|блюдо
+plate|тарелка
+cup|чашка
+glass|стекло, стакан
+bottle|бутылка
+knife|нож
+fork|вилка
+spoon|ложка
