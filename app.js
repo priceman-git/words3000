@@ -1453,7 +1453,7 @@ function appDiag() {
   const ms = nav ? Math.round(nav.domContentLoadedEventEnd) : 0;
   const sw = 'serviceWorker' in navigator && navigator.serviceWorker.controller;
   const parts = [esc(location.host || 'файл'), sw ? 'офлайн-кэш включён' : 'офлайн-кэш не включён'];
-  if (ms) parts.push(`загрузка ${(ms / 1000).toFixed(1)} с`);
+  if (ms) parts.push(`загрузка ${ms < 1000 ? ms + " мс" : (ms / 1000).toFixed(1) + " с"}`);
   if (!isSecureContext) parts.push('адрес без HTTPS — офлайн-режим невозможен; установите иконку заново с https://priceman-git.github.io/words3000/');
   else if (!sw) parts.push('кэш включится со следующего открытия');
   return parts.join(' · ');
