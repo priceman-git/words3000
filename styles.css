@@ -50,6 +50,7 @@ h1, h2, h3 { margin: 0; }
 .brand { text-align: center; padding: 14px 16px 2px; }
 .brand h1 { color: var(--title); font-size: 34px; font-weight: 700; letter-spacing: .01em; line-height: 1.1; }
 .brand { padding-left: 8px; padding-right: 8px; }
+.brand-sub { font-size: clamp(14px, 4.6vw, 20px); font-weight: 500; color: var(--title); white-space: nowrap; margin-top: 2px; }
 .brand p { margin: 4px 0 0; font-size: clamp(11px, 3.7vw, 17px); white-space: nowrap; color: #555; font-style: italic; }   /* слоган всегда в одну строку */
 .pager { display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 8px; }
 .pager h2 { color: var(--title); font-size: 24px; font-weight: 700; }

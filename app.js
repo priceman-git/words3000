@@ -495,7 +495,7 @@ function renderMain(app) {
       <button class="st-item" data-act="leagues">${badgeSVG(leagueOf(level()), level(), 48)}<small>${LEAGUES[leagueOf(level())].name} · ур. ${level()}</small></button>
       <button class="st-item grow" data-act="profile"><span class="learned-pill">${lc}</span><small>Выучено слов: ${lc}<b>+${pc}</b></small></button>
     </div>
-    <div class="brand"><h1>3000 слов</h1><p>95% любого текста можно понять, зная всего 3000 слов</p></div>
+    <div class="brand"><h1>3000 слов</h1><div class="brand-sub">самых употребительных в английском</div><p>95% любого текста можно понять, зная всего 3000 слов</p></div>
     <div class="pager">
       <button class="arrow" data-act="prev" ${p === 0 ? 'disabled' : ''} aria-label="Предыдущая страница">${I.back}</button>
       <h2>Уроки ${a}–${b}${a > CORE ? '<small>Курс 2 · продвинутый</small>' : ''}</h2>
@@ -1256,7 +1256,7 @@ const nextSelf = code => SELF_ORDER[Math.min(SELF_ORDER.length - 1, SELF_ORDER.i
 let onb = { step: 'self' };
 
 function renderOnb(app) {
-  const brand = `<div class="brand"><h1>3000 слов</h1><p>95% любого текста можно понять, зная всего 3000 слов</p></div>`;
+  const brand = `<div class="brand"><h1>3000 слов</h1><div class="brand-sub">самых употребительных в английском</div><p>95% любого текста можно понять, зная всего 3000 слов</p></div>`;
   const back = onb.again ? `<button class="btn ghost-link" data-act="cancel">Отмена</button>` : '';
   if (onb.step === 'self') {
     app.innerHTML = `<div class="onb">${brand}
