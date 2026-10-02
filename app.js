@@ -199,7 +199,7 @@ function openLeagues() {
     return `<div class="lg-row ${k === li ? 'cur' : k > li ? 'future' : ''}">${badgeSVG(k, k === li ? lv : L.from, 44)}
       <div class="lg-t"><b>${L.name}</b><div>уровни ${L.from}–${to} · от ${levelNeed(L.from)} слов</div></div>${k === li ? '<span class="lg-you">вы здесь</span>' : k < li ? `<span class="lg-ok">${I.check}</span>` : ''}</div>`;
   }).reverse().join('');
-  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.down}</button><h2>Лиги</h2>
+  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button><h2>Лиги</h2>
     <div class="lg-big">${badgeSVG(li, lv, 120)}</div>
     <div class="lg-name">${LEAGUES[li].name} · уровень ${lv}</div>
     ${next ? `<div class="lg-prog"><div class="progress"><i style="width:${pct}%"></i></div>
@@ -403,6 +403,7 @@ const I = {
   back: svg('<path d="M15 5l-7 7 7 7"/>', 'stroke-width="2.8"'),
   next: svg('<path d="M9 5l7 7-7 7"/>', 'stroke-width="2.8"'),
   down: svg('<path d="M5 9l7 7 7-7"/>', 'stroke-width="2.8"'),
+  close: svg('<path d="M6 6l12 12M18 6L6 18"/>', 'stroke-width="2.6"'),
   check: svg('<path d="M4.5 12.5l5 5L19.5 7"/>', 'stroke-width="3"'),
   heart: svg('<path d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.7 4 7 4c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.3 0 5.4 3.3 4.2 6.7C19.5 15.4 12 20 12 20z"/>', 'stroke-width="1.6"'),
   heartOn: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.7 4 7 4c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.3 0 5.4 3.3 4.2 6.7C19.5 15.4 12 20 12 20z"/></svg>',
@@ -856,7 +857,7 @@ function finishRun() {
     l.rep.done = Date.now();
     l.learn.forEach(i => { wmut(i).learned = 1; });
     save(); view = { name: 'main' }; render();
-    sheet(`<button class="sheet-close" data-close>${I.down}</button><h2>Повторение пройдено</h2>
+    sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button><h2>Повторение пройдено</h2>
       <p class="rep-text">Слова урока ${r.n} закреплены. Выучено слов: <span>+${l.learn.length}</span></p>
       <button class="btn" data-close>ОК</button>`);
   } else {
@@ -893,7 +894,7 @@ function finishRun() {
 function stageResults(r, then) {
   const l = L(r.n), st = l.st[r.k];
   const cells = learnIds(r.n).map(i => `<div class="res ${st.ok[i] ? 'ok' : ''}">${esc(disp(i))}<span class="pts">${st.pts[i] ?? 0}</span>${st.err[i] ? `<span class="badge">${st.err[i]}</span>` : ''}</div>`).join('');
-  const s = sheet(`<button class="sheet-close" data-close aria-label="Далее">${I.down}</button>
+  const s = sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button>
     <h2>Упражнение выполнено</h2>
     <p class="note">Для того, чтобы слово считалось изученным, вам нужно набрать по 3 балла в каждом упражнении. Использование подсказки отнимает 1 балл.</p>
     <div class="legend"><span class="dot">1</span> — количество ошибок, допущенных в слове.</div>
@@ -934,7 +935,7 @@ function completeLesson(n) {
 
 function repOffer(n) {
   const due = Date.now() + REP_DELAY;
-  sheet(`<button class="sheet-close" data-close>${I.down}</button><h2 class="teal">ПОВТОРЕНИЕ</h2>
+  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button><h2 class="teal">ПОВТОРЕНИЕ</h2>
     <p class="rep-text">Активировано <span>повторение</span> только что выученных слов. Повторение очень важно для закрепления в памяти. Оно активируется <span>${fmtDue(due)}</span>. Не забудьте его пройти!</p>
     <button class="btn teal" data-act>Активировать</button>`, {
     onClick: (e, close) => { if (e.target.closest('[data-act]')) { close(); activateRep(n); } },
@@ -1464,7 +1465,7 @@ function openProfile() {
   const vs = voiceChoices();
   const cur = bestVoice();
   const sk = streak();
-  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.down}</button><div class="prof">
+  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button><div class="prof">
     <h2>Профиль</h2>
     <h3>Имя и аватар</h3>
     <input class="name-input" id="pname" value="${esc(S.profile.name)}" maxlength="24" autocomplete="off">
