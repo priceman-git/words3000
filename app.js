@@ -20,6 +20,7 @@ const lessonOf = i => Math.floor(i / PER_LESSON) + 1;
 const STAGE_PTS = 3;                   // баллов за этап; каждая ошибка и подсказка отнимают по 1 баллу
 const REP_DELAY = 24 * 3600 * 1000;
 const KEY = 'w3000.v2';
+const APP_V = ((document.currentScript && /[?&]v=(\d+)/.exec(document.currentScript.src)) || [])[1] || '?';   // версия из ?v= в index.html
 const DICT_VER = 3;   // версия словаря: при смене порядка слов прогресс, привязанный к номерам слов, сбрасывается
 
 const STAGES = [
@@ -1446,6 +1447,17 @@ function applyStart(n, info) {
 
 /* ================= профиль ================= */
 
+// Диагностика: откуда открыто приложение, работает ли офлайн-кэш и сколько заняла загрузка
+function appDiag() {
+  const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  const ms = nav ? Math.round(nav.domContentLoadedEventEnd) : 0;
+  const sw = 'serviceWorker' in navigator && navigator.serviceWorker.controller;
+  const parts = [esc(location.host || 'файл'), sw ? 'офлайн-кэш включён' : 'офлайн-кэш не включён'];
+  if (ms) parts.push(`загрузка ${(ms / 1000).toFixed(1)} с`);
+  if (!isSecureContext) parts.push('адрес без HTTPS — офлайн-режим невозможен; установите иконку заново с https://priceman-git.github.io/words3000/');
+  else if (!sw) parts.push('кэш включится со следующего открытия');
+  return parts.join(' · ');
+}
 function openProfile() {
   const lessonsDone = Object.values(S.L).filter(l => l.complete).length;
   const favs = Object.keys(S.fav).map(Number);
@@ -1473,6 +1485,8 @@ function openProfile() {
     <div class="prow"><div class="l">Звуки ответов<div>Сигнал верного и неверного ответа</div></div><label class="switch"><input type="checkbox" data-set="sfx" ${S.set.sfx ? 'checked' : ''}><span></span></label></div>
     <div class="prow"><div class="l">Диктор</div>${TTS && vs.length ? `<select class="select" id="voice">${vs.map(o => `<option value="${esc(o.voice.voiceURI)}" ${cur === o.voice ? 'selected' : ''}>${esc(o.label)} — ${esc(voiceName(o.voice))}</option>`).join('')}</select>` : '<span class="sub">недоступно</span>'}</div>
     <div class="prow"><div class="l">Скорость речи<div id="ratev">${S.set.rate.toFixed(2)}×</div></div><input type="range" min="0.5" max="1.2" step="0.05" value="${S.set.rate}" id="rate"></div>
+    <h3>О приложении</h3>
+    <div class="prow"><div class="l">Версия ${APP_V}<div>${appDiag()}</div></div></div>
     <h3>Данные</h3>
     <p class="sub" style="text-align:left">Прогресс хранится на этом устройстве. Чтобы перенести его на другой iPhone, iPad или Mac, сохраните файл и загрузите его там.</p>
     <button class="btn gray small" data-act="export">Сохранить прогресс в файл</button>
