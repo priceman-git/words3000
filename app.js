@@ -1307,7 +1307,7 @@ function renderOnb(app) {
     const skipped = (N - 1) * PER_LESSON;
     app.innerHTML = `<div class="onb">${brand}
       <h2 class="onb-h">Результат тестового урока</h2>
-      <p class="onb-sub">Самооценка ${selfLabel(onb.self)} · ${r.capped ? `тест пройден отлично — рекомендуем уровень <b>${selfLabel(r.capCode)}</b> (${r.known} слов из ${W.length}). Если знаете больше, выберите при самооценке уровень выше` : `вы знаете примерно <b>${r.known}</b> слов из ${W.length}`}</p>
+      <p class="onb-sub">Самооценка ${selfLabel(onb.self)} · ${r.capped ? `тест пройден отлично — рекомендуем уровень <b>${selfLabel(r.capCode)}</b> (${r.known} слов из ${CORE * PER_LESSON}). Если знаете больше, выберите при самооценке уровень выше` : `вы знаете примерно <b>${Math.min(r.known, CORE * PER_LESSON)}</b> слов из ${CORE * PER_LESSON}`}</p>
       <div class="bands">${r.bands.map(b => `<div class="band"><span class="band-l">Слова ${b.from + 1}–${b.to}</span>
         <span class="band-bar"><i style="width:${b.score * 100}%" class="${b.score >= 0.75 ? 'ok' : b.score >= 0.4 ? 'mid' : 'bad'}"></i></span>
         <span class="band-r">${b.c} из ${PLACE_PER_BAND}</span></div>`).join('')}</div>
@@ -1495,7 +1495,7 @@ function openProfile() {
     <h3>Статистика</h3>
     <div class="stat3"><div><b>${learnedCount()}</b><span>выучено слов</span></div><div><b>${lessonsDone}</b><span>уроков из ${TOTAL}</span></div><div><b>${sk}</b><span>${plural(sk, 'день', 'дня', 'дней')} подряд</span></div></div>
     <h3>Уровень английского</h3>
-    <div class="prow"><div class="l">${S.placement ? `${esc(selfLabel(S.placement.self))} · старт с урока ${S.start}` : `Старт с урока ${S.start}`}<div>${S.placement && S.placement.known != null ? `По тестовому уроку: около ${S.placement.known} слов из ${W.length}` : 'Определение уровня не проходили'}</div></div>
+    <div class="prow"><div class="l">${S.placement ? `${esc(selfLabel(S.placement.self))} · старт с урока ${S.start}` : `Старт с урока ${S.start}`}<div>${S.placement && S.placement.known != null ? `По тестовому уроку: около ${Math.min(S.placement.known, CORE * PER_LESSON)} слов из ${CORE * PER_LESSON}` : 'Определение уровня не проходили'}</div></div>
       <button class="btn gray small" style="width:auto;margin:0;padding:0 14px" data-act="replace">Определить заново</button></div>
     <h3>Мои слова (${favs.length})</h3>
     <div class="favlist">${favs.length ? favs.map(i => `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div><button class="x" data-unfav="${i}" aria-label="Убрать">×</button></div>`).join('') : '<p class="sub">Нажмите ♡ в упражнении, чтобы добавить слово.</p>'}</div>
