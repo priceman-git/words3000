@@ -1,0 +1,523 @@
+agenda|повестка дня
+agricultural|сельскохозяйственный
+attachment|привязанность, вложение (файл)
+characterize|характеризовать
+clothing|одежда
+complexity|сложность
+comprise|включать, состоять из
+consequently|следовательно
+constraint|ограничение
+damn|чёрт (возьми), проклятый
+deficit|дефицит
+dramatically|резко, драматически
+emphasize|подчёркивать
+expenditure|расходы, затраты
+faithfully|верно, преданно
+firmly|твёрдо, крепко
+firstly|во-первых
+framework|структура, рамки
+further|дальше, далее, дальнейший
+gay|гей, весёлый
+historian|историк
+hypothesis|гипотеза
+ill|больной
+illustration|иллюстрация
+implementation|внедрение, реализация
+inflation|инфляция
+institutional|институциональный
+listener|слушатель
+noun|существительное
+opera|опера
+reasonably|разумно, достаточно
+respectively|соответственно
+secondly|во-вторых
+shareholder|акционер
+situate|располагать, размещать
+structural|структурный
+subsequently|впоследствии
+summarize|подводить итог, резюмировать
+theoretical|теоретический
+thirst|жажда
+tourism|туризм
+uncertainty|неопределённость
+van|фургон
+verb|глагол
+voluntary|добровольный
+abdominal|брюшной
+absorption|поглощение
+acceleration|ускорение
+accumulate|накапливать
+accumulation|накопление
+accurately|точно
+acidic|кислотный
+actively|активно
+adaptation|адаптация, экранизация
+adaptive|адаптивный
+adjacent|соседний, смежный
+adolescent|подросток, подростковый
+adverse|неблагоприятный
+aerosol|аэрозоль
+aesthetic|эстетический
+affirm|утверждать, подтверждать
+aggregate|совокупный, совокупность
+algebra|алгебра
+algorithm|алгоритм
+allocate|выделять, распределять
+allocation|распределение
+aluminum|алюминий
+amino|амино-
+amplitude|амплитуда
+analogy|аналогия
+anthropology|антропология
+antibody|антитело
+antiquity|античность, древность
+appendix|приложение, аппендикс
+approximate|приблизительный
+approximation|приближение
+arbitrary|произвольный
+archaeology|археология
+articulate|чётко выражать, красноречивый
+artifact|артефакт
+artwork|произведение искусства
+assert|утверждать
+autonomy|автономия
+availability|наличие, доступность
+axiom|аксиома
+axis|ось
+bacterial|бактериальный
+behavioral|поведенческий
+bilingual|двуязычный
+binary|двоичный
+biodiversity|биоразнообразие
+biologist|биолог
+bodily|телесный
+bound|связанный, обязанный
+bracket|скобка, категория
+broadly|в широком смысле
+calcium|кальций
+calculator|калькулятор
+calculus|математический анализ
+capillary|капилляр
+capitalism|капитализм
+capitalist|капиталист, капиталистический
+censor|цензор, подвергать цензуре
+characterization|описание, характеристика
+chemotherapy|химиотерапия
+chloride|хлорид
+chromosome|хромосома
+circa|около (о дате)
+circulate|циркулировать, распространять
+classification|классификация
+coefficient|коэффициент
+coherent|связный, последовательный
+comma|запятая
+communicative|коммуникативный
+compact|компактный
+comparable|сопоставимый
+comparative|сравнительный
+competence|компетентность
+competent|компетентный
+complement|дополнять, дополнение
+composite|составной
+comprehension|понимание
+computation|вычисление
+conception|концепция, зачатие
+conceptual|концептуальный
+conditional|условный
+conduction|проводимость
+configuration|конфигурация
+confound|сбивать с толку, смешивать
+congruent|соответствующий, конгруэнтный
+connector|соединитель, разъём
+connotation|оттенок значения, коннотация
+consensus|консенсус
+conservation|сохранение, охрана
+conserve|сохранять, беречь
+consonant|согласный (звук)
+constrain|ограничивать, сдерживать
+consultation|консультация
+continuity|непрерывность
+contour|контур
+contradict|противоречить
+contradiction|противоречие
+contradictory|противоречивый
+converge|сходиться
+convergence|сближение, конвергенция
+coordination|координация
+coronary|коронарный
+corpus|корпус (текстов)
+correlate|соотносить, коррелировать
+correlation|корреляция, взаимосвязь
+correspondence|переписка, соответствие
+cortex|кора (мозга)
+credibility|достоверность, доверие
+critically|критически
+critique|критический разбор
+curriculum|учебный план
+cyclic|циклический
+damp|влажный, сырой
+deficiency|недостаток, дефицит
+deflection|отклонение
+degrade|ухудшать, разлагаться
+demonstrator|демонстрант
+denominator|знаменатель
+denote|обозначать
+dense|плотный, густой
+dependence|зависимость
+depict|изображать
+derivative|производный, производная
+descendent|потомок
+descriptor|дескриптор, описатель
+detection|обнаружение
+developmental|связанный с развитием
+deviation|отклонение
+diagnostic|диагностический
+diagram|диаграмма, схема
+dialect|диалект
+diameter|диаметр
+differential|дифференциальный, разница
+differentiate|различать, отличать
+differentiation|дифференциация
+diffusion|диффузия, распространение
+dilemma|дилемма
+dilute|разбавлять
+dimensional|пространственный, мерный
+dioxide|диоксид
+directive|директива
+discourse|дискурс, речь
+discrete|дискретный, отдельный
+displacement|смещение, вытеснение
+dissection|вскрытие, рассечение
+dissertation|диссертация
+diverse|разнообразный
+dominance|доминирование
+domination|господство
+duration|продолжительность
+ecological|экологический
+ecology|экология
+economically|экономически
+economist|экономист
+effectiveness|эффективность
+elastic|упругий, эластичный
+elasticity|упругость
+electron|электрон
+elevation|высота, возвышение
+elimination|устранение
+embed|встраивать, внедрять
+emergence|появление
+emission|выброс, излучение
+emit|испускать, выделять
+empirical|эмпирический
+encode|кодировать
+enormously|чрезвычайно
+entrant|участник, поступающий
+enzyme|фермент
+epidemic|эпидемия
+epidemiology|эпидемиология
+equilibrium|равновесие
+equivalence|равноценность, эквивалентность
+estimation|оценка
+evident|очевидный
+evolutionary|эволюционный
+explicit|явный, откровенный
+explicitly|явно
+exponential|экспоненциальный
+facet|грань, аспект
+factorial|факториал
+fatigue|усталость
+fertility|плодовитость, плодородие
+fetal|эмбриональный
+fin|плавник
+finite|конечный
+flexibility|гибкость
+flux|поток, изменчивость
+footnote|сноска
+formally|официально, формально
+formulation|формулировка
+friction|трение
+fringe|край, окраина
+fundamentally|в корне, по существу
+fungus|гриб (организм)
+generalization|обобщение
+generalize|обобщать
+genetically|генетически
+genetics|генетика
+globalization|глобализация
+gradient|градиент
+grammatical|грамматический
+graph|график
+handout|раздаточный материал
+hawk|ястреб
+helix|спираль
+hepatitis|гепатит
+herbicide|гербицид
+hierarchy|иерархия
+historically|исторически
+horizontal|горизонтальный
+hydrogen|водород
+ideology|идеология
+implicit|неявный, подразумеваемый
+incidence|частота (случаев)
+inclusion|включение
+incumbent|действующий (о должности)
+independently|независимо
+indicator|показатель
+indifference|безразличие
+indigenous|коренной
+indirect|косвенный
+individually|по отдельности
+induction|индукция, введение
+industrialization|индустриализация
+industrialize|индустриализировать
+inequality|неравенство
+inevitably|неизбежно
+infectious|инфекционный
+inference|вывод, умозаключение
+inferior|низший, худший
+infinity|бесконечность
+influential|влиятельный
+informal|неформальный
+inhibit|подавлять, сдерживать
+inhibition|подавление, скованность
+initiation|начало, посвящение
+innate|врождённый
+instability|нестабильность
+integral|неотъемлемый, интеграл
+integration|интеграция
+intensive|интенсивный
+interestingly|что интересно
+intermediate|промежуточный, средний
+interval|интервал
+intervene|вмешиваться
+interviewer|интервьюер
+inversion|инверсия
+invert|переворачивать
+ion|ион
+irrigation|орошение
+justification|оправдание, обоснование
+lateral|боковой
+lecturer|преподаватель, лектор
+lever|рычаг
+lexical|лексический
+likelihood|вероятность
+linear|линейный
+linguistic|лингвистический
+linguistics|лингвистика
+liter|литр
+locally|на месте, локально
+locus|место, локус
+longitudinal|продольный, долгосрочный
+magnitude|величина, масштаб
+manipulation|манипуляция
+marginal|незначительный, предельный
+marrow|костный мозг
+maternal|материнский
+mathematical|математический
+maximize|максимизировать
+mediate|быть посредником
+membrane|мембрана
+memorize|запоминать
+mercury|ртуть
+metabolism|обмен веществ
+methodology|методология
+migrate|мигрировать
+migration|миграция
+millimeter|миллиметр
+minimize|сводить к минимуму
+mobility|подвижность, мобильность
+modification|изменение, модификация
+momentum|импульс, инерция
+monetary|денежный
+monopoly|монополия
+morality|нравственность
+morphological|морфологический
+morphology|морфология
+mortality|смертность
+motif|мотив (узор)
+multinational|многонациональный, транснациональный
+multiply|умножать
+mutation|мутация
+namely|а именно
+nationalism|национализм
+neural|нейронный
+neuron|нейрон
+niche|ниша
+nitrogen|азот
+node|узел
+noisy|шумный
+nominal|номинальный
+nonlinear|нелинейный
+notation|обозначение, нотация
+novice|новичок
+nucleus|ядро
+null|нулевой, недействительный
+numerical|числовой
+nutrient|питательное вещество
+occurrence|случай, появление
+offspring|потомство
+onset|начало
+onwards|вперёд, далее
+optical|оптический
+optimal|оптимальный
+optimum|оптимум, оптимальный
+orient|ориентировать
+oscillation|колебание
+overlap|перекрываться, частично совпадать
+overview|обзор
+oxidize|окислять
+paradigm|парадигма
+paradox|парадокс
+parameter|параметр
+parcel|посылка, участок
+parental|родительский
+parenthesis|скобка
+partition|перегородка, раздел
+pathway|путь, дорожка
+periodic|периодический
+peripheral|периферийный
+pest|вредитель
+pesticide|пестицид
+phenomenal|феноменальный
+philosophical|философский
+phonological|фонологический
+phosphate|фосфат
+photographic|фотографический
+physiological|физиологический
+planner|планировщик, ежедневник
+plausible|правдоподобный
+plural|множественное число
+polar|полярный
+portrayal|изображение
+postgraduate|аспирант, магистрант
+potassium|калий
+practitioner|практикующий специалист
+pragmatic|прагматичный
+precipitate|ускорять, осадок
+precipitation|осадки
+predominantly|преимущественно
+prevalence|распространённость
+primer|грунтовка, учебник
+problematic|проблематичный
+processor|процессор
+productivity|производительность
+progression|развитие, прогрессия
+proton|протон
+qualitative|качественный
+quantitative|количественный
+questionnaire|анкета, опросник
+quotation|цитата
+rainfall|осадки
+randomize|рандомизировать
+randomly|случайно, наугад
+rationality|рациональность
+reactive|реактивный, ответный
+readily|охотно, легко
+realism|реализм
+receptor|рецептор
+reconstruct|восстанавливать, реконструировать
+regression|регрессия
+rehabilitation|реабилитация
+reliability|надёжность
+repertoire|репертуар
+replicate|воспроизводить
+replication|воспроизведение, репликация
+reproduce|воспроизводить, размножаться
+reproduction|воспроизведение, размножение
+reservoir|водохранилище, резервуар
+residual|остаточный
+residue|остаток
+resistant|устойчивый
+respiratory|дыхательный
+rhetoric|риторика
+scripture|священное писание
+secrete|выделять (вещество)
+sediment|осадок
+selective|избирательный
+semantic|семантический
+sensory|сенсорный
+separately|отдельно
+sexuality|сексуальность
+similarity|сходство
+simplify|упрощать
+simulate|моделировать, имитировать
+singular|единственное число, необычайный
+slab|плита
+sneeze|чихать
+socialize|общаться
+socially|социально
+sodium|натрий
+soluble|растворимый
+solute|растворённое вещество
+solvent|растворитель
+spatial|пространственный
+specification|спецификация, требование
+sperm|сперма
+splice|сращивать, склеивать
+sponsorship|спонсорство
+spontaneous|спонтанный
+stabilize|стабилизировать
+stance|позиция
+standardize|стандартизировать
+statistical|статистический
+statistically|статистически
+statistics|статистика
+stereotype|стереотип
+stimulus|стимул, раздражитель
+straightforward|простой, прямолинейный
+subjective|субъективный
+subset|подмножество
+substitution|замена, подстановка
+substrate|субстрат, подложка
+subtract|вычитать
+sufficiently|достаточно
+surplus|излишек, профицит
+susceptible|восприимчивый
+sustainable|устойчивый, экологичный
+syllable|слог
+syllabus|программа курса
+symbolic|символический
+syntactic|синтаксический
+syntax|синтаксис
+synthesis|синтез
+synthetic|синтетический
+systematic|систематический
+temporal|временной
+terminology|терминология
+theorem|теорема
+theorist|теоретик
+thickness|толщина
+tract|тракт, участок
+traditionally|традиционно
+trajectory|траектория
+transcribe|расшифровывать (запись)
+transcription|транскрипция, расшифровка
+transparency|прозрачность
+trivial|тривиальный, пустяковый
+turbulent|бурный, турбулентный
+undergraduate|студент (бакалавриата)
+unify|объединять
+unintelligible|невнятный, непонятный
+uplift|подъём, поднимать
+upward|вверх, восходящий
+usage|использование, употребление
+utterance|высказывание
+validity|обоснованность, действительность
+variability|изменчивость
+variance|расхождение, дисперсия
+variant|вариант
+vegetation|растительность
+velocity|скорость
+verbal|словесный, устный
+viable|жизнеспособный
+vocabulary|словарный запас
+volition|воля
+vowel|гласный (звук)
+watershed|водораздел, переломный момент
+wavelength|длина волны
+whereby|посредством которого
+whichever|какой бы ни
+widespread|широко распространённый
+yeast|дрожжи
+premise|предпосылка
+accord|соглашение, согласие
+bore|зануда, надоедать

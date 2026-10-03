@@ -113,7 +113,34 @@ c2_path = 'data/freq/course2.txt'
 course2 = [l.strip().lower() for l in open(c2_path, encoding='utf-8') if l.strip() and not l.startswith('#')] if os.path.exists(c2_path) else []
 course2 = [w for w in course2 if w in words and w not in in1]
 rest2 = [w for w in ordered if w not in in1 and w not in set(course2)]
-chosen = course1 + (course2 + rest2)[:EXTRA]
+core2 = course2 + rest2[:max(0, EXTRA - len(course2))]
+# Экзаменационная лексика TOEFL / IELTS: NGSL 1.2 + NAWL 1.2 (Browne, Culligan, Phillips; CC BY-SA 4.0).
+# Каждое слово этих списков должно быть в словаре; недостающие встают в курс 2 по частотности —
+# перед первым зафиксированным словом, которое встречается реже (порядок остальных слов не меняется)
+EXAM_SKIP = {'pi', 'neo', 'pre', 'trans', 'multi', 'non', 'micro', 'founds', 'a', 'the',   # приставки, артикли
+             # варианты слов, которые уже есть в словаре: adviser → advisor, afterward → afterwards, ethics → ethic…
+             'adviser', 'criteria', 'afterward', 'backward', 'ethics', 'headquarter', 'sophisticate', 'amaze',
+             'complicate', 'dialog', 'excite'}
+exam = []
+for path in sorted(glob.glob('data/exam/*_lemmatized_for_teaching.csv')):
+    for line in open(path, encoding='latin-1'):
+        h = line.split(',')[0].strip().lower()
+        if h and not h.startswith('#') and h not in EXAM_SKIP and h not in SKIP and re.fullmatch('[a-z]+', h):
+            exam.append(US.get(h, h))
+in_core = set(course1) | set(core2)
+absent = [w for w in exam if w not in words and w not in in_core]
+assert not absent, f'нет перевода для экзаменационных слов (добавить в data/19.txt): {absent[:20]}'
+new_exam = sorted({w for w in exam if w not in in_core}, key=rank)
+fixed_ranks = [rank(w) for w in core2]
+slot = {w: sum(r < rank(w) for r in fixed_ranks) for w in new_exam}
+merged = []
+for k, w in enumerate(core2 + [None]):
+    merged += [n for n in new_exam if slot[n] == k]
+    if w: merged.append(w)
+exam_set = set(exam)
+chosen = course1 + merged
+# только полные уроки по 10 слов: хвост неполного урока (самые редкие слова) отбрасываем
+chosen = chosen[:len(chosen) // 10 * 10]
 ordered = chosen + [w for w in ordered if w not in set(chosen)]
 # транскрипции и примеры (готовит enrich.py)
 def tsv(path):
@@ -166,3 +193,6 @@ if '--dropped' in sys.argv:
 with open('words.js', 'w', encoding='utf-8') as fh:
     fh.write('// Сгенерировано build_words.py — не редактировать вручную\n')
     fh.write('window.WORDS=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n')
+    # номера слов, добавленных в версии словаря 4 (TOEFL / IELTS) — по ним приложение переносит прогресс курса 2
+    if os.path.exists('data/added_v4.json'):
+        fh.write('window.WORDS_ADDED={4:' + open('data/added_v4.json').read().strip() + '};\n')

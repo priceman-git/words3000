@@ -139,6 +139,8 @@ def highlight_en(text, cands):
             return text[:m.start()] + '[' + text[m.start():m.end()] + ']' + text[m.end():]
     return None
 
+# пары Tatoeba с неточным переводом — не брать в примеры
+BAD_EN = {'They acted immediately by agreement.'}
 used = defaultdict(int)
 examples = {}
 for w in words:
@@ -152,6 +154,7 @@ for w in words:
             if eid in seen: continue
             seen.add(eid)
             text = eng[eid]
+            if text in BAD_EN: continue
             toks = [t.lower() for t in TOK.findall(text)]
             rare = sum(1 for t in toks if rank.get(t.split("'")[0], 99999) > 2000 and t not in cands)
             for rid in pairs[eid]:
@@ -167,6 +170,8 @@ for w in words:
         used[best[1]] += 1
         examples[w] = (best[2], best[3])
 
+# слов нет в CMUdict — транскрипция вручную
+ipa.setdefault('postgraduate', 'ˌpoʊstˈɡrædʒuət'); ipa.setdefault('factorial', 'fækˈtɔːriəl')
 with open('data/ipa.tsv', 'w', encoding='utf-8') as f:
     for w in words:
         if w in ipa: f.write(f'{w}\t{ipa[w]}\n')

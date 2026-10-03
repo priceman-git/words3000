@@ -3,8 +3,8 @@
 
 const W = window.WORDS;               // [en, ru, ipa, пример, перевод примера, глагол]
 const PER_LESSON = 10;
-const TOTAL = Math.ceil(W.length / PER_LESSON);   // 500 уроков
-const CORE = 300;                      // курс 1 — уроки 1–300 (3000 слов); курс 2 (301–500) открывается в лиге «Грандмастер»
+const TOTAL = Math.ceil(W.length / PER_LESSON);   // 562 урока (5620 слов)
+const CORE = 300;                      // курс 1 — уроки 1–300 (3000 слов); курс 2 (301–562) открывается в лиге «Грандмастер»
 const PAGE = 50;                       // уроков на странице
 const ROW = 4;                         // уроков в ряду, 5-я ячейка — тест
 const PAGES = Math.ceil(TOTAL / PAGE);
@@ -21,7 +21,7 @@ const STAGE_PTS = 3;                   // баллов за этап; кажда
 const REP_DELAY = 24 * 3600 * 1000;
 const KEY = 'w3000.v2';
 const APP_V = ((document.currentScript && /[?&]v=(\d+)/.exec(document.currentScript.src)) || [])[1] || '?';   // версия из ?v= в index.html
-const DICT_VER = 3;   // версия словаря: при смене порядка слов прогресс, привязанный к номерам слов, сбрасывается
+const DICT_VER = 4;   // версия словаря: 4 — добавлены слова TOEFL / IELTS (курс 2); с версии 3 прогресс переносится, со старших — сбрасывается
 
 const STAGES = [
   { key: 'study', name: 'Изучение', g: 0 },
@@ -60,6 +60,7 @@ function load() {
       if (!r.set.soundOff) { r.set.auto = false; r.set.sfx = false; r.set.soundOff = 1; }   // переход: звук выключен по умолчанию
       if ('keys' in r.set) { r.set.keySound = r.set.haptic = r.set.keys !== false; delete r.set.keys; }   // переход: звук и вибрация разделены
       if (s.onboarded === undefined) r.onboarded = Object.keys(r.L).length ? 1 : 0;       // у тех, кто уже занимался, опрос не показываем
+      if (s.dictVer === 3 && DICT_VER === 4) return migrateV4(r);
       if (s.dictVer !== DICT_VER) {   // словарь пересобран — прогресс по номерам слов больше не верен; настройки и профиль сохраняем
         const fresh = { ...d, set: r.set, profile: r.profile, dictReset: Object.keys(r.L).length > 0 || Object.keys(r.w).length > 0 };
         return fresh;
@@ -68,6 +69,29 @@ function load() {
     }
   } catch (e) { /* повреждённые данные — начинаем с чистого листа */ }
   return defaults();
+}
+// Словарь 3 → 4: в курс 2 по частотности вставлены слова TOEFL / IELTS — номера слов после 3000 сдвинулись.
+// Выученные слова и «Мои слова» переносим по самому слову; уроки и мини-тесты курса 2, у которых поменялся
+// состав, начинаются заново; курс 1 (слова 1–3000) не меняется.
+function migrateV4(r) {
+  const added = new Set((window.WORDS_ADDED && WORDS_ADDED[4]) || []);
+  const map = {};   // старый номер -> новый
+  for (let i = 0, o = 0; i < W.length; i++) if (!added.has(i)) map[o++] = i;
+  const remapKeys = obj => { const out = {}; for (const k in obj) if (map[k] !== undefined) out[map[k]] = obj[k]; return out; };
+  const touched = Object.keys(r.L).some(n => +n > CORE) || Object.keys(r.w).some(i => +i >= CORE * PER_LESSON);
+  r.w = remapKeys(r.w); r.fav = remapKeys(r.fav);
+  const L = {};
+  for (const n in r.L) {
+    if (+n <= CORE) { L[n] = r.L[n]; continue; }
+    let same = true;   // (range ещё не объявлена — load() вызывается раньше helpers)
+    for (let o = (n - 1) * PER_LESSON; o < n * PER_LESSON; o++) if (map[o] !== o) same = false;
+    if (same) L[n] = r.L[n];   // состав урока не изменился
+  }
+  r.L = L;
+  for (const id in r.T) if (+id.split('.')[0] * PAGE >= CORE) delete r.T[id];   // мини-тесты курса 2
+  r.dictVer = 4;
+  if (touched) r.dictNote = 1;
+  return r;
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast('Не удалось сохранить прогресс'); } }
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
@@ -106,7 +130,7 @@ const newLesson = () => ({ started: Date.now(), dec: {}, learn: null, st: STAGES
 
 function stageInfo(n, k) {
   const l = L(n);
-  if (!l) return { done: false, credited: 0, total: PER_LESSON, full: false, avail: k === 0 };
+  if (!l) return { done: false, credited: 0, total: lessonIds(n).length, full: false, avail: k === 0 };   // последний урок может быть неполным
   const st = l.st[k];
   if (k === 0) return { done: !!st.done, credited: Object.keys(l.dec).length, total: lessonIds(n).length, full: !!st.done, avail: true };
   const ids = learnIds(n), onRep = st.rep || {};
@@ -128,7 +152,7 @@ function pendingCount() {
   return c;
 }
 // уровень: сначала растёт быстро (10 слов), к концу нужно всё больше слов; пороги кратны 10,
-// уровень 100 = 3000 слов, дальше уровни продолжаются в курсе 2 (все 5000 слов — ~134)
+// уровень 100 = 3000 слов, дальше уровни продолжаются в курсе 2 (все 5620 слов — 144)
 const levelNeed = N => Math.round((10 * (N - 1) + 0.205 * (N - 1) ** 2) / 10) * 10;
 function levelFor(c) { let N = 1; while (c >= levelNeed(N + 1)) N++; return N; }
 const level = () => levelFor(learnedCount());
@@ -523,7 +547,7 @@ function renderMain(app) {
       <h2>Уроки ${a}–${b}${a > CORE ? '<small>Курс 2 · продвинутый</small>' : ''}</h2>
       <button class="arrow" data-act="next" ${p >= PAGES - 1 ? 'disabled' : ''} aria-label="Следующая страница">${I.next}</button>
     </div>
-    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(LEAGUES.length - 1, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${(TOTAL - CORE) * PER_LESSON} слов для продвинутых</b>
+    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(LEAGUES.length - 1, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${W.length - CORE * PER_LESSON} слов для продвинутых</b>
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
     <div class="grid">${cells}</div>`;
@@ -1262,7 +1286,7 @@ const CEFR = [
   ['C2', 'В совершенстве', 'Уровень носителя языка или близкий к нему'],
 ];
 // диапазон уровня в частотном списке 3000 слов (сколько слов обычно знает человек этого уровня)
-// C1 и C2 на деле знают почти все 3000 базовых слов — их граница в курсе 2 (слова 3001–5000): C1 ≈ 3250, C2 ≈ 3750
+// C1 и C2 на деле знают почти все 3000 базовых слов — их граница в курсе 2 (слова 3001–5620): C1 ≈ 3250, C2 ≈ 3750
 const CEFR_RANGE = { A1: [0, 250], A2: [250, 650], B1: [650, 1200], B2: [1200, 1800], C1: [3000, 3500], C2: [3500, 4000] };
 // ожидаемая граница знания по самооценке: «−» — первая четверть диапазона, без знака — середина, «+» — три четверти
 const SELF_POS = {};
@@ -1517,6 +1541,7 @@ function openProfile() {
     <div class="prow"><div class="l">Скорость речи<div id="ratev">${S.set.rate.toFixed(2)}×</div></div><input type="range" min="0.5" max="1.2" step="0.05" value="${S.set.rate}" id="rate"></div>
     <h3>О приложении</h3>
     <div class="prow"><div class="l">Версия ${APP_V}<div>${appDiag()}</div></div></div>
+    <p class="sub" style="text-align:left">Словарь: частотность — wordfreq (CC BY-SA 4.0) и SUBTLEX-US; лексика TOEFL / IELTS — NGSL и NAWL (Browne, Culligan, Phillips; CC BY-SA 4.0); примеры фраз — Tatoeba (CC BY 2.0 FR); транскрипции — CMUdict.</p>
     <h3>Данные</h3>
     <p class="sub" style="text-align:left">Прогресс хранится на этом устройстве. Чтобы перенести его на другой iPhone, iPad или Mac, сохраните файл и загрузите его там.</p>
     <button class="btn gray small" data-act="export">Сохранить прогресс в файл</button>
@@ -1589,6 +1614,7 @@ setInterval(() => { if (!run && !$('.sheet-bg') && view.name === 'main') render(
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 
 // открыть страницу с текущим уроком
+if (S.dictNote) { delete S.dictNote; save(); setTimeout(() => toast('Курс 2 пополнен словами TOEFL и IELTS. Выученные слова сохранены, уроки курса 2 начнутся заново'), 600); }
 if (S.dictReset) { delete S.dictReset; save(); setTimeout(() => toast('Словарь обновлён: слова упорядочены по современной частотности. Прогресс начат заново'), 600); }
 (function initPage() {
   const open = Object.keys(S.L).map(Number).filter(k => !S.L[k].complete);

@@ -1,4 +1,4 @@
-# 3000 слов — веб-версия (+2000 слов курса 2)
+# 3000 слов — веб-версия (+2620 слов курса 2)
 
 Аналог iOS-приложения «3000 слов» (Konstantin Neliubin): 3000 самых частотных английских слов,
 300 уроков по 10 слов, один урок в день, проверка после каждых 5 уроков.
@@ -31,6 +31,9 @@
 субтитры, новости, книги, Reddit, Twitter, до ~2021 г.) и [SUBTLEX-US](https://www.ugent.be/pp/experimentele-psychologie/en/research/documents/subtlexus)
 (американские субтитры, с частями речи; свободно для некоммерческого использования). Место слова — среднее геометрическое
 мест в двух списках; формы сведены к базовым словам по [lemma.en](https://github.com/skywind3000/lemma.en).
+Экзаменационная лексика TOEFL / IELTS — по спискам [NGSL 1.2 и NAWL 1.2](https://www.newgeneralservicelist.com)
+(Browne, Culligan, Phillips; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)), файлы в `data/exam/`.
+Все их слова есть в словаре: недостающие переведены в `data/19.txt` и вставлены в курс 2 по частотности.
 Главное значение омографов (back — «назад», like — «как») — по SUBTLEX-US, список в `data/primary.txt`.
 Базовая бытовая лексика (числа, цвета, еда, одежда…) из `data/freq/core.txt` включена обязательно.
 Исходные списки `data/freq/subtlex_us_pos.tsv`, `wordfreq_en.tsv` и `lemma.txt` в репозиторий не входят
