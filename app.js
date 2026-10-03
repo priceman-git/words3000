@@ -1367,8 +1367,9 @@ function renderOnb(app) {
 }
 // тестовый урок охватывает 1000 слов вокруг ожидаемой границы знания
 const PLACE_SPAN = PLACE_BANDS * PLACE_BAND_W;
-const PLACE_C_LO = 3100;   // C1–C2: тест по словам дополнительных 2000 — с 3101-го по 4100-е
-const placeLo = code => /^C/.test(code) ? PLACE_C_LO : Math.max(0, Math.min(W.length - PLACE_SPAN, SELF_POS[code] - PLACE_SPAN / 2));
+// C1 и C2 — тест по словам курса 2: C1 — с 3101-го по 4100-е, C2 — сложнее, с 4101-го по 5100-е (больше академической лексики)
+const PLACE_C_LO = { C1: 3100, C2: 4100 };
+const placeLo = code => /^C/.test(code) ? PLACE_C_LO[code.slice(0, 2)] : Math.max(0, Math.min(W.length - PLACE_SPAN, SELF_POS[code] - PLACE_SPAN / 2));
 // C1–C2: тест сложнее — не выбор из 4, а «Закрепление»: написать слово по-английски по переводу на полной клавиатуре
 const placeTyping = code => /^C/.test(code);
 const PLACE_MAX_WRONG = 2;   // как в «Закреплении»: третье неверное нажатие — слово не засчитано
