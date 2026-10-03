@@ -170,6 +170,13 @@ const LEAGUES = [
   { name: 'Мастер',      from: 79, shape: 'laurel',  c: ['#e3c8ff', '#8b3fd9', '#3f1273'] },
   { name: 'Грандмастер', from: 92, shape: 'crown',   c: ['#ff9a9a', '#d42a36', '#6b0a12'] },
 ];
+const GM_INDEX = LEAGUES.length - 1;   // «Грандмастер» — с него открывается курс 2
+// после «Грандмастера» — ступени каждые 10 уровней: «Грандмастер 2» с уровня 100 (все 3000 слов курса 1), 3 — со 110…
+// значок тот же (корона), с номером ступени и всё темнее
+const GM_TIERS = [['#ffb3c7', '#c2185b', '#5a0828'], ['#ff8a65', '#b71c1c', '#3e0505'], ['#ffd27a', '#8d1d2c', '#2b0208'],
+  ['#f0b8ff', '#7b1238', '#1e0010'], ['#fff1a8', '#4a0d1a', '#000000']];
+for (let t = 2, from = 100; from <= MAX_LEVEL; t++, from += 10)
+  LEAGUES.push({ name: `Грандмастер ${t}`, from, shape: 'crown', tier: t, c: GM_TIERS[Math.min(t - 2, GM_TIERS.length - 1)] });
 const leagueOf = lv => { let k = 0; LEAGUES.forEach((l, i) => { if (lv >= l.from) k = i; }); return k; };
 let badgeId = 0;
 // значок лиги с цифрой уровня внутри (SVG)
@@ -190,6 +197,7 @@ function badgeSVG(li, num, size = 46) {
     case 'crown': body = `<path d="M50 24 L87 34 V58 C87 79 71 91 50 98 C29 91 13 79 13 58 V34 Z" fill="${fill}" stroke="${c3}" stroke-width="5" stroke-linejoin="round"/>
       <path d="M27 27 L31 6 L41 17 L50 2 L59 17 L69 6 L73 27 Z" fill="#ffd54a" stroke="#a36b00" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="3" r="3" fill="#fff4b0"/>`; ty = 63; break;
   }
+  if (L.tier) body += `<circle cx="84" cy="86" r="13" fill="#ffd54a" stroke="#a36b00" stroke-width="3"/><text x="84" y="87" text-anchor="middle" dominant-baseline="middle" font-family="Roboto Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="18" fill="#5a3a00">${L.tier}</text>`;
   const fs = String(num).length >= 3 ? 27 : 33;
   return `<svg class="badge-svg" viewBox="0 0 100 100" width="${size}" height="${size}" aria-label="${L.name}, уровень ${num}">${grad}${body}
     <text x="50" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="${fs}" fill="#fff" stroke="${c3}" stroke-width="5" paint-order="stroke">${num}</text></svg>`;
@@ -227,7 +235,7 @@ function openLeagues() {
     <div class="lg-big">${badgeSVG(li, lv, 120)}</div>
     <div class="lg-name">${LEAGUES[li].name} · уровень ${lv}</div>
     ${next ? `<div class="lg-prog"><div class="progress"><i style="width:${pct}%"></i></div>
-      <p class="sub">До лиги ${next.name}: ещё ${Math.max(0, toW - words)} ${plural(Math.max(0, toW - words), 'слово', 'слова', 'слов')}</p></div>` : '<p class="sub">Высшая лига — вы выучили почти все 3000 слов!</p>'}
+      <p class="sub">До лиги ${next.name}: ещё ${Math.max(0, toW - words)} ${plural(Math.max(0, toW - words), 'слово', 'слова', 'слов')}</p></div>` : '<p class="sub">Высшая лига — вы выучили почти весь словарь!</p>'}
     <div class="lg-list">${rows}</div>`);
 }
 function bumpDay() { const d = today(); S.days[d] = (S.days[d] || 0) + 1; }
@@ -241,7 +249,7 @@ const testId = (p, r) => `${p}.${r}`;
 const MAX_UNREPEATED = 2;              // больше 2 неповторённых уроков — новый урок не начать
 const unrepeated = () => Object.keys(S.L).map(Number).filter(n => L(n).complete && repState(n) && repState(n) !== 'done').sort((a, b) => a - b);
 const repBlocked = () => unrepeated().length > MAX_UNREPEATED;
-const GRANDMASTER = () => LEAGUES[LEAGUES.length - 1].from;
+const GRANDMASTER = () => LEAGUES[GM_INDEX].from;
 const extraLocked = n => n > CORE && level() < GRANDMASTER();   // курс 2 — только в лиге «Грандмастер»
 const canStartNew = () => (!S.set.daily || S.lastStart !== today()) && !repBlocked();
 function nextToStart() {
@@ -547,7 +555,7 @@ function renderMain(app) {
       <h2>Уроки ${a}–${b}${a > CORE ? '<small>Курс 2 · продвинутый</small>' : ''}</h2>
       <button class="arrow" data-act="next" ${p >= PAGES - 1 ? 'disabled' : ''} aria-label="Следующая страница">${I.next}</button>
     </div>
-    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(LEAGUES.length - 1, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${W.length - CORE * PER_LESSON} слов для продвинутых</b>
+    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(GM_INDEX, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${W.length - CORE * PER_LESSON} слов для продвинутых</b>
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
     <div class="grid">${cells}</div>`;
