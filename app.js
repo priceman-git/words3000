@@ -1270,6 +1270,7 @@ for (const [c, [a, b]] of Object.entries(CEFR_RANGE)) {
   SELF_POS[c] = Math.round((a + b) / 2);
   SELF_POS[c + '+'] = Math.round(a + (b - a) * 3 / 4);
 }
+SELF_POS['A1-'] = 0;   // A1− — почти с нуля: без теста старт с урока 1 (раньше было с 7-го)
 const PLACE_BANDS = 5, PLACE_BAND_W = 200, PLACE_PER_BAND = 4;   // тестовый урок: 5 диапазонов по 200 слов, по 4 слова = 20 слов
 const selfLabel = code => code.replace('-', '−');
 const SELF_ORDER = Object.keys(CEFR_RANGE).flatMap(c => [c + '-', c, c + '+']);
@@ -1282,10 +1283,11 @@ function renderOnb(app) {
   if (onb.step === 'self') {
     app.innerHTML = `<div class="onb">${brand}
       <h2 class="onb-h">Какой у вас уровень английского?</h2>
-      <p class="onb-sub">Выберите уровень и где вы в нём: <b>−</b> ниже среднего, без знака — средний, <b>+</b> выше среднего. Затем короткий тестовый урок уточнит, с какого урока начать.</p>
+      <button class="btn zero-btn" data-act="zero">Я только начинаю учить английский<small>Начать с первого урока, без теста</small></button>
+      <p class="onb-sub onb-or">Уже знаете английский? Выберите уровень и где вы в нём: <b>−</b> ниже среднего, без знака — средний, <b>+</b> выше среднего. Затем короткий тестовый урок уточнит, с какого урока начать.</p>
       <div class="lvls">${CEFR.map(([c, name, text]) => `<div class="lvl"><div class="lvl-info"><b>${c}</b> <span>${name}</span><div>${text}</div></div>
         <div class="lvl-btns"><button class="lvl-b" data-self="${c}-">${c}−<small>ниже среднего</small></button><button class="lvl-b mid" data-self="${c}">${c}<small>средний</small></button><button class="lvl-b" data-self="${c}+">${c}+<small>выше среднего</small></button></div></div>`).join('')}</div>
-      <button class="btn ghost-link" data-act="zero">Я только начинаю — с первого урока</button>${back}</div>`;
+      ${back}</div>`;
   } else if (onb.step === 'intro') {
     const lo = placeLo(onb.self);
     app.innerHTML = `<div class="onb">${brand}

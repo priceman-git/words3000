@@ -334,6 +334,8 @@ em { font-style: inherit; color: #f0592b; }
 .onb { padding: calc(var(--safe-t) + 6px) 14px calc(var(--safe-b) + 20px); }
 .onb .brand { padding-top: 8px; }
 .onb-h { text-align: center; color: #111; font-size: 23px; font-weight: 700; margin: 14px 0 6px; }
+.btn.zero-btn { flex-direction: column; gap: 2px; padding: 10px 14px; font-size: 20px; margin: 4px 0 14px; line-height: 1.2; }
+.zero-btn small { font-size: 15px; font-weight: 400; opacity: .9; }
 .onb-sub { text-align: center; color: #555; font-size: 16px; margin: 0 4px 12px; }
 .lvls { display: grid; gap: 8px; }
 .lvl { background: #fff; border-radius: 16px; padding: 10px 10px 10px 14px; }
