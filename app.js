@@ -1295,7 +1295,7 @@ const CEFR = [
 ];
 // диапазон уровня в частотном списке 3000 слов (сколько слов обычно знает человек этого уровня)
 // C1 и C2 на деле знают почти все 3000 базовых слов — их граница в курсе 2 (слова 3001–5620): C1 ≈ 3250, C2 ≈ 3750
-const CEFR_RANGE = { A1: [0, 250], A2: [250, 650], B1: [650, 1200], B2: [1200, 1800], C1: [3000, 3500], C2: [3500, 4000] };
+const CEFR_RANGE = { A1: [0, 250], A2: [250, 650], B1: [650, 1200], B2: [1350, 1950], C1: [3000, 3500], C2: [3500, 4000] };
 // ожидаемая граница знания по самооценке: «−» — первая четверть диапазона, без знака — середина, «+» — три четверти
 const SELF_POS = {};
 for (const [c, [a, b]] of Object.entries(CEFR_RANGE)) {
@@ -1369,7 +1369,10 @@ function renderOnb(app) {
 const PLACE_SPAN = PLACE_BANDS * PLACE_BAND_W;
 // C1 и C2 — тест по словам курса 2: C1 — с 3101-го по 4100-е, C2 — сложнее, с 4101-го по 5100-е (больше академической лексики)
 const PLACE_C_LO = { C1: 3100, C2: 4100 };
-const placeLo = code => /^C/.test(code) ? PLACE_C_LO[code.slice(0, 2)] : Math.max(0, Math.min(W.length - PLACE_SPAN, SELF_POS[code] - PLACE_SPAN / 2));
+// B2 — тест сложнее: окно сдвинуто на 200 слов к менее частотным (B2: слова 1351–2350 вместо 1151–2150)
+const PLACE_UP = { B2: 200 };
+const placeLo = code => /^C/.test(code) ? PLACE_C_LO[code.slice(0, 2)]
+  : Math.max(0, Math.min(W.length - PLACE_SPAN, SELF_POS[code] - PLACE_SPAN / 2 + (PLACE_UP[code.slice(0, 2)] || 0)));
 // C1–C2: тест сложнее — не выбор из 4, а «Закрепление»: написать слово по-английски по переводу на полной клавиатуре
 const placeTyping = code => /^C/.test(code);
 const PLACE_MAX_WRONG = 2;   // как в «Закреплении»: третье неверное нажатие — слово не засчитано
