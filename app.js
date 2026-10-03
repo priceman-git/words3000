@@ -386,6 +386,7 @@ const clickType = el => { const k = el.dataset.k; return el.classList.contains('
 document.addEventListener('click', e => {
   const el = e.target.closest(CLICKABLE);
   if (!el || el.disabled || e.target.closest('[data-haptic] input')) return;
+  if (el.matches('.key, .tile')) return;   // буквы уже отозвались при касании (bindTaps)
   keyClick(clickType(el)); haptic();
 }, true);
 
@@ -395,6 +396,26 @@ document.addEventListener('pointerdown', function unlock() {
   try { if (TTS) { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } } catch (e) {}
   try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume(); } catch (e) {}
 });
+
+// Нажатие букв и клавиш — в момент касания (pointerdown), а не по click после отпускания пальца:
+// при быстром наборе двумя пальцами касания перекрываются, и iOS такие click не присылает — буква терялась,
+// следующее нажатие попадало не на ту позицию и считалось ошибкой. Касание в зазор между клавишами
+// отдаём ближайшей клавише (до 14 px), как системная клавиатура iPhone. Звук, подсветка и вибрация — сразу.
+function bindTaps(box, sel, onHit) {
+  box.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    let best = null, bd = 14 * 14 + 1;
+    for (const el of box.querySelectorAll(sel)) {
+      const r = el.getBoundingClientRect(); if (!r.width) continue;
+      const dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right), dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom);
+      const d = dx * dx + dy * dy; if (d < bd) { bd = d; best = el; if (!d) break; }
+    }
+    if (!best || best.classList.contains('used')) return;   // по месту убранной плитки — не на соседнюю
+    best.classList.add('press'); setTimeout(() => best.classList.remove('press'), 120);
+    keyClick(clickType(best)); haptic();
+    onHit(best);
+  });
+}
 
 /* ---------------- icons ---------------- */
 
@@ -1144,13 +1165,12 @@ function renderLetters(app, key) {
     else if (pos === word.length) finish(false);
   };
   if (kb) {
-    $('#kbd').onclick = e => {
-      const k = e.target.closest('.key'); if (!k) return;
+    bindTaps($('#kbd'), '.key', k => {
       if (k.dataset.k === 'del') return;   // принятые буквы всегда верные — стирать нечего
       press(k.dataset.k, k);
-    };
+    });
   } else {
-    $('#tiles').onclick = e => { const t = e.target.closest('.tile'); if (!t || t.classList.contains('used')) return; press(letters[+t.dataset.t].toLowerCase(), t); };
+    bindTaps($('#tiles'), '.tile', t => press(letters[+t.dataset.t].toLowerCase(), t));
   }
   onKey = e => {
     if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
@@ -1384,7 +1404,7 @@ function renderPlaceType(app) {
     const c = cells[pos]; if (c) { c.classList.add('flash'); setTimeout(() => c.classList.remove('flash'), 300); }
     if (wrong > PLACE_MAX_WRONG) finish('bad');
   };
-  $('#kbd').onclick = e => { const k = e.target.closest('.key'); if (k && k.dataset.k !== 'del') press(k.dataset.k, k); };
+  bindTaps($('#kbd'), '.key', k => { if (k.dataset.k !== 'del') press(k.dataset.k, k); });
   $('#phint').onclick = () => {
     if (done || hinted) return;
     hinted = true; put('hint'); $('#phint').disabled = true; $('#phint').textContent = 'Подсказка использована';
