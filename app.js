@@ -516,7 +516,7 @@ let view = { name: 'main' };
 let run = null;     // активное упражнение
 let onKey = null;
 
-function go(v) { view = v; run = null; onKey = null; closeSheet(); window.scrollTo(0, 0); render(); }
+function go(v) { view = v; run = null; onKey = null; closeSheet(); window.scrollTo(0, 0); render(); if (swReload) setTimeout(applyUpdate, 300); }
 function render() {
   const app = $('#app');
   app.onclick = app.ontouchstart = app.ontouchend = null;
@@ -1619,7 +1619,22 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('visibilitychange', () => { if (!document.hidden && !run && !$('.sheet-bg')) render(); });
 setInterval(() => { if (!run && !$('.sheet-bg') && view.name === 'main') render(); }, 60000);   // обновить время повторений
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+// Обновление: новая версия скачивается в фоне (sw.js); как только она включилась — перезагружаем страницу,
+// чтобы пользователь не сидел на старой версии до следующего открытия. Во время урока, теста, открытого окна
+// или определения уровня не перезагружаем — ждём возврата на главный экран.
+let swReload = false;
+function applyUpdate() {
+  if (!swReload || run || $('.sheet-bg') || (view.name === 'onb' && onb.step !== 'self')) return;
+  swReload = false; location.reload();
+}
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  const hadController = !!navigator.serviceWorker.controller;   // первая установка — не перезагружаем
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !swReload) { swReload = true; applyUpdate(); setInterval(applyUpdate, 2000); } });
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(reg => {
+    // приложение с экрана «Домой» может неделями не перезапускаться — проверяем обновление при каждом возвращении
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+  }).catch(() => {}));
+}
 
 // открыть страницу с текущим уроком
 if (S.dictNote) { delete S.dictNote; save(); setTimeout(() => toast('Курс 2 пополнен словами TOEFL и IELTS. Выученные слова сохранены, уроки курса 2 начнутся заново'), 600); }
