@@ -117,7 +117,7 @@ capture|захватывать
 care about|заботиться о
 careless|небрежный
 category|категория
-cause|причина, вызывать
+cause|причина, вызывать, потому что (разг.)
 celebrate|праздновать
 cell|клетка, ячейка
 century|век, столетие
@@ -166,7 +166,7 @@ comparison|сравнение
 compete|соревноваться
 complaint|жалоба
 complex|сложный
-complicated|запутанный
+complicated|сложный, запутанный
 component|компонент
 concentrate|сосредоточиться
 concept|понятие

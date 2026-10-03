@@ -225,7 +225,7 @@ light|свет, лёгкий
 voice|голос
 wife|жена
 police|полиция
-mind|разум
+mind|разум, возражать (do you mind)
 price|цена
 bed|кровать
 picture|картина, изображение

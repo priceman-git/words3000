@@ -79,7 +79,7 @@ edition|издание
 editor|редактор
 educate|обучать
 effective|эффективный
-efficient|действенный
+efficient|эффективный
 elderly|пожилой
 elect|избирать
 election|выборы
@@ -159,8 +159,8 @@ faint|слабый, падать в обморок
 faith|вера
 false|ложный
 familiar|знакомый
-fan|веер, фанат
-fancy|причудливый
+fan|фанат, вентилятор
+fancy|шикарный, причудливый
 fantastic|фантастический
 fantasy|фантазия
 fashion|мода
@@ -198,7 +198,7 @@ folk|народный
 folder|папка
 follower|последователь
 following|следующий
-fond|любящий
+fond|любящий (be fond of — любить)
 forbid|запрещать
 forecast|прогноз
 forehead|лоб
@@ -208,7 +208,7 @@ formal|формальный
 former|бывший
 fortune|удача, состояние
 forward|вперёд
-found|основывать
+found|основывать, нашёл (прош. от find)
 foundation|фундамент, фонд
 frame|рамка, каркас
 frankly|откровенно
@@ -250,8 +250,8 @@ grant|грант, предоставлять
 grateful|благодарный
 grave|могила
 greatly|значительно
-grocery|бакалея
-gross|валовой, отвратительный
+grocery|продукты, продуктовый магазин
+gross|отвратительный, валовой
 growth|рост
 guarantee|гарантия
 guard|охрана, охранять
@@ -268,7 +268,7 @@ harm|вред
 hat|шляпа
 headline|заголовок
 heal|заживать
-hearing|слух
+hearing|слушание (в суде), слух
 heaven|небеса
 height|высота
 helicopter|вертолёт
@@ -283,7 +283,7 @@ hit|удар, хит
 hole|отверстие
 hollow|пустой, полый
 holy|святой
-honey|мёд
+honey|дорогая (обращение), мёд
 honor|честь
 hook|крючок
 horrible|ужасный

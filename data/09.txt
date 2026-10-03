@@ -132,7 +132,7 @@ narrative|повествование
 nasty|противный
 native|родной
 navy|военно-морской флот
-neat|аккуратный
+neat|аккуратный, классный
 necessarily|обязательно
 needle|игла
 negative|отрицательный
@@ -236,11 +236,11 @@ pill|таблетка
 pin|булавка
 pipe|труба
 pitch|поле, высота звука
-pity|жалость
+pity|жалость, жаль (what a pity)
 platform|платформа
 pleasant|приятный
 pleasure|удовольствие
-plenty|изобилие
+plenty|много (plenty of), изобилие
 plot|сюжет, заговор
 plus|плюс
 poem|стихотворение

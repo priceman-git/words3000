@@ -28,7 +28,7 @@ staff|персонал
 employee|сотрудник
 employer|работодатель
 career|карьера
-interview|собеседование
+interview|интервью, собеседование
 meeting|встреча, собрание
 conference|конференция
 project|проект

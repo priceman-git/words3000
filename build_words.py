@@ -13,7 +13,7 @@
 Итог — 5000 слов: курс 1 — 3000 слов в зафиксированном порядке (data/freq/course1.txt),
 курс 2 — следующие 2000 по частотности (открываются в лиге «Грандмастер»).
 """
-import glob, json, math, re, sys
+import os, glob, json, math, re, sys
 
 # британское написание → американское (частоты складываются)
 US = {'colour': 'color', 'favour': 'favor', 'honour': 'honor', 'favourite': 'favorite', 'centre': 'center',
@@ -107,7 +107,13 @@ assert not missing, f'слова курса 1 пропали из словаря
 # Курс 2 (уроки 301–500, открываются в лиге «Грандмастер»): следующие 2000 слов по частотности
 EXTRA = 2000
 in1 = set(course1)
-chosen = course1 + [w for w in ordered if w not in in1][:EXTRA]
+# порядок курса 2 тоже зафиксирован (data/freq/course2.txt): правка перевода меняет оценку словоформ (own_share),
+# и без фиксации соседние слова менялись местами — прогресс в курсе 2 съезжал бы
+c2_path = 'data/freq/course2.txt'
+course2 = [l.strip().lower() for l in open(c2_path, encoding='utf-8') if l.strip() and not l.startswith('#')] if os.path.exists(c2_path) else []
+course2 = [w for w in course2 if w in words and w not in in1]
+rest2 = [w for w in ordered if w not in in1 and w not in set(course2)]
+chosen = course1 + (course2 + rest2)[:EXTRA]
 ordered = chosen + [w for w in ordered if w not in set(chosen)]
 # транскрипции и примеры (готовит enrich.py)
 def tsv(path):
@@ -118,7 +124,7 @@ ipa, ex = tsv('data/ipa.tsv'), tsv('data/examples.tsv')
 # глагол — если первое значение русский инфинитив; в карточке показывается «to …», как в оригинале
 VERB = re.compile(r'(ать|ять|еть|ить|оть|уть|ыть|ться|сти|зти|ти|чь|чься)$')
 VERB_EXTRA = {'класть', 'есть', 'красть', 'сесть', 'упасть'}
-NOT_VERB = {'мать', 'кровать', 'печать', 'сеть', 'треть', 'путь', 'суть', 'ртуть', 'нить', 'пять', 'девять', 'десять',
+NOT_VERB = {'кости', 'мать', 'кровать', 'печать', 'сеть', 'треть', 'путь', 'суть', 'ртуть', 'нить', 'пять', 'девять', 'десять',
             'память', 'опять', 'почти', 'ночь', 'дочь', 'речь', 'вещь', 'плоть', 'благодать', 'рать', 'зять',
             'власть', 'власти', 'смерть', 'прочь', 'эти', 'новости', 'локоть', 'полночь', 'поблизости'}
 MODAL = {'can', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would', 'ought'}   # модальные — без «to»

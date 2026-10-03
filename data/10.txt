@@ -64,7 +64,7 @@ review|обзор
 revolution|революция
 reward|награда
 rhythm|ритм
-rid|избавлять
+rid|избавиться (get rid of)
 ridiculous|нелепый
 rifle|винтовка
 rival|соперник
@@ -120,7 +120,7 @@ severe|суровый
 sew|шить
 sex|пол, секс
 shake|трясти
-shame|стыд
+shame|стыд, жаль (what a shame)
 shape|форма
 sharp|острый
 shelter|убежище
@@ -282,7 +282,7 @@ therapy|терапия
 thereby|тем самым
 therefore|поэтому
 thief|вор
-thirsty|испытывающий жажду
+thirsty|жаждущий, хочется пить
 thorough|тщательный
 thread|нить
 threaten|угрожать
@@ -294,7 +294,7 @@ tight|плотный
 till|до
 tip|кончик, чаевые
 tired|уставший
-tissue|ткань (биол.), салфетка
+tissue|салфетка, ткань (биол.)
 tobacco|табак
 toe|палец ноги
 toilet|туалет

@@ -111,3 +111,19 @@ outside|снаружи|r
 welcome|добро пожаловать|int
 like|как, подобно, нравиться|prep
 May|может, можно, май|modal|may
+# части речи, которые частотный корпус определяет неверно (проверка переводов, октябрь 2026)
+pardon|простите, извините, помилование|int
+when|когда|conj
+cannot|не может|modal
+amongst|среди|prep
+versus|против|prep
+whereas|тогда как|conj
+whilst|в то время как|conj
+unconscious|без сознания|a
+app|приложение|n
+dice|кости (игральные)|n
+goodnight|спокойной ночи|int
+unto|к, до (устар.)|prep
+intel|разведданные|n
+oops|ой|int
+ouch|ой (больно)|int

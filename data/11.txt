@@ -29,7 +29,7 @@ upstairs|наверху
 urban|городской
 urge|побуждать
 urgent|срочный
-used|использованный
+used|раньше (used to), использованный
 useless|бесполезный
 user|пользователь
 usual|обычный
@@ -179,7 +179,7 @@ armed|вооружённый
 arrow|стрела
 artificial|искусственный
 artistic|художественный
-ashamed|пристыжённый
+ashamed|пристыжённый, стыдно (be ashamed)
 asleep|спящий
 assembly|собрание
 assignment|задание
@@ -236,7 +236,7 @@ blank|пустой, бланк
 blanket|плед
 bless|благословлять
 blond|белокурый
-bloody|кровавый
+bloody|кровавый, чёртов (брит.)
 blossom|цветение
 blouse|блузка
 boil|варить
@@ -265,6 +265,6 @@ bucket|ведро
 budget|бюджет
 bug|жук, ошибка
 bullet|пуля
-bunch|пучок, связка
+bunch|куча (a bunch of), пучок
 burden|бремя
 burglar|грабитель
