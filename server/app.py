@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Сервер синхронизации «3000 слов» (5555words.com): вход по e-mail и коду, хранение прогресса.
+"""Сервер синхронизации «5555 слов» (5555words.com): вход по e-mail и коду, хранение прогресса.
 
 Без внешних библиотек: http.server + sqlite3 + smtplib. Работает за nginx (location /api/ → 127.0.0.1:8081).
 
@@ -70,10 +70,10 @@ def send_code(email, code):
         print(f'[DEV] код для {email}: {code}', flush=True)
         return
     m = EmailMessage()
-    m['From'] = os.environ.get('MAIL_FROM', '3000 слов <no-reply@5555words.com>')
+    m['From'] = os.environ.get('MAIL_FROM', '5555 слов <no-reply@5555words.com>')
     m['To'] = email
-    m['Subject'] = f'{code} — код входа в «3000 слов»'
-    m.set_content(f'Ваш код входа: {code}\n\nВведите его в приложении «3000 слов» (5555words.com). '
+    m['Subject'] = f'{code} — код входа в «5555 слов»'
+    m.set_content(f'Ваш код входа: {code}\n\nВведите его в приложении «5555 слов» (5555words.com). '
                   f'Код действует 10 минут.\n\nЕсли вы не запрашивали код, просто удалите это письмо.')
     with smtplib.SMTP(host, int(os.environ.get('SMTP_PORT', '587')), timeout=20) as s:
         s.starttls()

@@ -21,7 +21,7 @@ SECRET=$(openssl rand -hex 32)
 # SMTP_PORT=587
 # SMTP_USER=
 # SMTP_PASS=
-# MAIL_FROM=3000 слов <no-reply@5555words.com>
+# MAIL_FROM=5555 слов <no-reply@5555words.com>
 EOF
 fi
 chown root:words /etc/5555words/api.env; chmod 640 /etc/5555words/api.env

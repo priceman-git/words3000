@@ -1,5 +1,5 @@
 'use strict';
-/* 3000 words — веб-версия по ТЗ (TZ.md). Прогресс хранится в localStorage устройства. */
+/* 5555 слов (5555words.com) — веб-версия по ТЗ (TZ.md). Прогресс хранится в localStorage устройства. */
 
 const W = window.WORDS;               // [en, ru, ipa, пример, перевод примера, глагол]
 const PER_LESSON = 10;
@@ -1603,7 +1603,7 @@ function openProfile() {
 }
 function exportData() {
   const blob = new Blob([JSON.stringify(S)], { type: 'application/json' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `3000-words-progress-${today()}.json`;
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `5555-words-progress-${today()}.json`;
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 function importData(file) {
