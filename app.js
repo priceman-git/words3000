@@ -598,7 +598,7 @@ function renderMain(app) {
       <h2>Уроки ${a}–${b}${a > CORE ? '<small>Курс 2 · продвинутый</small>' : ''}</h2>
       <button class="arrow" data-act="next" ${p >= PAGES - 1 ? 'disabled' : ''} aria-label="Следующая страница">${I.next}</button>
     </div>
-    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(GM_INDEX, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${W.length - CORE * PER_LESSON} слов для продвинутых</b>
+    ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(GM_INDEX, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё 2555+ слов для продвинутых</b>
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
     ${typeof syncBanner === 'function' ? syncBanner() : ''}
@@ -1516,7 +1516,7 @@ function placeBands(r) {
 // «примерно 1500 слов из 3000» или, для уровня C, «все 3000 базовых слов и ещё примерно 250 из следующих 2000»
 function knownText(k) {
   const base = CORE * PER_LESSON;
-  return k <= base ? `примерно <b>${k}</b> слов из ${base}` : `все ${base} базовых слов и ещё примерно <b>${k - base}</b> из следующих ${W.length - base}`;
+  return k <= base ? `примерно <b>${k}</b> слов из ${base}` : `все ${base} базовых слов и ещё примерно <b>${k - base}</b> из следующих 2555+`;
 }
 function estimateKnown(bands) {
   // слова до первого проверенного диапазона считаем известными, если он уверенно знаком; промежутки — по среднему соседей

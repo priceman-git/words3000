@@ -80,7 +80,7 @@ def head(title, desc, path, crumbs):
 <meta property="og:url" content="{SITE}{path}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
-<meta property="og:image" content="{SITE}/icons/og-image.png">
+<meta property="og:image" content="{SITE}/icons/og-image.png?v=2">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../fonts/fonts.css">
@@ -129,7 +129,7 @@ def links(lo, hi):
     return ''.join(f'<a href="{fname(a, b)}">Слова {a + 1}–{b}<small>{", ".join(W[i][0] for i in range(a, min(a + 3, b)))}…</small></a>'
                    for a, b in pages if lo <= a < hi)
 idx = f"""{head('Самые употребительные английские слова: списки по 100 слов с переводом и транскрипцией',
-                f'{N} английских слов по частоте употребления: 3000 самых частотных и {N - CORE} для продвинутых (IELTS, TOEFL). Перевод, транскрипция, произношение и примеры.',
+                f'{N} английских слов по частоте употребления: 3000 самых частотных и ещё 2555+ для продвинутых (IELTS, TOEFL). Перевод, транскрипция, произношение и примеры.',
                 '/slova/', [('5555 слов', '/'), ('Списки слов', '/slova/')])}
 <nav class="crumbs"><a href="../">5555 слов</a> › Списки слов</nav>
 <h1>Самые употребительные английские слова</h1>
@@ -137,7 +137,7 @@ idx = f"""{head('Самые употребительные английские 
 <a class="cta" href="../">Учить бесплатно в приложении</a>
 <h2>3000 самых частотных слов</h2>
 <div class="ranges">{links(0, CORE)}</div>
-<h2>Ещё {N - CORE} слов для продвинутых, IELTS и TOEFL</h2>
+<h2>Ещё 2555+ слов для продвинутых, IELTS и TOEFL</h2>
 <div class="ranges">{links(CORE, N)}</div>
 {FOOT}
 </main></body></html>
