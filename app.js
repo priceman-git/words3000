@@ -560,7 +560,21 @@ let view = { name: 'main' };
 let run = null;     // активное упражнение
 let onKey = null;
 
-function go(v) { view = v; run = null; onKey = null; closeSheet(); window.scrollTo(0, 0); render(); if (swReload) setTimeout(applyUpdate, 300); }
+function go(v) { view = v; run = null; onKey = null; closeSheet(); window.scrollTo(0, 0); render(); if (v.name === 'main') scrollToCurrent(); if (swReload) setTimeout(applyUpdate, 300); }
+// урок, к которому прокручиваем главный экран: пора повторить → начатый, но не законченный → следующий по порядку
+function currentLesson() {
+  const ready = Object.keys(S.L).map(Number).filter(n => repState(n) === 'ready');
+  if (ready.length) return Math.min(...ready);
+  const open = Object.keys(S.L).map(Number).filter(n => n >= S.start && !S.L[n].complete);
+  return open.length ? Math.min(...open) : nextToStart() || TOTAL;
+}
+// главный экран сразу показывает этот урок посередине — без прокрутки вручную
+function scrollToCurrent() {
+  if (view.name !== 'main' || run) return;
+  const n = currentLesson();
+  if (Math.floor((n - 1) / PAGE) !== S.page) return;   // пользователь сам листает другую страницу — не мешаем
+  requestAnimationFrame(() => { const el = $(`.cell[data-n="${n}"]`); if (el) el.scrollIntoView({ block: 'center' }); });
+}
 function render() {
   const app = $('#app');
   app.onclick = app.ontouchstart = app.ontouchend = null;
@@ -1695,8 +1709,8 @@ if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
 if (S.dictNote) { delete S.dictNote; save(); setTimeout(() => toast('Курс 2 пополнен словами TOEFL и IELTS. Выученные слова сохранены, уроки курса 2 начнутся заново'), 600); }
 if (S.dictReset) { delete S.dictReset; save(); setTimeout(() => toast('Словарь обновлён: слова упорядочены по современной частотности. Прогресс начат заново'), 600); }
 (function initPage() {
-  const open = Object.keys(S.L).map(Number).filter(k => !S.L[k].complete);
-  const cur = open.length ? Math.min(...open) : nextToStart();
+  const cur = currentLesson();
   if (cur) S.page = Math.floor((cur - 1) / PAGE);
 })();
 render();
+scrollToCurrent();
