@@ -1323,7 +1323,7 @@ function renderOnb(app) {
       <p class="onb-sub onb-or">Уже знаете английский? Выберите уровень и где вы в нём: <b>−</b> ниже среднего, без знака — средний, <b>+</b> выше среднего. Затем короткий тестовый урок уточнит, с какого урока начать.</p>
       <div class="lvls">${CEFR.map(([c, name, text]) => `<div class="lvl"><div class="lvl-info"><b>${c}</b> <span>${name}</span><div>${text}</div></div>
         <div class="lvl-btns"><button class="lvl-b" data-self="${c}-">${c}−<small>ниже среднего</small></button><button class="lvl-b mid" data-self="${c}">${c}<small>средний</small></button><button class="lvl-b" data-self="${c}+">${c}+<small>выше среднего</small></button></div></div>`).join('')}</div>
-      ${back}</div>`;
+      ${back}<p class="sub" style="margin:18px 0 6px"><a href="o-prilozhenii.html">Что это за приложение и как оно работает</a></p></div>`;
   } else if (onb.step === 'intro') {
     const lo = placeLo(onb.self);
     app.innerHTML = `<div class="onb">${brand}
@@ -1558,6 +1558,7 @@ function openProfile() {
     <div class="prow"><div class="l">Скорость речи<div id="ratev">${S.set.rate.toFixed(2)}×</div></div><input type="range" min="0.5" max="1.2" step="0.05" value="${S.set.rate}" id="rate"></div>
     <h3>О приложении</h3>
     <div class="prow"><div class="l">Версия ${APP_V}<div>${appDiag()}</div></div></div>
+    <p class="sub" style="text-align:left"><a href="o-prilozhenii.html">Подробнее о приложении</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
     <p class="sub" style="text-align:left">Словарь: частотность — wordfreq (CC BY-SA 4.0) и SUBTLEX-US; лексика TOEFL / IELTS — NGSL и NAWL (Browne, Culligan, Phillips; CC BY-SA 4.0); примеры фраз — Tatoeba (CC BY 2.0 FR); транскрипции — CMUdict.</p>
     <h3>Данные</h3>
     <p class="sub" style="text-align:left">Прогресс хранится на этом устройстве. Чтобы перенести его на другой iPhone, iPad или Mac, сохраните файл и загрузите его там.</p>

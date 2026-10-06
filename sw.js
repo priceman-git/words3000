@@ -3,7 +3,7 @@
 // Обновление: браузер сам проверяет sw.js при каждом открытии; если VERSION изменился, новая версия целиком
 // скачивается в фоне (все файлы из FILES) и включается при следующем открытии — старая и новая версии не смешиваются.
 // При выпуске новой версии: увеличить V здесь и ?v= в index.html (у styles.css, fonts.css, words.js, app.js).
-const V = 83;
+const V = 84;
 const VERSION = 'w3000-v' + V;
 const FILES = [
   './', 'index.html', `styles.css?v=${V}`, `words.js?v=${V}`, `app.js?v=${V}`, `sync.js?v=${V}`, 'privacy.html', `fonts/fonts.css?v=${V}`,
@@ -26,9 +26,11 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   const url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;   // API синхронизации — всегда из сети, не кэшируем
-  // открытие страницы (в том числе с параметрами в адресе) — всегда index.html из кэша
+  // открытие приложения (в том числе с параметрами в адресе) — всегда index.html из кэша;
+  // отдельные страницы (о приложении, политика, списки слов) — из сети, без сети — из кэша
   if (req.mode === 'navigate') {
-    e.respondWith(caches.match('index.html').then(r => r || fetch(req)));
+    if (/\/$|\/index\.html$/.test(url.pathname)) e.respondWith(caches.match('index.html').then(r => r || fetch(req)));
+    else e.respondWith(fetch(req).catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('index.html'))));
     return;
   }
   e.respondWith(caches.match(req).then(r => r || fetch(req).then(res => {
