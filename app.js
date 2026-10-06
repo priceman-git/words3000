@@ -552,7 +552,12 @@ function refreshRing(i) {
   if (span.textContent !== String(pts)) { span.textContent = pts; r.classList.remove('bump'); void r.offsetWidth; r.classList.add('bump'); }
   r.querySelector('.arc').setAttribute('stroke-dasharray', `${c * f} ${c}`);
 }
-const toggleFav = i => { if (S.fav[i]) delete S.fav[i]; else S.fav[i] = 1; save(); toast(S.fav[i] ? 'Добавлено в «Мои слова»' : 'Убрано из «Моих слов»'); return !!S.fav[i]; };
+function setFav(i, on) {
+  if (on) { S.fav[i] = Date.now(); if (S.favDel) delete S.favDel[i]; }
+  else { delete S.fav[i]; (S.favDel || (S.favDel = {}))[i] = Date.now(); }
+  save();
+}
+const toggleFav = i => { const on = !S.fav[i]; setFav(i, on); toast(on ? 'Добавлено в «Мои слова»' : 'Убрано из «Моих слов»'); return on; };
 
 /* ---------------- routing ---------------- */
 
@@ -583,8 +588,108 @@ function render() {
   onKey = null;
   if (!S.onboarded || view.name === 'onb') return renderOnb(app);
   if (view.name === 'lesson') return renderLesson(app, view.n);
+  if (view.name === 'fav') return renderFavs(app);
   renderMain(app);
   setTimeout(checkLeague, 450);   // переход в новую лигу — праздничное окно
+}
+
+/* ================= «Мои слова»: избранное, поиск и тренировка ================= */
+
+const FAV_STEPS = ['memo', 'match', 'audio', 'write', 'fix'];   // стандартные упражнения урока, без «Изучения»
+const FAV_SESSION = 10;
+let favQ = '', favLetter = '';
+const favIds = () => Object.keys(S.fav).map(Number).filter(i => i < W.length);
+
+function favBar() {
+  const n = favIds().length;
+  return `<button class="fav-bar" data-act="favs"><span class="fav-ic">${I.heartOn}</span><span><b>Мои слова${n ? ` · ${n}` : ''}</b>
+    ${n ? 'тренировать и искать слова' : 'добавляйте слова сердечком ♡ в уроках или найдите по первым буквам'}</span><span class="fav-go">${I.next}</span></button>`;
+}
+// слова для тренировки: сначала ещё не тренированные, потом с большей долей ошибок, потом давно не тренированные
+function pickFavs() {
+  const st = S.favStat || {};
+  const score = i => { const x = st[i]; return x ? [1, -(x.err / Math.max(1, x.n)), x.last] : [0, 0, 0]; };
+  return shuffle(favIds().sort((a, b) => { const p = score(a), q = score(b); return p[0] - q[0] || p[1] - q[1] || p[2] - q[2]; }).slice(0, FAV_SESSION));
+}
+function startFav(words) {
+  if (!words.length) return toast('Сначала добавьте слова в «Мои слова»');
+  const steps = FAV_STEPS.filter(k => k !== 'match' || words.length >= 2);
+  favStep({ words, steps, step: 0, werr: {}, t0: Date.now() });
+}
+function favStep(f) {
+  const key = f.steps[f.step];
+  run = { kind: 'fav', key, k: STAGES.findIndex(x => x.key === key), queue: shuffle(f.words), pos: 0, res: [], total: f.words.length,
+    okSet: new Set(), hints: HINTS[key] || 0, hintsUsed: 0, t0: Date.now(), pass: 1, words: f.words, steps: f.steps, step: f.step, werr: f.werr, ft0: f.t0 };
+  window.scrollTo(0, 0); render();
+  if (f.step) toast(`Упражнение ${f.step + 1} из ${f.steps.length}: ${STAGES[run.k].name}`);
+}
+function favNextStep(r) {
+  if (r.step + 1 < r.steps.length) return favStep({ words: r.words, steps: r.steps, step: r.step + 1, werr: r.werr, t0: r.ft0 });
+  const st = S.favStat || (S.favStat = {}), now = Date.now();
+  r.words.forEach(i => { const x = st[i] || (st[i] = { n: 0, err: 0, last: 0 }); x.n++; x.err += r.werr[i] || 0; x.last = now; });
+  save();
+  view = { name: 'fav' }; render();
+  const wrong = r.words.filter(i => r.werr[i]).sort((a, b) => r.werr[b] - r.werr[a]);
+  const errs = wrong.reduce((s, i) => s + r.werr[i], 0);
+  sheet(`<h2>Тренировка завершена</h2>
+    <p class="rep-text">Слов: <span>${r.words.length}</span> · упражнений: <span>${r.steps.length}</span> · ошибок: <span>${errs}</span></p>
+    ${wrong.length ? `<p class="sub">Больше всего ошибок — эти слова попадут в следующую тренировку раньше других:</p>
+      <div class="rating">${wrong.map(i => `<span class="wchip">${esc(disp(i))}<span class="badge">${r.werr[i]}</span></span>`).join('')}</div>` : '<p class="sub">Без единой ошибки!</p>'}
+    <div class="sticky"><button class="btn teal" data-again>Ещё ${Math.min(FAV_SESSION, favIds().length)} слов</button><button class="btn" data-close>Готово</button></div>`,
+    { onClick: (e, close) => { if (e.target.closest('[data-again]')) { close(); startFav(pickFavs()); } } });
+}
+
+function favRow(i, mode) {
+  const btn = mode === 'search'
+    ? `<button class="heart ${S.fav[i] ? 'on' : ''}" data-tfav="${i}" aria-label="${S.fav[i] ? 'Убрать' : 'Добавить'}">${S.fav[i] ? I.heartOn : I.heart}</button>`
+    : `<button class="x" data-unfav="${i}" aria-label="Убрать">×</button>`;
+  return `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div>${btn}</div>`;
+}
+// поиск по словарю по первым буквам: английское слово или любое слово перевода начинается с введённого
+function favSearch(q) {
+  q = q.trim().toLowerCase().replace(/^to\s+/, '');
+  if (!q) return [];
+  const out = [];
+  for (let i = 0; i < W.length && out.length < 40; i++) {
+    if (en(i).toLowerCase().startsWith(q) || ru(i).toLowerCase().split(/[\s,;()«»—-]+/).some(w => w.startsWith(q))) out.push(i);
+  }
+  return out;
+}
+function renderFavs(app) {
+  const all = favIds().sort((a, b) => en(a).localeCompare(en(b), 'en', { sensitivity: 'base' }));
+  const letters = [...new Set(all.map(i => en(i)[0].toUpperCase()))];
+  if (favLetter && !letters.includes(favLetter)) favLetter = '';
+  const shown = favLetter ? all.filter(i => en(i)[0].toUpperCase() === favLetter) : all;
+  const n = Math.min(FAV_SESSION, all.length);
+  app.innerHTML = `<div class="xhead"><button class="back" id="xback" aria-label="Назад">${I.back}</button><h2>Мои слова</h2><span></span></div>
+    <div class="favpage">
+      <button class="btn" data-act="train" ${all.length ? '' : 'disabled'}>${all.length ? `Тренировать ${n} ${plural(n, 'слово', 'слова', 'слов')}` : 'Тренировать'}</button>
+      <p class="sub">5 упражнений, как в уроке: запоминание, пары, аудирование, написание и закрепление.${all.length > FAV_SESSION ? ` За раз — ${FAV_SESSION} слов: сначала новые для тренировки и те, где чаще ошибаетесь.` : ''}</p>
+      <h3>Найти и добавить слово</h3>
+      <input class="name-input" id="fsearch" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Первые буквы — по-английски или по-русски" value="${esc(favQ)}">
+      <div class="favlist" id="fres"></div>
+      <h3>В списке: ${all.length}</h3>
+      ${all.length ? `<div class="letters"><button class="${favLetter ? '' : 'on'}" data-letter="">Все</button>${letters.map(ch => `<button class="${ch === favLetter ? 'on' : ''}" data-letter="${ch}">${ch}</button>`).join('')}</div>
+        <div class="favlist">${shown.map(i => favRow(i, 'list')).join('')}</div>`
+        : '<p class="sub">Пока пусто. Нажимайте сердечко ♡ в упражнениях и в окне ответа или найдите слова поиском выше.</p>'}
+    </div>`;
+  const res = $('#fres');
+  const showRes = () => {
+    const ids = favSearch(favQ);
+    res.innerHTML = favQ.trim() ? (ids.length ? ids.map(i => favRow(i, 'search')).join('') : '<p class="sub">Ничего не найдено</p>') : '';
+  };
+  showRes();
+  $('#fsearch').oninput = e => { favQ = e.target.value; showRes(); };
+  $('#xback').onclick = () => go({ name: 'main' });
+  app.onclick = e => {
+    const say = e.target.closest('[data-say]'); if (say) return sayWord(+say.dataset.say);
+    const tf = e.target.closest('[data-tfav]');
+    if (tf) { setFav(+tf.dataset.tfav, !S.fav[+tf.dataset.tfav]); const y = scrollY; render(); window.scrollTo(0, y); return; }
+    const uf = e.target.closest('[data-unfav]');
+    if (uf) { setFav(+uf.dataset.unfav, false); const y = scrollY; render(); window.scrollTo(0, y); return; }
+    const lt = e.target.closest('[data-letter]'); if (lt) { favLetter = lt.dataset.letter; return render(); }
+    if (e.target.closest('[data-act="train"]')) return startFav(pickFavs());
+  };
 }
 
 /* ================= главный экран ================= */
@@ -617,11 +722,13 @@ function renderMain(app) {
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
     ${typeof syncBanner === 'function' ? syncBanner() : ''}
+    ${favBar()}
     <div class="grid">${cells}</div>`;
   const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== S.page) { S.page = np; save(); render(); window.scrollTo(0, 0); } };
   app.onclick = e => {
     const t = e.target.closest('[data-act],[data-n],[data-test]'); if (!t) return;
     if (t.dataset.act && t.dataset.act.startsWith('sync-') && window.syncAction) return syncAction(t.dataset.act);   // вход и синхронизация — sync.js
+    if (t.dataset.act === 'favs') return go({ name: 'fav' });
     if (t.dataset.act === 'prev') return turn(p - 1);
     if (t.dataset.act === 'next') return turn(p + 1);
     if (t.dataset.act === 'profile') return openProfile();
@@ -895,14 +1002,15 @@ function exitRun() {
   if (run.kind === 'place') { run = null; onb.step = 'intro'; return render(); }
   if (run.kind === 'test' && run.pos > 0 && !confirm('Прервать мини-тест? Результат не сохранится — тест нужно пройти целиком.')) return;
   if (run.kind === 'stage') { L(run.n).time += Date.now() - run.t0; L(run.n).hints += run.hintsUsed; save(); }
-  go(run.kind === 'stage' ? { name: 'lesson', n: run.n } : { name: 'main' });
+  go(run.kind === 'stage' ? { name: 'lesson', n: run.n } : run.kind === 'fav' ? { name: 'fav' } : { name: 'main' });
 }
 
 /* ----- запись результата по слову ----- */
 
 function commit(i, pts, ok, errs, hinted = false) {
   run.res.push({ i, ok });
-  wmut(i).err += errs;
+  if (run.kind === 'fav') run.werr[i] = (run.werr[i] || 0) + errs;
+  else wmut(i).err += errs;
   if (run.kind === 'stage') {
     const l = L(run.n), st = l.st[run.k];
     // любая ошибка или подсказка — слово не станет выученным сразу, а уйдёт на повторение (даже если этап потом пересдан)
@@ -912,7 +1020,7 @@ function commit(i, pts, ok, errs, hinted = false) {
     // этап пройден повторно, а слово снова с ошибкой — переводим его в статус «на повторении»
     if (!ok && run.pass >= 2 && run.k > 0) st.rep[i] = 1;
   }
-  if (run.kind === 'rep' || run.kind === 'test') {   // ошибка — слово повторяется в конце, пока все не будут верны
+  if (run.kind === 'rep' || run.kind === 'test' || (run.kind === 'fav' && run.key !== 'match')) {   // ошибка — слово повторяется в конце, пока все не будут верны
     if (ok) run.okSet.add(i);
     else { run.queue.push(i); if (run.tasks) run.tasks.push(run.tasks[run.pos]); run.errors = (run.errors || 0) + 1; }
   }
@@ -926,7 +1034,7 @@ function answerSheet(i, ok) {
   const ex = exEn(i) ? `<div class="ans-row"><div class="grow ans-ex">${hl(exEn(i))}</div><button class="spk dark" data-sayex aria-label="Произнести пример">${I.spk}</button></div>
     <div class="ans-exru">${hl(exRu(i))}</div>` : '';
   const s = sheet(`<div class="verdict ${ok ? 'ok' : 'bad'}">${ok ? 'ПРАВИЛЬНО!' : 'НЕВЕРНО'}</div>
-    <div class="ans-row"><div class="grow"><div class="ans-word">${esc(disp(i))}</div><div class="ans-ipa">${esc(ipa(i))}</div></div><button class="spk dark" data-say aria-label="Произнести">${I.spk}</button></div>
+    <div class="ans-row"><div class="grow"><div class="ans-word">${esc(disp(i))}</div><div class="ans-ipa">${esc(ipa(i))}</div></div><button class="heart ${S.fav[i] ? 'on' : ''}" data-afav aria-label="В «Мои слова»">${S.fav[i] ? I.heartOn : I.heart}</button><button class="spk dark" data-say aria-label="Произнести">${I.spk}</button></div>
     <div class="ans-ru">${esc(ru(i))}</div>${ex}
     <div class="sticky"><button class="btn" data-ok>ОК</button></div>`, {
     // длинный пример — мельче шрифт, чтобы окно не росло и не закрывало кольцо прогресса
@@ -935,6 +1043,8 @@ function answerSheet(i, ok) {
     onClick: (e, close) => {
       if (e.target.closest('[data-say]')) return sayWord(i);
       if (e.target.closest('[data-sayex]')) return sayEx(i);
+      const hf = e.target.closest('[data-afav]');
+      if (hf) { const on = toggleFav(i); hf.classList.toggle('on', on); hf.innerHTML = on ? I.heartOn : I.heart; const top = $('#fav'); if (top) { top.classList.toggle('on', on); top.innerHTML = hf.innerHTML; } return; }
       if (e.target.closest('[data-ok]')) { close(); nextWord(); }
     },
   });
@@ -965,6 +1075,8 @@ function finishRun() {
     const completeNow = stagesFull(r.n) && !l.complete;
     if (r.k === 0) { if (completeNow) completeLesson(r.n); return; }
     stageResults(r, () => { if (completeNow) completeLesson(r.n); });
+  } else if (r.kind === 'fav') {
+    favNextStep(r);
   } else if (r.kind === 'rep') {
     const l = L(r.n);
     l.rep.done = Date.now();
@@ -1604,6 +1716,7 @@ function openProfile() {
     <div class="prow"><div class="l">${S.placement ? `${esc(selfLabel(S.placement.self))} · старт с урока ${S.start}` : `Старт с урока ${S.start}`}<div>${S.placement && S.placement.known != null ? `По тестовому уроку: ${knownText(S.placement.known).replace(/<\/?b>/g, '')}` : 'Определение уровня не проходили'}</div></div>
       <button class="btn gray small" style="width:auto;margin:0;padding:0 14px" data-act="replace">Определить заново</button></div>
     <h3>Мои слова (${favs.length})</h3>
+    <button class="btn teal small" data-act="favs">Открыть «Мои слова»: поиск и тренировка</button>
     <div class="favlist">${favs.length ? favs.map(i => `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div><button class="x" data-unfav="${i}" aria-label="Убрать">×</button></div>`).join('') : '<p class="sub">Нажмите ♡ в упражнении, чтобы добавить слово.</p>'}</div>
     <h3>Настройки</h3>
     <div class="prow"><div class="l">Один урок в день<div>Новый урок можно начать раз в сутки</div></div><label class="switch"><input type="checkbox" data-set="daily" ${S.set.daily ? 'checked' : ''}><span></span></label></div>
@@ -1630,7 +1743,7 @@ function openProfile() {
       const av = e.target.closest('[data-av]');
       if (av) { S.profile.avatar = av.dataset.av; S.profile.ts = Date.now(); save(); $$('[data-av]').forEach(b => b.classList.toggle('on', b === av)); return; }
       const say = e.target.closest('[data-say]'); if (say) return sayWord(+say.dataset.say);
-      const uf = e.target.closest('[data-unfav]'); if (uf) { delete S.fav[+uf.dataset.unfav]; save(); uf.closest('.fav').remove(); return; }
+      const uf = e.target.closest('[data-unfav]'); if (uf) { setFav(+uf.dataset.unfav, false); uf.closest('.fav').remove(); return; }
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act.startsWith('sync-') && window.syncAction) return syncAction(a.dataset.act, close);
       if (a.dataset.act === 'testkeys') {
@@ -1640,6 +1753,7 @@ function openProfile() {
         toast(!S.set.keySound ? 'Звук нажатий выключен' : st === 'running' ? 'Щелчки воспроизводятся. Не слышно — проверьте беззвучный режим и громкость' : 'Звук ещё не разрешён — нажмите «Проверить» ещё раз');
         return;
       }
+      if (a.dataset.act === 'favs') { close(); return go({ name: 'fav' }); }
       if (a.dataset.act === 'replace') { close(); onb = { step: 'self', again: true }; return go({ name: 'onb' }); }
       if (a.dataset.act === 'export') exportData();
       if (a.dataset.act === 'import') $('#importfile').click();

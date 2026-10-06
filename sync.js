@@ -50,7 +50,15 @@ function mergeStates(a, b) {   // a — это устройство, b — се�
     const p = a.w[i] || {}, q = (b.w || {})[i] || {};
     o.w[i] = { learned: p.learned || q.learned ? 1 : 0, err: Math.max(p.err || 0, q.err || 0) };
   }
-  o.fav = { ...(b.fav || {}), ...(a.fav || {}) };
+  // «Мои слова»: у добавления и удаления есть время — побеждает последнее действие (удалённое слово не «воскресает»)
+  o.fav = {}; o.favDel = {};
+  const t = (x, k, i) => +((x[k] || {})[i] || 0);
+  for (const i of keys({ ...a.fav, ...a.favDel }, { ...(b.fav || {}), ...(b.favDel || {}) })) {
+    const add = Math.max(t(a, 'fav', i), t(b, 'fav', i)), del = Math.max(t(a, 'favDel', i), t(b, 'favDel', i));
+    if (add > del) o.fav[i] = add; else if (del) o.favDel[i] = del;
+  }
+  o.favStat = { ...(b.favStat || {}) };
+  for (const i in a.favStat || {}) if (!o.favStat[i] || a.favStat[i].last > o.favStat[i].last) o.favStat[i] = a.favStat[i];
   o.L = {};
   for (const n of keys(a.L, b.L)) o.L[n] = lessonScore((b.L || {})[n]) > lessonScore((a.L || {})[n]) ? b.L[n] : a.L[n];
   o.T = {};
