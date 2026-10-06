@@ -318,9 +318,10 @@ if (TTS) { refreshVoices(); speechSynthesis.addEventListener && speechSynthesis.
 // в настройках — только 3 диктора: лучший доступный голос каждого типа (самые популярные голоса iOS, macOS, Chrome, Windows)
 const VOICE_KINDS = [
   // на устройствах с русским интерфейсом Apple показывает имена по-русски — ищем в обоих написаниях
+  // первый — диктор по умолчанию: британский (Daniel на iPhone, iPad и Mac; Google UK English на Android)
+  { label: 'Британский', lang: /en[-_]GB/i, names: ['Daniel', 'Дэниэл', 'Google UK English Male', 'Arthur', 'Oliver', 'Оливер', 'Microsoft Ryan', 'Serena', 'Серена', 'Kate', 'Кейт', 'Martha', 'Google UK English Female', 'Microsoft Libby', 'Microsoft Hazel'] },
   { label: 'Американский, женский', lang: /en[-_]US/i, names: ['Samantha', 'Саманта', 'Ava', 'Ава', 'Allison', 'Эллисон', 'Susan', 'Zoe', 'Зои', 'Nicky', 'Никки', 'Google US English', 'Microsoft Aria', 'Microsoft Jenny', 'Microsoft Zira'] },
   { label: 'Американский, мужской', lang: /en[-_]US/i, names: ['Alex', 'Алекс', 'Evan', 'Эван', 'Tom', 'Том', 'Aaron', 'Nathan', 'Натан', 'Fred', 'Фред', 'Microsoft Guy', 'Microsoft Davis', 'Microsoft David'] },
-  { label: 'Британский', lang: /en[-_]GB/i, names: ['Daniel', 'Дэниэл', 'Serena', 'Серена', 'Kate', 'Кейт', 'Oliver', 'Оливер', 'Arthur', 'Martha', 'Google UK English Female', 'Google UK English Male', 'Microsoft Libby', 'Microsoft Ryan', 'Microsoft Hazel'] },
 ];
 // шуточные и «эффектные» голоса Apple (Bells, Zarvox, Whisper…) и упрощённые голоса Eloquence — не предлагаем
 const NOVELTY = /^(Albert|Альберт|Bad News|Плохие новости|Bahh|Бах|Bells|Колокольчик|Boing|Прыг-скок|Bubbles|Пузырьки|Cellos|Виолончель|Good News|Хорошие новости|Jester|Шутник|Junior|Джуниор|Organ|Орган|Superstar|Суперзвезда|Trinoids|Триноид|Whisper|Шепот|Wobble|Воббл|Zarvox|Зарвокс|Ralph|Ральф|Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley)\b/i;
@@ -341,7 +342,7 @@ function voiceChoices() {
     if (best) out.push({ label: kind.label, voice: best });
   }
   // если каких-то типов нет на устройстве — добираем другими английскими голосами (до трёх), встроенные первыми
-  const rest = voices.filter(v => /en[-_](US|GB)/i.test(v.lang) && !NOVELTY.test(v.name)).sort((a, b) => b.localService - a.localService);
+  const rest = voices.filter(v => /en[-_](US|GB)/i.test(v.lang) && !NOVELTY.test(v.name)).sort((a, b) => b.localService - a.localService || /GB/i.test(b.lang) - /GB/i.test(a.lang));
   for (const v of rest) {
     if (out.length >= 3) break;
     if (!out.some(o => o.voice === v)) out.push({ label: /GB/i.test(v.lang) ? 'Британский' : 'Американский', voice: v });
@@ -350,7 +351,7 @@ function voiceChoices() {
 }
 function bestVoice() {
   const ch = voiceChoices();
-  return (ch.find(o => o.voice.voiceURI === S.set.voice) || ch[0] || {}).voice || voices[0] || null;
+  return (ch.find(o => o.voice.voiceURI === S.set.voice) || ch.find(o => /GB/i.test(o.voice.lang)) || ch[0] || {}).voice || voices[0] || null;
 }
 function speak(text, rate) {
   if (!TTS || !text) return;
@@ -359,7 +360,7 @@ function speak(text, rate) {
     let v = bestVoice();
     // сетевой голос без интернета молчит — подменяем встроенным английским
     if (v && !v.localService && !navigator.onLine) v = voices.find(x => x.localService && x.lang.replace('_', '-').startsWith(v.lang.slice(0, 5).replace('_', '-'))) || voices.find(x => x.localService) || v;
-    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-GB';
     u.rate = rate || S.set.rate;
     if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(() => speechSynthesis.speak(u), 60); }
     else speechSynthesis.speak(u);

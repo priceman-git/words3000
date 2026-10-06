@@ -67,7 +67,9 @@
 // произношение по кнопке ▶ — голос браузера (как в приложении)
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-say]'); if (!b || !window.speechSynthesis) return;
-  const u = new SpeechSynthesisUtterance(b.dataset.say); u.lang = 'en-US'; u.rate = 0.85;
+  const u = new SpeechSynthesisUtterance(b.dataset.say); u.lang = 'en-GB'; u.rate = 0.85;
+  const vs = speechSynthesis.getVoices().filter(v => /en[-_]GB/i.test(v.lang));   // британский, Daniel — первым
+  u.voice = vs.find(v => /^(Daniel|Дэниэл)/.test(v.name)) || vs.find(v => v.localService) || vs[0] || null;
   speechSynthesis.cancel(); speechSynthesis.speak(u);
 });
 </script></body></html>
