@@ -217,7 +217,9 @@ function leagueUp(li) {
     <div class="lg-name">${L.name}</div>
     <p class="rep-text">Поздравляем! Вы перешли в лигу <span>${L.name}</span>. Выучено слов: <span>${learnedCount()}</span></p>
     ${li < LEAGUES.length - 1 ? `<p class="sub">Следующая — ${LEAGUES[li + 1].name}, с уровня ${LEAGUES[li + 1].from}</p>` : '<p class="sub">Это высшая лига!</p>'}
-    <div class="sticky"><button class="btn" data-close>Отлично!</button></div>`, { cls: 'lg-sheet' });
+    <div class="sticky"><button class="btn teal" data-act="share">Поделиться успехом</button><button class="btn" data-close>Отлично!</button></div>`,
+    { cls: 'lg-sheet', onClick: e => { if (e.target.closest('[data-act="share"]')) shareProgress(); } });
+  prepareShare();
   sfx(true);
 }
 // окно «Лиги»: текущая лига, прогресс до следующей и вся лестница
@@ -236,7 +238,48 @@ function openLeagues() {
     <div class="lg-name">${LEAGUES[li].name} · уровень ${lv}</div>
     ${next ? `<div class="lg-prog"><div class="progress"><i style="width:${pct}%"></i></div>
       <p class="sub">До лиги ${next.name}: ещё ${Math.max(0, toW - words)} ${plural(Math.max(0, toW - words), 'слово', 'слова', 'слов')}</p></div>` : '<p class="sub">Высшая лига — вы выучили почти весь словарь!</p>'}
-    <div class="lg-list">${rows}</div>`);
+    <button class="btn teal small" data-act="share">Поделиться успехом</button>
+    <div class="lg-list">${rows}</div>`, { onClick: e => { if (e.target.closest('[data-act="share"]')) shareProgress(); } });
+  prepareShare();
+}
+// «Поделиться успехом»: картинка-карточка (лига, уровень, выучено слов) + текст со ссылкой через системное меню.
+// Картинку готовим заранее, при открытии окна: Safari открывает меню «Поделиться» только сразу после нажатия.
+let shareFile = null;
+const shareText = () => {
+  const n = learnedCount(), lv = level();
+  return `Уже ${n} ${plural(n, 'английское слово выучено', 'английских слова выучено', 'английских слов выучено')} в «5555 слов» — лига «${LEAGUES[leagueOf(lv)].name}», уровень ${lv}! Учи бесплатно:`;
+};
+function prepareShare() {
+  shareFile = null;
+  try {
+    const lv = level(), li = leagueOf(lv), n = learnedCount();
+    const c = document.createElement('canvas'); c.width = c.height = 1080;
+    const g = c.getContext('2d'), font = (w, px) => `${w} ${px}px "Roboto Condensed", "Arial Narrow", sans-serif`;
+    g.fillStyle = '#ececec'; g.fillRect(0, 0, 1080, 1080);
+    g.fillStyle = '#fff'; g.beginPath(); g.roundRect ? g.roundRect(60, 60, 960, 960, 48) : g.rect(60, 60, 960, 960); g.fill();
+    g.textAlign = 'center'; g.fillStyle = '#2c6a8c';
+    g.font = font(700, 76); g.fillText('5555 слов', 540, 170);
+    const svg = badgeSVG(li, lv, 360).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
+    const img = new Image();
+    img.onload = () => {
+      g.drawImage(img, 360, 210, 360, 360);
+      g.fillStyle = '#111'; g.font = font(700, 120); g.fillText(String(n), 540, 720);
+      g.fillStyle = '#555'; g.font = font(400, 46); g.fillText(plural(n, 'английское слово выучено', 'английских слова выучено', 'английских слов выучено'), 540, 785);
+      g.fillStyle = '#2c6a8c'; g.font = font(700, 50); g.fillText(`Лига «${LEAGUES[li].name}» · уровень ${lv}`, 540, 870);
+      g.fillStyle = '#3fc9b6'; g.font = font(700, 44); g.fillText('5555words.com — учи бесплатно', 540, 965);
+      c.toBlob(b => { if (b) shareFile = new File([b], '5555words.png', { type: 'image/png' }); }, 'image/png');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  } catch (e) {}
+}
+async function shareProgress() {
+  const text = shareText(), url = 'https://5555words.com/';
+  try {
+    if (shareFile && navigator.canShare && navigator.canShare({ files: [shareFile] })) return await navigator.share({ files: [shareFile], text: text + ' ' + url });
+    if (navigator.share) return await navigator.share({ text, url });
+  } catch (e) { if (e.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(text + ' ' + url); toast('Текст скопирован — вставьте его в сообщение'); }
+  catch (e) { toast(text + ' ' + url); }
 }
 function bumpDay() { const d = today(); S.days[d] = (S.days[d] || 0) + 1; }
 function streak() { let s = 0; const d = new Date(); if (!S.days[dkey(d)]) d.setDate(d.getDate() - 1); while (S.days[dkey(d)]) { s++; d.setDate(d.getDate() - 1); } return s; }
@@ -1558,7 +1601,7 @@ function openProfile() {
     <div class="prow"><div class="l">Скорость речи<div id="ratev">${S.set.rate.toFixed(2)}×</div></div><input type="range" min="0.5" max="1.2" step="0.05" value="${S.set.rate}" id="rate"></div>
     <h3>О приложении</h3>
     <div class="prow"><div class="l">Версия ${APP_V}<div>${appDiag()}</div></div></div>
-    <p class="sub" style="text-align:left"><a href="o-prilozhenii.html">Подробнее о приложении</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
+    <p class="sub" style="text-align:left"><a href="o-prilozhenii.html">Подробнее о приложении</a> · <a href="slova/">Все слова списком</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
     <p class="sub" style="text-align:left">Словарь: частотность — wordfreq (CC BY-SA 4.0) и SUBTLEX-US; лексика TOEFL / IELTS — NGSL и NAWL (Browne, Culligan, Phillips; CC BY-SA 4.0); примеры фраз — Tatoeba (CC BY 2.0 FR); транскрипции — CMUdict.</p>
     <h3>Данные</h3>
     <p class="sub" style="text-align:left">Прогресс хранится на этом устройстве. Чтобы перенести его на другой iPhone, iPad или Mac, сохраните файл и загрузите его там.</p>
