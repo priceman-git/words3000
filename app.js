@@ -558,10 +558,12 @@ function renderMain(app) {
     ${a > CORE && extraLocked(a) ? `<div class="gm-banner">${badgeSVG(GM_INDEX, GRANDMASTER(), 44)}<div><b>Курс 2 — ещё ${W.length - CORE * PER_LESSON} слов для продвинутых</b>
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
+    ${typeof syncBanner === 'function' ? syncBanner() : ''}
     <div class="grid">${cells}</div>`;
   const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== S.page) { S.page = np; save(); render(); window.scrollTo(0, 0); } };
   app.onclick = e => {
     const t = e.target.closest('[data-act],[data-n],[data-test]'); if (!t) return;
+    if (t.dataset.act && t.dataset.act.startsWith('sync-') && window.syncAction) return syncAction(t.dataset.act);   // вход и синхронизация — sync.js
     if (t.dataset.act === 'prev') return turn(p - 1);
     if (t.dataset.act === 'next') return turn(p + 1);
     if (t.dataset.act === 'profile') return openProfile();
@@ -1316,6 +1318,7 @@ function renderOnb(app) {
   if (onb.step === 'self') {
     app.innerHTML = `<div class="onb">${brand}
       <h2 class="onb-h">Какой у вас уровень английского?</h2>
+      ${typeof SYNC_ON === 'function' && SYNC_ON() ? '<button class="btn ghost-link" data-act="sync-login" style="margin-top:0">Уже занимались на другом устройстве? Войти</button>' : ''}
       <button class="btn zero-btn" data-act="zero">Я только начинаю учить английский<small>Начать с первого урока, без теста</small></button>
       <p class="onb-sub onb-or">Уже знаете английский? Выберите уровень и где вы в нём: <b>−</b> ниже среднего, без знака — средний, <b>+</b> выше среднего. Затем короткий тестовый урок уточнит, с какого урока начать.</p>
       <div class="lvls">${CEFR.map(([c, name, text]) => `<div class="lvl"><div class="lvl-info"><b>${c}</b> <span>${name}</span><div>${text}</div></div>
@@ -1357,6 +1360,7 @@ function renderOnb(app) {
     if (d) { onb.start = Math.min(TOTAL, Math.max(1, onb.start + +d.dataset.d)); return render(); }
     const a = e.target.closest('[data-act]'); if (!a) return;
     const act = a.dataset.act;
+    if (act === 'sync-login' && window.syncAction) return syncAction(act);   // вход на новом устройстве — до определения уровня
     if (act === 'zero') applyStart(1, { self: 'A1-', known: 0, rec: 1 });
     if (act === 'cancel') { onb = { step: 'self' }; go({ name: 'main' }); }
     if (act === 'back') { onb.step = 'self'; render(); }
@@ -1537,6 +1541,7 @@ function openProfile() {
     <div class="avatars" style="margin-top:10px">${AVATARS.map(a => `<button class="${a === S.profile.avatar ? 'on' : ''}" data-av="${a}">${a}</button>`).join('')}</div>
     <h3>Статистика</h3>
     <div class="stat3"><div><b>${learnedCount()}</b><span>выучено слов</span></div><div><b>${lessonsDone}</b><span>уроков из ${TOTAL}</span></div><div><b>${sk}</b><span>${plural(sk, 'день', 'дня', 'дней')} подряд</span></div></div>
+    ${typeof syncSection === 'function' ? syncSection() : ''}
     <h3>Уровень английского</h3>
     <div class="prow"><div class="l">${S.placement ? `${esc(selfLabel(S.placement.self))} · старт с урока ${S.start}` : `Старт с урока ${S.start}`}<div>${S.placement && S.placement.known != null ? `По тестовому уроку: ${knownText(S.placement.known).replace(/<\/?b>/g, '')}` : 'Определение уровня не проходили'}</div></div>
       <button class="btn gray small" style="width:auto;margin:0;padding:0 14px" data-act="replace">Определить заново</button></div>
@@ -1564,10 +1569,11 @@ function openProfile() {
     onClose: render,
     onClick: (e, close) => {
       const av = e.target.closest('[data-av]');
-      if (av) { S.profile.avatar = av.dataset.av; save(); $$('[data-av]').forEach(b => b.classList.toggle('on', b === av)); return; }
+      if (av) { S.profile.avatar = av.dataset.av; S.profile.ts = Date.now(); save(); $$('[data-av]').forEach(b => b.classList.toggle('on', b === av)); return; }
       const say = e.target.closest('[data-say]'); if (say) return sayWord(+say.dataset.say);
       const uf = e.target.closest('[data-unfav]'); if (uf) { delete S.fav[+uf.dataset.unfav]; save(); uf.closest('.fav').remove(); return; }
       const a = e.target.closest('[data-act]'); if (!a) return;
+      if (a.dataset.act.startsWith('sync-') && window.syncAction) return syncAction(a.dataset.act, close);
       if (a.dataset.act === 'testkeys') {
         unlockAudio(); haptic();   // на iPhone вибрация уже сработала от касания этой кнопки
         setTimeout(() => keyClick('key'), 60); setTimeout(() => keyClick('key'), 220); setTimeout(() => keyClick('del'), 380);
@@ -1584,7 +1590,7 @@ function openProfile() {
     },
   });
   const m = $('.prof');
-  $('#pname').oninput = e => { S.profile.name = e.target.value.trim() || 'Профиль'; save(); };
+  $('#pname').oninput = e => { S.profile.name = e.target.value.trim() || 'Профиль'; S.profile.ts = Date.now(); save(); };
   m.onchange = e => {
     const t = e.target;
     if (t.dataset.set) { S.set[t.dataset.set] = t.checked; save(); if (t.dataset.set === 'haptic') applyHaptics(); }

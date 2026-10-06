@@ -3,10 +3,10 @@
 // Обновление: браузер сам проверяет sw.js при каждом открытии; если VERSION изменился, новая версия целиком
 // скачивается в фоне (все файлы из FILES) и включается при следующем открытии — старая и новая версии не смешиваются.
 // При выпуске новой версии: увеличить V здесь и ?v= в index.html (у styles.css, fonts.css, words.js, app.js).
-const V = 79;
+const V = 80;
 const VERSION = 'w3000-v' + V;
 const FILES = [
-  './', 'index.html', `styles.css?v=${V}`, `words.js?v=${V}`, `app.js?v=${V}`, `fonts/fonts.css?v=${V}`,
+  './', 'index.html', `styles.css?v=${V}`, `words.js?v=${V}`, `app.js?v=${V}`, `sync.js?v=${V}`, 'privacy.html', `fonts/fonts.css?v=${V}`,
   'fonts/rc-latin-normal.woff2', 'fonts/rc-latin-italic.woff2', 'fonts/rc-latin-ext-normal.woff2',
   'fonts/rc-latin-ext-italic.woff2', 'fonts/rc-cyrillic-normal.woff2', 'fonts/rc-cyrillic-italic.woff2',
   'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
@@ -24,7 +24,8 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  const url = new URL(req.url);
+  if (req.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;   // API синхронизации — всегда из сети, не кэшируем
   // открытие страницы (в том числе с параметрами в адресе) — всегда index.html из кэша
   if (req.mode === 'navigate') {
     e.respondWith(caches.match('index.html').then(r => r || fetch(req)));

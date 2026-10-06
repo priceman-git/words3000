@@ -5,6 +5,6 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 rsync -az --delete --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
-  index.html styles.css app.js words.js sw.js manifest.webmanifest fonts icons \
+  index.html privacy.html styles.css app.js sync.js words.js sw.js manifest.webmanifest fonts icons \
   5555words:/var/www/5555words/
 echo "Опубликовано: https://5555words.com (версия $(grep -o 'const V = [0-9]*' sw.js | grep -o '[0-9]*'))"
