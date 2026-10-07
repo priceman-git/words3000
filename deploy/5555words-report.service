@@ -1,0 +1,11 @@
+[Unit]
+Description=5555words: weekly stats to owner in Telegram
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=words
+Group=adm
+EnvironmentFile=/etc/5555words/telegram.env
+Environment=OWNER_IP=185.122.185.121
+ExecStart=/usr/bin/python3 /opt/5555words/weekly_report.py
