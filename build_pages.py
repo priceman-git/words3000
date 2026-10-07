@@ -84,6 +84,8 @@ def head(title, desc, path, crumbs):
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:image" content="{SITE}/icons/og-image.png?v=2">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/icons/favicon-120.png" type="image/png" sizes="120x120">
 <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../fonts/fonts.css">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
@@ -94,7 +96,57 @@ def head(title, desc, path, crumbs):
 def range_title(a, b):
     return f'Английские слова {a + 1}–{b}' + (' — самые употребительные' if b <= CORE else ' — для продвинутых, IELTS и TOEFL')
 
+def row(i, num):
+    w = W[i]
+    ex = f'<div class="ex">{mark(w[3])}<br>{mark(w[4])}</div>' if w[3] else ''
+    return (f'<div class="w"><div class="n">{num}</div><div><span class="en">{esc(disp(w))}'
+            f'<button data-say="{esc(w[0])}" aria-label="Произнести {esc(w[0])}">▶</button></span>'
+            f'<span class="ipa">{"[" + esc(w[2]) + "]" if w[2] else ""}</span><div class="ru">{esc(w[1])}</div></div>{ex}</div>')
+
+# тематические списки: части речи (по частоте) и академическая лексика IELTS / TOEFL (NAWL)
+nawl = set()
+for line in open('data/exam/NAWL_12_lemmatized_for_teaching.csv', encoding='latin-1'):
+    h = line.split(',')[0].strip().lower()
+    if h and not h.startswith('#'): nawl.add(h)
+def plural(n, one, few, many):
+    n = abs(n) % 100; n1 = n % 10
+    return many if 10 < n < 20 else one if n1 == 1 else few if 2 <= n1 <= 4 else many
+of_pos = lambda p, n: [i for i, w in enumerate(W) if w[6] == p][:n]
+TOPICS = [
+    ('glagoly', 'Самые употребительные английские глаголы', of_pos('v', 300),
+     ('глагол', 'глагола', 'глаголов'), 'Глаголы be и have в список не входят — их знает каждый.'),
+    ('sushchestvitelnye', 'Самые употребительные английские существительные', of_pos('n', 500), ('существительное', 'существительных', 'существительных'), ''),
+    ('prilagatelnye', 'Самые употребительные английские прилагательные', of_pos('a', 300), ('прилагательное', 'прилагательных', 'прилагательных'), ''),
+    ('narechiya', 'Самые употребительные английские наречия', of_pos('r', 150), ('наречие', 'наречия', 'наречий'), ''),
+    ('predlogi', 'Английские предлоги', of_pos('prep', 60), ('предлог', 'предлога', 'предлогов'), 'Все предлоги словаря — от самых частых (of, in, for, on) к редким.'),
+    ('ielts-toefl', 'Академические английские слова для IELTS и TOEFL', [i for i, w in enumerate(W) if w[0].lower() in nawl], ('академическое слово', 'академических слова', 'академических слов'),
+     'Список NAWL (New Academic Word List, Browne, Culligan, Phillips) — лексика научных и учебных текстов, на которой строятся задания IELTS и TOEFL. Слова идут по частоте.'),
+]
+def more_lists(skip=''):
+    return ('<h2>Ещё списки</h2><div class="ranges">'
+            + ''.join(f'<a href="{slug}.html">{esc(t)}<small>{len(ids)} {plural(len(ids), *word)}</small></a>' for slug, t, ids, word, _ in TOPICS if slug != skip)
+            + '<a href="./">Все слова по 100<small>' + str(N) + ' слов по частоте</small></a></div>')
+
 os.makedirs('slova', exist_ok=True)
+for slug, t, ids, word, note in TOPICS:
+    path = f'/slova/{slug}.html'
+    sample = ', '.join(W[i][0] for i in ids[:6])
+    nw = f'{len(ids)} {plural(len(ids), *word)}'
+    title = f'{t}: {len(ids)} {plural(len(ids), "слово", "слова", "слов")} с переводом и транскрипцией'
+    desc = f'{t} ({sample}…) — {nw} по частоте употребления: перевод, транскрипция, произношение и примеры. Учите бесплатно в приложении «5555 слов».'
+    body = f'''{head(title, desc, path, [('5555 слов', '/'), ('Списки слов', '/slova/'), (t, path)])}
+<nav class="crumbs"><a href="../">5555 слов</a> › <a href="./">Списки слов</a> › {esc(t)}</nav>
+<h1>{esc(t)}</h1>
+<p class="lead">{nw} по частоте в современном английском: сначала самые нужные. С переводом, транскрипцией, произношением (кнопка ▶) и примерами. {esc(note)}</p>
+<a class="cta" href="../">Учить эти слова в приложении</a>
+<div class="card">{''.join(row(i, k + 1) for k, i in enumerate(ids))}</div>
+<p><a class="cta" href="../">Учить бесплатно</a></p>
+{more_lists(slug)}
+{FOOT}
+</main>{SPEAK}</body></html>
+'''
+    open(f'slova/{slug}.html', 'w', encoding='utf-8').write(body)
+
 for k, (a, b) in enumerate(pages):
     path = f'/slova/{fname(a, b)}'
     course = 'курс 1 — самые употребительные слова' if b <= CORE else 'курс 2 — для продвинутых, включая лексику IELTS и TOEFL'
@@ -102,13 +154,7 @@ for k, (a, b) in enumerate(pages):
     title = f'{range_title(a, b)}: список с переводом и транскрипцией'
     desc = (f'Английские слова {a + 1}–{b} по частоте ({sample}…): перевод, транскрипция, произношение и примеры. '
             f'Учите их бесплатно в приложении «5555 слов».')
-    rows = []
-    for i in range(a, b):
-        w = W[i]
-        ex = f'<div class="ex">{mark(w[3])}<br>{mark(w[4])}</div>' if w[3] else ''
-        rows.append(f'<div class="w"><div class="n">{i + 1}</div><div><span class="en">{esc(disp(w))}'
-                    f'<button data-say="{esc(w[0])}" aria-label="Произнести {esc(w[0])}">▶</button></span>'
-                    f'<span class="ipa">{"[" + esc(w[2]) + "]" if w[2] else ""}</span><div class="ru">{esc(w[1])}</div></div>{ex}</div>')
+    rows = [row(i, i + 1) for i in range(a, b)]
     prev = f'<a href="{fname(*pages[k - 1])}">← Слова {pages[k - 1][0] + 1}–{pages[k - 1][1]}</a>' if k else '<span></span>'
     nxt = f'<a href="{fname(*pages[k + 1])}">Слова {pages[k + 1][0] + 1}–{pages[k + 1][1]} →</a>' if k + 1 < len(pages) else '<span></span>'
     lessons = f'уроки {a // 10 + 1}–{(b - 1) // 10 + 1}'
@@ -121,6 +167,7 @@ for k, (a, b) in enumerate(pages):
 <div class="card">{''.join(rows)}</div>
 <div class="pager">{prev}{nxt}</div>
 <p><a class="cta" href="../">Учить эти слова бесплатно</a></p>
+{more_lists()}
 {FOOT}
 </main>{SPEAK}</body></html>
 """
@@ -137,6 +184,8 @@ idx = f"""{head('Самые употребительные английские 
 <h1>Самые употребительные английские слова</h1>
 <p class="lead">{N} английских слов, упорядоченных по частоте в современном английском: сначала самые нужные. По 100 слов на странице — с переводом, транскрипцией, произношением и примерами.</p>
 <a class="cta" href="../">Учить бесплатно в приложении</a>
+<h2>По частям речи и для экзаменов</h2>
+<div class="ranges">{''.join(f'<a href="{slug}.html">{esc(t)}<small>{len(ids)} {plural(len(ids), *word)}</small></a>' for slug, t, ids, word, _ in TOPICS)}</div>
 <h2>3000 самых частотных слов</h2>
 <div class="ranges">{links(0, CORE)}</div>
 <h2>Ещё 2555+ слов для продвинутых, IELTS и TOEFL</h2>
@@ -148,8 +197,9 @@ open('slova/index.html', 'w', encoding='utf-8').write(idx)
 
 # sitemap
 urls = [('/', '1.0', 'weekly'), ('/o-prilozhenii.html', '0.9', 'monthly'), ('/slova/', '0.9', 'monthly')]
+urls += [(f'/slova/{slug}.html', '0.8', 'monthly') for slug, *_ in TOPICS]
 urls += [(f'/slova/{fname(a, b)}', '0.8' if b <= CORE else '0.6', 'monthly') for a, b in pages]
 urls += [('/privacy.html', '0.2', 'yearly')]
 open('sitemap.xml', 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + ''.join(f'  <url><loc>{SITE}{u}</loc><changefreq>{c}</changefreq><priority>{p}</priority></url>\n' for u, p, c in urls) + '</urlset>\n')
-print(f'страниц: {len(pages)} + оглавление, sitemap: {len(urls)} адресов')
+print(f'страниц: {len(pages)} по 100 + {len(TOPICS)} тематических + оглавление, sitemap: {len(urls)} адресов')
