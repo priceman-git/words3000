@@ -709,7 +709,8 @@ function renderMain(app) {
   app.innerHTML = `
     <div class="status">
       <button class="st-item" data-act="profile"><span class="avatar">${esc(S.profile.avatar)}</span><small>${esc(S.profile.name)}</small></button>
-      <button class="st-item" data-act="leagues">${badgeSVG(leagueOf(level()), level(), 48)}<small>${LEAGUES[leagueOf(level())].name} · ур. ${level()}</small></button>
+      <button class="st-item" data-act="leagues">${badgeSVG(leagueOf(level()), level(), 48)}<small>${LEAGUES[leagueOf(level())].name}<span class="lv-txt"> · ур. ${level()}</span></small></button>
+      <button class="st-item" data-act="favs" aria-label="Мои слова"><span class="fav-circle">${I.heartOn}${favIds().length ? `<span class="fav-n">${favIds().length}</span>` : ''}</span><small>Мои слова</small></button>
       <button class="st-item grow" data-act="profile"><span class="learned-pill">${lc}</span><small>Выучено слов: ${lc}<b>+${pc}</b></small></button>
     </div>
     <div class="brand"><h1>5555 слов</h1><div class="brand-sub">самых используемых в английском</div><p>95% любого текста можно понять, зная всего 3000 слов</p></div>
@@ -722,7 +723,6 @@ function renderMain(app) {
       Откроется в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.</div></div>` : ''}
     ${repBanner()}
     ${typeof syncBanner === 'function' ? syncBanner() : ''}
-    ${favBar()}
     <div class="grid">${cells}</div>`;
   const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== S.page) { S.page = np; save(); render(); window.scrollTo(0, 0); } };
   app.onclick = e => {
