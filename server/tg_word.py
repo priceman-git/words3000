@@ -48,8 +48,8 @@ def card(i):
     from PIL import Image, ImageDraw, ImageFont
     font = lambda name, size: ImageFont.truetype(FONTS + f'RobotoCondensed-{name}.ttf', size)
     en, ru, ipa, ex, exru, verb = W[i][:6]
-    S = 1080
-    img = Image.new('RGB', (S, S), BG); d = ImageDraw.Draw(img)
+    S, H = 1080, 900   # без нарисованной кнопки: настоящая кнопка-ссылка — под картинкой
+    img = Image.new('RGB', (S, H), BG); d = ImageDraw.Draw(img)
 
     def fit(text, name, size, maxw, minsize=40):   # уменьшаем шрифт, пока строка не поместится
         while size > minsize and d.textlength(text, font=font(name, size)) > maxw: size -= 4
@@ -102,9 +102,6 @@ def card(i):
         d.line((110, y, 890, y), fill=LINE, width=3); speaker(960, y)
         y += 30
         rich(exru, y, 'Italic', 48, GRAY, 760)
-    # кнопка внизу — как «Выучить слово»
-    d.rounded_rectangle((110, 920, 970, 1030), radius=26, fill=LIME)
-    d.text((S / 2, 975), 'Учить бесплатно — 5555words.com', font=font('Medium', 50), fill='#ffffff', anchor='mm')
     import io
     b = io.BytesIO(); img.save(b, 'PNG', optimize=True); return b.getvalue()
 
@@ -118,9 +115,13 @@ def caption(i):
                       f'📖 <a href="{page}">Слова {a + 1}–{min(a + 100, len(W))} с переводом</a>',
                       f'📱 <a href="{SITE}/">Учить бесплатно — 5555 слов</a>', '', '#словодня #английский'])
 
-def send_photo(token, png, cap):
+BUTTON = json.dumps({'inline_keyboard': [[{'text': '📱 Учить бесплатно — 5555words.com', 'url': f'{SITE}/'}]]}, ensure_ascii=False)
+
+def send_photo(token, png, cap=None):
+    # пост — только картинка и настоящая кнопка-ссылка под ней (без подписи)
     boundary = '----5555words' + os.urandom(8).hex()
-    fields = {'chat_id': CHANNEL, 'caption': cap, 'parse_mode': 'HTML'}
+    fields = {'chat_id': CHANNEL, 'reply_markup': BUTTON}
+    if cap: fields.update(caption=cap, parse_mode='HTML')
     body = b''.join(f'--{boundary}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode() for k, v in fields.items())
     body += f'--{boundary}\r\nContent-Disposition: form-data; name="photo"; filename="word.png"\r\nContent-Type: image/png\r\n\r\n'.encode() + png + f'\r\n--{boundary}--\r\n'.encode()
     req = urllib.request.Request(f'https://api.telegram.org/bot{token}/sendPhoto', body, {'Content-Type': f'multipart/form-data; boundary={boundary}'})
@@ -133,7 +134,16 @@ def main():
     if '--preview' in sys.argv:   # картинка — в /tmp/tg_preview.png, подпись — на экран
         open('/tmp/tg_preview.png', 'wb').write(card(i)); print(caption(i)); return
     token = os.environ['TG_TOKEN']
-    r = send_photo(token, card(i), caption(i))
+    if '--redo' in sys.argv:   # заменить картинку уже опубликованного поста и убрать подпись: --redo <message_id> --word <слово>
+        mid = sys.argv[sys.argv.index('--redo') + 1]
+        boundary = '----5555words' + os.urandom(8).hex()
+        media = json.dumps({'type': 'photo', 'media': 'attach://photo'})
+        fields = {'chat_id': CHANNEL, 'message_id': mid, 'media': media, 'reply_markup': BUTTON}
+        body = b''.join(f'--{boundary}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode() for k, v in fields.items())
+        body += f'--{boundary}\r\nContent-Disposition: form-data; name="photo"; filename="word.png"\r\nContent-Type: image/png\r\n\r\n'.encode() + card(i) + f'\r\n--{boundary}--\r\n'.encode()
+        req = urllib.request.Request(f'https://api.telegram.org/bot{token}/editMessageMedia', body, {'Content-Type': f'multipart/form-data; boundary={boundary}'})
+        print(json.load(urllib.request.urlopen(req, timeout=60)).get('ok')); return
+    r = send_photo(token, card(i))
     if not r.get('ok'): sys.exit(f'Telegram: {r}')
     st['next'] += 1
     st.setdefault('log', []).append({'i': i, 'word': W[i][0], 'msg': r['result']['message_id']})
