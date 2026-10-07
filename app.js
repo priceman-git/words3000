@@ -1719,6 +1719,7 @@ function openProfile() {
     <button class="btn teal small" data-act="favs">Открыть «Мои слова»: поиск и тренировка</button>
     <div class="favlist">${favs.length ? favs.map(i => `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div><button class="x" data-unfav="${i}" aria-label="Убрать">×</button></div>`).join('') : '<p class="sub">Нажмите ♡ в упражнении, чтобы добавить слово.</p>'}</div>
     <h3>Настройки</h3>
+    <div class="prow"><div class="l">Telegram-канал «Слово дня»<div>Два новых слова каждый день — в 6:00 и 18:00 по Москве</div></div><a class="btn teal small tg-btn" href="https://t.me/eng_words555" target="_blank" rel="noopener">Подписаться</a></div>
     <div class="prow"><div class="l">Один урок в день<div>Новый урок можно начать раз в сутки</div></div><label class="switch"><input type="checkbox" data-set="daily" ${S.set.daily ? 'checked' : ''}><span></span></label></div>
     <div class="prow"><div class="l">Автоматически произносить слова</div><label class="switch"><input type="checkbox" data-set="auto" ${S.set.auto ? 'checked' : ''}><span></span></label></div>
     <div class="prow"><div class="l">Звук нажатий<div>Щелчок при нажатии на кнопки, буквы и клавиши. <button class="linkbtn" data-act="testkeys">Проверить</button></div></div><label class="switch"><input type="checkbox" data-set="keySound" ${S.set.keySound ? 'checked' : ''}><span></span></label></div>

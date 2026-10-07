@@ -526,3 +526,4 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
   .st-item small { font-size: 12px; }
   .lv-txt { display: none; }
 }
+.tg-btn { width: auto; margin: 0; padding: 0 16px; text-decoration: none; flex: none; }
