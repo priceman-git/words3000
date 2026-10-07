@@ -5,3 +5,5 @@ __pycache__/
 data/freq/subtlex_us_pos.tsv
 data/freq/wordfreq_en.tsv
 data/freq/lemma.txt
+# черновики публикаций (статья для Хабра и т. п.) — не выкладываем до публикации
+docs/

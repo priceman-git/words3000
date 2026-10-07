@@ -1066,6 +1066,7 @@ function finishRun() {
     l.time += Date.now() - r.t0;
     l.hints += r.hintsUsed;
     l.st[r.k].done = 1;
+    statBump('stages');
     if (r.k === 0) {
       l.learn = lessonIds(r.n).filter(i => l.dec[i] === 'l');
       if (!l.learn.length) l.st.forEach(s => { s.done = 1; });   // все слова известны — урок завершён
@@ -1127,7 +1128,9 @@ function stageResults(r, then) {
   onKey = e => { if (e.key === 'Enter' || e.key === 'Escape') { e.preventDefault(); s.close(); } };
 }
 
+const statBump = k => { if (window.statsBump) statsBump(k); };   // анонимная статистика — sync.js
 function completeLesson(n) {
+  statBump('lessons');
   const l = L(n);
   l.complete = Date.now();
   if (n < S.start) l.rep = { due: 0, done: Date.now() };   // условно пройденный урок: повторение не требуется

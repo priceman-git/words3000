@@ -237,8 +237,45 @@ async function syncAction(act, close) {
   }
 }
 
+/* ---------------- анонимная статистика ---------------- */
+// Случайный номер устройства (не связан с e-mail, аккаунтом и IP — сервер IP не сохраняет), раз в день «открыто»
+// и после уроков — счётчики за день. «Не отслеживать» в браузере — ничего не отправляем.
+const STAT_KEY = 'w3000.stat';
+const DNT = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+let stat = (() => { try { return JSON.parse(localStorage.getItem(STAT_KEY)) || {}; } catch (e) { return {}; } })();
+const saveStat = () => { try { localStorage.setItem(STAT_KEY, JSON.stringify(stat)); } catch (e) {} };
+if (!stat.dev) {
+  const b = new Uint8Array(12); crypto.getRandomValues(b);
+  stat.dev = [...b].map(x => x.toString(16).padStart(2, '0')).join(''); stat.first = today();
+}
+const fromParam = new URLSearchParams(location.search).get('from');   // метка источника: 5555words.com/?from=habr
+if (fromParam && !stat.src) stat.src = fromParam.slice(0, 24);
+// устройства владельца не считаем: один раз открыть 5555words.com/?owner=1 (вернуть — ?owner=0)
+const ownerParam = new URLSearchParams(location.search).get('owner');
+if (ownerParam === '1') { stat.owner = 1; setTimeout(() => toast('Это устройство больше не попадает в статистику'), 800); }
+if (ownerParam === '0') delete stat.owner;
+if (stat.day !== today()) { stat.day = today(); stat.stages = 0; stat.lessons = 0; stat.sent = 0; }
+saveStat();
+const platform = () => { const u = navigator.userAgent; return /iPhone|iPod/.test(u) ? 'iPhone' : /iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? 'iPad' : /Android/.test(u) ? 'Android' : /Macintosh/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows' : /Linux/.test(u) ? 'Linux' : 'other'; };
+let statTimer = null;
+function sendStat() {
+  if (DNT || stat.owner || !SYNC_HOST || !navigator.onLine) return;
+  const pwa = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  const body = JSON.stringify({ day: stat.day, dev: stat.dev, first: stat.first, ver: APP_V, plat: platform(), pwa, src: stat.src || '',
+    stages: stat.stages, lessons: stat.lessons, learned: learnedCount() });
+  fetch('/api/ping', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true })
+    .then(r => { if (r.ok) { stat.sent = 1; saveStat(); } }).catch(() => {});
+}
+window.statsBump = k => {
+  if (stat.day !== today()) { stat.day = today(); stat.stages = 0; stat.lessons = 0; stat.sent = 0; }
+  stat[k] = (stat[k] || 0) + 1; saveStat();
+  clearTimeout(statTimer); statTimer = setTimeout(sendStat, 8000);
+};
+
 /* ---------------- запуск ---------------- */
 if (SYNC_HOST) {
+  if (!stat.sent) setTimeout(sendStat, 3000);   // «открыто сегодня» — один раз в день
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && stat.day !== today()) { stat.day = today(); stat.stages = 0; stat.lessons = 0; stat.sent = 0; saveStat(); sendStat(); } });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) syncSoon(500); });
   addEventListener('online', () => syncSoon(500));
   setInterval(() => { if (!document.hidden) syncNow(); }, 5 * 60000);

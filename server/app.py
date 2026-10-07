@@ -46,6 +46,9 @@ def init_db():
         CREATE TABLE IF NOT EXISTS devices (id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                                             token TEXT UNIQUE NOT NULL, name TEXT NOT NULL,
                                             created INTEGER NOT NULL, seen INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS daily   (day TEXT NOT NULL, dev TEXT NOT NULL, first TEXT, ver TEXT, plat TEXT, pwa INTEGER,
+                                            src TEXT, stages INTEGER DEFAULT 0, lessons INTEGER DEFAULT 0, learned INTEGER DEFAULT 0,
+                                            PRIMARY KEY (day, dev));   -- анонимная статистика: без IP, e-mail и связи с аккаунтом
         CREATE TABLE IF NOT EXISTS states  (user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
                                             rev INTEGER NOT NULL, data TEXT NOT NULL, updated INTEGER NOT NULL);
         ''')
@@ -127,6 +130,25 @@ def auth_verify(c, body, ip):
     c.commit()
     return {'token': tok, 'email': email, 'new': not u}
 
+# ---------------- анонимная статистика ----------------
+# Раз в день и после уроков приложение присылает: случайный номер устройства, дату, версию, тип устройства,
+# установлено ли на экран «Домой», метку источника и счётчики за день. IP не сохраняется.
+DAY_RE, DEV_RE = re.compile(r'^\d{4}-\d{2}-\d{2}$'), re.compile(r'^[0-9a-f]{16,32}$')
+def ping(c, body, ip):
+    if limited('ping:' + ip, 120, 3600): return {'ok': True}   # молча — статистика не должна мешать
+    day, dev = str(body.get('day', '')), str(body.get('dev', ''))
+    if not DAY_RE.match(day) or not DEV_RE.match(dev): raise Err(400, 'неверные данные')
+    clip = lambda k, n: re.sub(r'[^\w.+-]', '', str(body.get(k, '')))[:n] or None
+    num = lambda k: max(0, min(int(body.get(k) or 0), 100000))
+    first = str(body.get('first', ''))
+    c.execute('''INSERT INTO daily (day, dev, first, ver, plat, pwa, src, stages, lessons, learned) VALUES (?,?,?,?,?,?,?,?,?,?)
+                 ON CONFLICT(day, dev) DO UPDATE SET ver=excluded.ver, pwa=MAX(pwa, excluded.pwa),
+                 stages=MAX(stages, excluded.stages), lessons=MAX(lessons, excluded.lessons), learned=MAX(learned, excluded.learned)''',
+              (day, dev, first if DAY_RE.match(first) else None, clip('ver', 8), clip('plat', 16), 1 if body.get('pwa') else 0,
+               clip('src', 24), num('stages'), num('lessons'), num('learned')))
+    c.commit()
+    return {'ok': True}
+
 def sync_get(c, d):
     s = c.execute('SELECT rev, data FROM states WHERE user_id = ?', (d['user_id'],)).fetchone()
     c.commit()
@@ -172,6 +194,7 @@ class H(BaseHTTPRequestHandler):
         try:
             if method == 'POST' and path == '/api/auth/start': return auth_start(c, body, ip)
             if method == 'POST' and path == '/api/auth/verify': return auth_verify(c, body, ip)
+            if method == 'POST' and path == '/api/ping': return ping(c, body, ip)
             d = auth(c, self.headers)
             if method == 'GET' and path == '/api/sync': return sync_get(c, d)
             if method == 'PUT' and path == '/api/sync': return sync_put(c, d, body)
