@@ -14,9 +14,10 @@
 Настройки — переменные окружения (файл /etc/5555words/api.env, его читает systemd):
   DB=/var/lib/5555words/app.db, SECRET=<случайная строка>, PORT=8081,
   SMTP_HOST, SMTP_PORT=587, SMTP_USER, SMTP_PASS, MAIL_FROM — почта для кодов;
+  TG_TOKEN, TG_OWNER_CHAT (из /etc/5555words/telegram.env) — отзывы пересылаются автору в Telegram;
   без SMTP_HOST коды пишутся в журнал (journalctl -u 5555words-api) — для тестов.
 """
-import hashlib, hmac, json, os, re, secrets, smtplib, sqlite3, sys, threading, time
+import base64, hashlib, hmac, json, os, re, secrets, smtplib, sqlite3, sys, threading, time, urllib.request
 from email.message import EmailMessage
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -49,6 +50,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS daily   (day TEXT NOT NULL, dev TEXT NOT NULL, first TEXT, ver TEXT, plat TEXT, pwa INTEGER,
                                             src TEXT, stages INTEGER DEFAULT 0, lessons INTEGER DEFAULT 0, learned INTEGER DEFAULT 0,
                                             PRIMARY KEY (day, dev));   -- анонимная статистика: без IP, e-mail и связи с аккаунтом
+        CREATE TABLE IF NOT EXISTS feedback (id INTEGER PRIMARY KEY, created INTEGER NOT NULL, stars INTEGER, text TEXT,
+                                            contact TEXT, ver TEXT, plat TEXT, learned INTEGER, imgs INTEGER DEFAULT 0, sent INTEGER DEFAULT 0);
         CREATE TABLE IF NOT EXISTS states  (user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
                                             rev INTEGER NOT NULL, data TEXT NOT NULL, updated INTEGER NOT NULL);
         ''')
@@ -149,6 +152,61 @@ def ping(c, body, ip):
     c.commit()
     return {'ok': True}
 
+# ---------------- отзывы ----------------
+# Звёзды 1–5, текст, необязательный контакт и до 3 картинок (JPEG, уменьшены в браузере). Хранятся в базе и в
+# /var/lib/5555words/feedback/, копия уходит автору в Telegram. IP не сохраняется.
+FB_DIR = os.path.join(os.path.dirname(DB), 'feedback')
+TG_TOKEN, TG_OWNER = os.environ.get('TG_TOKEN'), os.environ.get('TG_OWNER_CHAT')
+def tg(method, fields, file=None):
+    """запрос к Telegram Bot API; file = (имя поля, имя файла, байты) — отправка multipart"""
+    if not (TG_TOKEN and TG_OWNER): return
+    url = f'https://api.telegram.org/bot{TG_TOKEN}/{method}'
+    if file:
+        b = '----5555' + secrets.token_hex(8)
+        parts = [f'--{b}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode() for k, v in fields.items()]
+        parts.append(f'--{b}\r\nContent-Disposition: form-data; name="{file[0]}"; filename="{file[1]}"\r\nContent-Type: image/jpeg\r\n\r\n'.encode() + file[2] + f'\r\n--{b}--\r\n'.encode())
+        req = urllib.request.Request(url, b''.join(parts), {'Content-Type': f'multipart/form-data; boundary={b}'})
+    else:
+        req = urllib.request.Request(url, json.dumps(fields).encode(), {'Content-Type': 'application/json'})
+    return json.load(urllib.request.urlopen(req, timeout=30)).get('ok')
+
+def forward_feedback(fid, stars, text, contact, ver, plat, learned, images):
+    try:
+        msg = (f'📝 Отзыв №{fid}\n' + ('★' * stars + '☆' * (5 - stars) if stars else 'без оценки') + '\n\n' + (text or '(без текста)') +
+               f'\n\n— версия {ver or "?"}, {plat or "?"}, выучено слов: {learned}' + (f'\nКонтакт: {contact}' if contact else ''))
+        ok = tg('sendMessage', {'chat_id': TG_OWNER, 'text': msg[:4000]})
+        for k, img in enumerate(images):
+            tg('sendPhoto', {'chat_id': TG_OWNER, 'caption': f'Отзыв №{fid}, картинка {k + 1}'}, ('photo', f'{fid}-{k + 1}.jpg', img))
+        if ok:
+            with db() as c: c.execute('UPDATE feedback SET sent = 1 WHERE id = ?', (fid,))
+    except Exception as e:
+        print('отзыв в Telegram не ушёл:', repr(e), file=sys.stderr, flush=True)
+
+def feedback(c, body, ip):
+    if limited('fb:' + ip, 5, 3600): raise Err(429, 'слишком много отзывов подряд — попробуйте через час')
+    stars = int(body.get('stars') or 0)
+    if not 0 <= stars <= 5: raise Err(400, 'неверная оценка')
+    text = str(body.get('text', '')).strip()[:3000]
+    contact = str(body.get('contact', '')).strip()[:100]
+    if not stars and not text: raise Err(400, 'пустой отзыв')
+    images = []
+    for s in (body.get('imgs') or [])[:3]:
+        m = re.fullmatch(r'data:image/jpeg;base64,([A-Za-z0-9+/=]+)', str(s))
+        if not m: raise Err(400, 'картинка должна быть JPEG')
+        img = base64.b64decode(m[1])
+        if len(img) > 600_000 or not img.startswith(b'\xff\xd8'): raise Err(400, 'картинка слишком большая')
+        images.append(img)
+    clip = lambda k, n: re.sub(r'[^\w.+ -]', '', str(body.get(k, '')))[:n]
+    ver, plat, learned = clip('ver', 8), clip('plat', 16), max(0, min(int(body.get('learned') or 0), 100000))
+    fid = c.execute('INSERT INTO feedback (created, stars, text, contact, ver, plat, learned, imgs) VALUES (?,?,?,?,?,?,?,?)',
+                    (int(time.time()), stars, text, contact, ver, plat, learned, len(images))).lastrowid
+    c.commit()
+    os.makedirs(FB_DIR, exist_ok=True)
+    for k, img in enumerate(images):
+        with open(os.path.join(FB_DIR, f'{fid}-{k + 1}.jpg'), 'wb') as f: f.write(img)
+    threading.Thread(target=forward_feedback, args=(fid, stars, text, contact, ver, plat, learned, images), daemon=True).start()
+    return {'ok': True, 'id': fid}
+
 def sync_get(c, d):
     s = c.execute('SELECT rev, data FROM states WHERE user_id = ?', (d['user_id'],)).fetchone()
     c.commit()
@@ -181,6 +239,8 @@ class H(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Cache-Control', 'no-store')
+        if self.headers.get('Origin') == 'https://priceman-git.github.io' and self.path.startswith('/api/feedback'):
+            self.send_header('Access-Control-Allow-Origin', 'https://priceman-git.github.io')   # отзыв из запасной копии на GitHub Pages
         self.send_header('Content-Length', str(len(b)))
         self.end_headers(); self.wfile.write(b)
 
@@ -195,6 +255,7 @@ class H(BaseHTTPRequestHandler):
             if method == 'POST' and path == '/api/auth/start': return auth_start(c, body, ip)
             if method == 'POST' and path == '/api/auth/verify': return auth_verify(c, body, ip)
             if method == 'POST' and path == '/api/ping': return ping(c, body, ip)
+            if method == 'POST' and path == '/api/feedback': return feedback(c, body, ip)
             d = auth(c, self.headers)
             if method == 'GET' and path == '/api/sync': return sync_get(c, d)
             if method == 'PUT' and path == '/api/sync': return sync_put(c, d, body)

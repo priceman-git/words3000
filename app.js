@@ -1722,6 +1722,7 @@ function openProfile() {
     <button class="btn teal small" data-act="favs">Открыть «Мои слова»: поиск и тренировка</button>
     <div class="favlist">${favs.length ? favs.map(i => `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div><button class="x" data-unfav="${i}" aria-label="Убрать">×</button></div>`).join('') : '<p class="sub">Нажмите ♡ в упражнении, чтобы добавить слово.</p>'}</div>
     <h3>Настройки</h3>
+    <div class="prow"><div class="l">Отзыв и предложения<div>Оценка, текст и скриншоты — их прочитает автор приложения</div></div><button class="btn teal small tg-btn" data-act="feedback">Написать</button></div>
     <div class="prow"><div class="l">Telegram-канал «Слово дня»<div>Два новых слова каждый день — в 6:00 и 18:00 по Москве</div></div><a class="btn teal small tg-btn" href="https://t.me/eng_words555" target="_blank" rel="noopener">Подписаться</a></div>
     <div class="prow"><div class="l">Один урок в день<div>Новый урок можно начать раз в сутки</div></div><label class="switch"><input type="checkbox" data-set="daily" ${S.set.daily ? 'checked' : ''}><span></span></label></div>
     <div class="prow"><div class="l">Автоматически произносить слова</div><label class="switch"><input type="checkbox" data-set="auto" ${S.set.auto ? 'checked' : ''}><span></span></label></div>
@@ -1757,6 +1758,7 @@ function openProfile() {
         toast(!S.set.keySound ? 'Звук нажатий выключен' : st === 'running' ? 'Щелчки воспроизводятся. Не слышно — проверьте беззвучный режим и громкость' : 'Звук ещё не разрешён — нажмите «Проверить» ещё раз');
         return;
       }
+      if (a.dataset.act === 'feedback') { close(); return openFeedback(); }
       if (a.dataset.act === 'favs') { close(); return go({ name: 'fav' }); }
       if (a.dataset.act === 'replace') { close(); onb = { step: 'self', again: true }; return go({ name: 'onb' }); }
       if (a.dataset.act === 'export') exportData();
@@ -1777,6 +1779,75 @@ function openProfile() {
     if (t.id === 'importfile' && t.files[0]) importData(t.files[0]);
   };
   m.oninput = e => { if (e.target.id === 'rate') $('#ratev').textContent = (+e.target.value).toFixed(2) + '×'; };
+}
+/* ---------------- отзыв: звёзды, текст, до 3 картинок → POST /api/feedback (сервер пересылает автору в Telegram) ---------------- */
+const FB_MAX_IMG = 3;
+function openFeedback() {
+  const fb = { stars: 0, imgs: [] };
+  const draw = () => {
+    $('#fbstars').innerHTML = [1, 2, 3, 4, 5].map(n => `<button data-star="${n}" class="${n <= fb.stars ? 'on' : ''}" aria-label="${n} из 5">★</button>`).join('');
+    $('#fbimgs').innerHTML = fb.imgs.map((src, k) => `<div class="fbimg"><img src="${src}" alt=""><button data-rmimg="${k}" aria-label="Убрать">×</button></div>`).join('') +
+      (fb.imgs.length < FB_MAX_IMG ? `<button class="fbadd" data-act="fb-add" aria-label="Добавить картинку">＋<span>фото</span></button>` : '');
+  };
+  const send = async (btn, close) => {
+    const text = $('#fbtext').value.trim();
+    if (!fb.stars && !text) return toast('Поставьте оценку или напишите пару слов');
+    if (!navigator.onLine) return toast('Нет интернета — отзыв можно отправить позже');
+    btn.disabled = true; btn.textContent = 'Отправляем…';
+    try {
+      const r = await fetch((/(^|\.)5555words\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://5555words.com') + '/api/feedback', {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },   // «простой» запрос — с GitHub Pages без CORS-предзапроса
+        body: JSON.stringify({ stars: fb.stars, text, contact: $('#fbcontact').value.trim(), imgs: fb.imgs, ver: APP_V,
+          plat: typeof platform === 'function' ? platform() : '', learned: learnedCount() }),
+      });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.status);
+      close(); toast('Спасибо! Отзыв отправлен');
+    } catch (e) {
+      btn.disabled = false; btn.textContent = 'Отправить';
+      toast('Не получилось отправить: ' + e.message);
+    }
+  };
+  sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button><div class="prof fb">
+    <h2>Отзыв</h2>
+    <p class="sub">Что нравится, что мешает, чего не хватает? Отзыв прочитает автор приложения.</p>
+    <h3>Оценка</h3><div class="fbstars" id="fbstars"></div>
+    <h3>Текст</h3><textarea class="name-input fbtext" id="fbtext" maxlength="3000" rows="5" placeholder="Например: хочу тёмную тему"></textarea>
+    <h3>Скриншоты <span class="sub">(до ${FB_MAX_IMG})</span></h3><div class="fbimgs" id="fbimgs"></div>
+    <input type="file" id="fbfile" accept="image/*" multiple class="hidden">
+    <h3>Как с вами связаться <span class="sub">(необязательно)</span></h3>
+    <input class="name-input" id="fbcontact" maxlength="100" placeholder="e-mail или @telegram" autocomplete="email">
+    <p class="sub" style="text-align:left;margin-top:10px">Вместе с отзывом отправляются версия приложения, тип устройства и число выученных слов. <a href="privacy.html">Подробнее</a></p>
+    <button class="btn teal" data-act="fb-send">Отправить</button>
+  </div>`, {
+    onClick: (e, close) => {
+      const st = e.target.closest('[data-star]'); if (st) { fb.stars = +st.dataset.star; return draw(); }
+      const rm = e.target.closest('[data-rmimg]'); if (rm) { fb.imgs.splice(+rm.dataset.rmimg, 1); return draw(); }
+      const a = e.target.closest('[data-act]'); if (!a) return;
+      if (a.dataset.act === 'fb-add') $('#fbfile').click();
+      if (a.dataset.act === 'fb-send') send(a, close);
+    },
+  });
+  $('#fbfile').onchange = async e => {
+    for (const f of [...e.target.files].slice(0, FB_MAX_IMG - fb.imgs.length)) {
+      try { fb.imgs.push(await shrinkImage(f)); } catch { toast('Не удалось открыть картинку'); }
+    }
+    e.target.value = ''; draw();
+  };
+  draw();
+}
+// уменьшаем картинку до 1280 px по длинной стороне и JPEG ~80% — обычно 100–300 КБ
+function shrinkImage(file) {
+  return new Promise((ok, fail) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1280 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); ok(c.toDataURL('image/jpeg', 0.8));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); fail(); };
+    img.src = url;
+  });
 }
 function exportData() {
   const blob = new Blob([JSON.stringify(S)], { type: 'application/json' });

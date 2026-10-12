@@ -527,3 +527,17 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
   .lv-txt { display: none; }
 }
 .tg-btn { width: auto; margin: 0; padding: 0 16px; text-decoration: none; flex: none; }
+
+/* отзыв */
+.fbstars { display: flex; gap: 6px; }
+.fbstars button { font-size: 40px; line-height: 1; color: #d9d9d9; padding: 2px; }
+.fbstars button.on { color: #f5b301; }
+.fbtext { height: auto; min-height: 120px; padding: 10px 12px; font: inherit; font-size: 17px; resize: vertical; }
+.fbimgs { display: flex; gap: 10px; flex-wrap: wrap; }
+.fbimg { position: relative; width: 84px; height: 84px; }
+.fbimg img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1px solid #ddd; }
+.fbimg button { position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 18px; line-height: 1; }
+.fbadd { width: 84px; height: 84px; border-radius: 10px; border: 2px dashed #ccc; color: #999; font-size: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+.fbadd span { font-size: 13px; margin-top: 4px; }
+.fb h3 .sub { font-weight: 400; font-size: 14px; text-transform: none; letter-spacing: 0; }
+.fb .btn.teal:not(.small) { margin-top: 14px; }
