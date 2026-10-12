@@ -183,7 +183,7 @@ def forward_feedback(fid, stars, text, contact, ver, plat, learned, images):
         print('отзыв в Telegram не ушёл:', repr(e), file=sys.stderr, flush=True)
 
 def feedback(c, body, ip):
-    if limited('fb:' + ip, 5, 3600): raise Err(429, 'слишком много отзывов подряд — попробуйте через час')
+    if limited('fb:' + ip, 3, 3600): raise Err(429, 'слишком много отзывов подряд — попробуйте через час')
     stars = int(body.get('stars') or 0)
     if not 0 <= stars <= 5: raise Err(400, 'неверная оценка')
     text = str(body.get('text', '')).strip()[:3000]
