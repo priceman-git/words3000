@@ -541,3 +541,12 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
 .fbadd span { font-size: 13px; margin-top: 4px; }
 .fb h3 .sub { font-weight: 400; font-size: 14px; text-transform: none; letter-spacing: 0; }
 .fb .btn.teal:not(.small) { margin-top: 14px; }
+
+/* компьютер с мышью: подсказки про клавиатуру — цифры у вариантов ответа и строка «можно печатать» */
+.kbd-hint { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .kbd-hint { display: block; font-size: 14px; color: var(--muted); text-align: center; margin: 6px 0 0; }
+  .opts { counter-reset: opt; }
+  .opt::before { counter-increment: opt; content: counter(opt); display: inline-block; min-width: 22px; height: 22px; line-height: 22px; border-radius: 6px; background: #eee; color: #888; font-size: 14px; font-weight: 700; margin-right: 10px; vertical-align: 3px; }
+  .idk::after { content: '\00a0(0)'; color: #999; }
+}

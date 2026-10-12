@@ -1316,7 +1316,7 @@ function renderLetters(app, key) {
   const prompt = key === 'audio'
     ? `<div class="listen-cap">Коснитесь, чтобы прослушать</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
     : `<div class="bigword ru">${esc(ru(i))}</div>`;
-  const cells = `<div class="cells" id="cells">${[...word].map((_, k) => `<span class="c ${k === 0 ? 'cur' : ''}"></span>`).join('')}</div>`;
+  const cells = `<div class="cells" id="cells">${[...word].map((_, k) => `<span class="c ${k === 0 ? 'cur' : ''}"></span>`).join('')}</div><p class="kbd-hint">Можно печатать на клавиатуре компьютера</p>`;
   const pad = kb ? keyboardHTML() : `<div class="tiles" id="tiles">${letters.map((ch, k) => `<button class="tile" data-t="${k}">${esc(ch)}</button>`).join('')}</div>`;
   const tl = tools(i, true);
   // в «Аудировании» кнопки под динамиком, в «Написании» и «Закреплении» — под ячейками
@@ -1380,9 +1380,7 @@ function renderLetters(app, key) {
     bindTaps($('#tiles'), '.tile', t => press(letters[+t.dataset.t].toLowerCase(), t));
   }
   onKey = e => {
-    if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
-    const ch = e.key.toLowerCase();
-    if (!/[a-z' -]/.test(ch)) return;
+    const ch = latinKey(e); if (!ch) return;
     e.preventDefault();
     keyClick(ch === ' ' || ch === '-' ? 'mod' : 'key');
     const el = kb ? $(`.key[data-k="${ch}"]`)
@@ -1390,6 +1388,13 @@ function renderLetters(app, key) {
     press(ch, el);
   };
   if (key === 'audio' && S.set.auto) sayWord(i);   // иначе — только по кнопке «Коснитесь, чтобы прослушать»
+}
+// буква с физической клавиатуры: при русской раскладке e.key — кириллица, поэтому берём клавишу по её месту (e.code)
+function latinKey(e) {
+  if (e.metaKey || e.ctrlKey || e.altKey) return null;
+  if (e.key.length === 1 && /[a-z' -]/i.test(e.key)) return e.key.toLowerCase();
+  const m = /^Key([A-Z])$/.exec(e.code);
+  return m ? m[1].toLowerCase() : { Space: ' ', Minus: '-', Quote: "'" }[e.code] || null;
 }
 // крупное слово задания: уменьшаем шрифт, пока самое длинное слово не поместится целиком (без разрыва посередине)
 function fitPrompts() {
@@ -1600,6 +1605,7 @@ function renderPlaceType(app) {
   app.innerHTML = `<div class="xhead"><button class="back" id="xback" aria-label="Назад">${I.back}</button><h2>Тестовый урок</h2><span></span></div>` + pbar() +
     `<div class="xbody"><div class="bigword ru">${esc(ru(i))}</div>
     <div class="cells" id="cells">${[...word].map((_, k) => `<span class="c ${k === 0 ? 'cur' : ''}"></span>`).join('')}</div>
+    <p class="kbd-hint">Можно печатать на клавиатуре компьютера</p>
     <div class="place-tools"><button class="btn gray small" id="phint">Подсказка (1)</button><button class="btn gray small" id="idk">Не знаю</button></div>
     ${keyboardHTML()}</div><div class="kbd-space"></div>`;
   fitLetters(word.length);
@@ -1629,8 +1635,7 @@ function renderPlaceType(app) {
   };
   $('#idk').onclick = () => finish('skip');
   onKey = e => {
-    if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
-    const ch = e.key.toLowerCase(); if (!/[a-z' -]/.test(ch)) return;
+    const ch = latinKey(e); if (!ch) return;
     e.preventDefault(); keyClick(ch === ' ' ? 'mod' : 'key'); press(ch, $(`.key[data-k="${ch}"]`));
   };
 }
@@ -1872,7 +1877,7 @@ function importData(file) {
 /* ================= запуск ================= */
 
 document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
   if (onKey) onKey(e);
 });
 document.addEventListener('visibilitychange', () => { if (!document.hidden && !run && !$('.sheet-bg')) render(); });
