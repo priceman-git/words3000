@@ -38,7 +38,7 @@ const AVATARS = ['🙂', '😎', '🦊', '🐱', '🐼', '🦁', '🐸', '🐧',
 const defaults = () => ({
   v: 2,
   profile: { name: 'Профиль', avatar: '🙂' },
-  set: { daily: true, auto: false, sfx: false, keySound: true, haptic: true, click: 'soft', rate: 0.85, voice: '' },   // озвучка выключена; звук нажатий и вибрация — включены, настраиваются отдельно
+  set: { daily: true, auto: false, hideRu: false, sfx: false, keySound: true, haptic: true, click: 'soft', rate: 0.85, voice: '' },   // озвучка выключена; звук нажатий и вибрация — включены, настраиваются отдельно
   L: {},        // урок -> {started, dec:{i:'k'|'l'}, learn:[], st:[6 этапов], errs:{}, hints, time, complete, rep:{due, done}}
   T: {},        // тест "страница.ряд" -> {best, n, stars}
   w: {},        // слово -> {learned, err}
@@ -1184,12 +1184,14 @@ function renderStudy(app) {
   const ruLen = ru(i).length, ruPx = ruLen <= 18 ? 36 : ruLen <= 28 ? 30 : 25;
   const exLen = Math.max(plain(exEn(i)).length, plain(exRu(i)).length * 0.8), exPx = exLen <= 40 ? 23 : exLen <= 55 ? 21 : 19;
   app.classList.add('fit');
-  app.innerHTML = `<div class="xfit"><div class="xhead"><button class="back" id="xback" aria-label="Назад">${I.back}</button><span></span>
+  const hide = S.set.hideRu;   // «Скрыть перевод»: честнее решить, знаю ли слово; перевод открывается касанием
+  app.innerHTML = `<div class="xfit"><div class="xhead"><button class="back" id="xback" aria-label="Назад">${I.back}</button>
+      <button class="trtog ${hide ? 'on' : ''}" id="trtog" aria-pressed="${hide}"><span class="sw"></span>Скрывать перевод</button>
       <button class="mute ${S.set.auto ? 'on' : ''}" id="auto" aria-label="Автоозвучка">${S.set.auto ? I.spk : I.mute}</button></div>
     <div class="pbar"><span class="seg ok" style="left:0;width:${k / all.length * 100}%"></span><span class="cnt">${k}</span><span class="tot">${all.length}</span></div>
-    <div class="xbody study"><div class="st-top"><div class="bigword" style="font-size:${wordPx}px">${esc(disp(i))}</div><div class="ipa gray">${esc(ipa(i))}</div></div>
+    <div class="xbody study ${hide ? 'hide-tr' : ''}" id="study"><div class="st-top"><div class="bigword" style="font-size:${wordPx}px">${esc(disp(i))}</div><div class="ipa gray">${esc(ipa(i))}</div></div>
       <div class="sline"><button class="spk" id="say" aria-label="Произнести">${I.spk}</button></div>
-      <div class="ru" style="font-size:${ruPx}px">${esc(ru(i))}</div>
+      <div class="ru" style="font-size:${ruPx}px"><span class="tr">${esc(ru(i))}</span><button class="peek" id="peek">Показать перевод</button></div>
       <div class="ex-box" style="font-size:${exPx}px">${ex}</div>
       <div class="big-btns"><button class="bbtn teal" id="know">Знаю слово</button><button class="bbtn lime" id="learn">Выучить слово</button></div></div></div>`;
   $('#xback').onclick = exitRun;
@@ -1201,9 +1203,19 @@ function renderStudy(app) {
     if (d === 'k') wmut(i).learned = 1;   // «Знаю слово» — исключается из урока и считается выученным
     bumpDay(); save(); nextWord();
   };
+  const reveal = () => $('#study').classList.remove('hide-tr');   // только для этого слова, настройка не меняется
+  $('#peek').onclick = reveal;
+  $('#trtog').onclick = () => {
+    S.set.hideRu = !S.set.hideRu; save();
+    $('#study').classList.toggle('hide-tr', S.set.hideRu);
+    $('#trtog').classList.toggle('on', S.set.hideRu); $('#trtog').setAttribute('aria-pressed', S.set.hideRu);
+  };
   $('#know').onclick = () => decide('k');
   $('#learn').onclick = () => decide('l');
-  onKey = e => { if (e.key === 'ArrowLeft') decide('k'); else if (e.key === 'ArrowRight' || e.key === 'Enter') decide('l'); };
+  onKey = e => {
+    if (e.key === 'ArrowLeft') decide('k'); else if (e.key === 'ArrowRight' || e.key === 'Enter') decide('l');
+    else if (e.key === ' ') { e.preventDefault(); reveal(); }
+  };
   if (S.set.auto) sayWord(i);
 }
 
