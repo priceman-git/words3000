@@ -380,6 +380,7 @@ function speak(text, rate) {
   if (!TTS || !text) return;
   try {
     const u = new SpeechSynthesisUtterance(text);
+    if (!voices.length) refreshVoices();   // iOS может отдать список голосов позже, а «voiceschanged» не прислать — иначе звучит голос по умолчанию
     let v = bestVoice();
     // сетевой голос без интернета молчит — подменяем встроенным английским
     if (v && !v.localService && !navigator.onLine) v = voices.find(x => x.localService && x.lang.replace('_', '-').startsWith(v.lang.slice(0, 5).replace('_', '-'))) || voices.find(x => x.localService) || v;
@@ -389,7 +390,8 @@ function speak(text, rate) {
     else speechSynthesis.speak(u);
   } catch (e) { /* озвучка недоступна */ }
 }
-const sayWord = i => speak(disp(i).replace(/\//g, ', '));
+// три формы глагола — через запятые: тире и косую черту iOS читает по-своему и может сменить голос
+const sayWord = i => speak(W[i][8] ? W[i][8].join(', ').replace(/\//g, ', ') : disp(i));
 const sayEx = i => speak(plain(exEn(i)));
 let actx = null;
 function sfx(ok) {
