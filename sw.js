@@ -3,10 +3,10 @@
 // Обновление: браузер сам проверяет sw.js при каждом открытии; если VERSION изменился, новая версия целиком
 // скачивается в фоне (все файлы из FILES) и включается при следующем открытии — старая и новая версии не смешиваются.
 // При выпуске новой версии: увеличить V здесь и ?v= в index.html (у styles.css, fonts.css, words.js, app.js).
-const V = 99;
+const V = 100;
 const VERSION = 'w3000-v' + V;
 const FILES = [
-  './', 'index.html', `styles.css?v=${V}`, `words.js?v=${V}`, `app.js?v=${V}`, `sync.js?v=${V}`, 'privacy.html', `fonts/fonts.css?v=${V}`,
+  './', 'index.html', `styles.css?v=${V}`, `words.js?v=${V}`, `app.js?v=${V}`, `sync.js?v=${V}`, `sets.js?v=${V}`, 'privacy.html', `fonts/fonts.css?v=${V}`,
   'fonts/rc-latin-normal.woff2', 'fonts/rc-latin-italic.woff2', 'fonts/rc-latin-ext-normal.woff2',
   'fonts/rc-latin-ext-italic.woff2', 'fonts/rc-cyrillic-normal.woff2', 'fonts/rc-cyrillic-italic.woff2',
   'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',

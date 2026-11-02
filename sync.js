@@ -12,7 +12,7 @@ const ACC_KEY = 'w3000.acc';
 // вход доступен только на своём сервере (на GitHub Pages нет API); пока нет почты для кодов — включается флагом для тестов
 const SYNC_HOST = /(^|\.)5555words\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
 const SYNC_ON = () => SYNC_HOST && (window.SYNC_PUBLIC || (() => { try { return localStorage.getItem('w3000.sync') === '1'; } catch (e) { return false; } })());
-const LOCAL_ONLY = ['set', 'page', 'league', 'dictReset', 'dictNote'];   // не синхронизируются
+const LOCAL_ONLY = ['set', 'page', 'league', 'dictReset', 'dictNote', 'tab'];   // не синхронизируются
 
 let acc = (() => { try { return JSON.parse(localStorage.getItem(ACC_KEY)) || {}; } catch (e) { return {}; } })();
 const saveAcc = () => { try { localStorage.setItem(ACC_KEY, JSON.stringify(acc)); } catch (e) {} };
@@ -44,7 +44,26 @@ function mergeStates(a, b) {   // a — это устройство, b — се�
     else if ((b.dictVer || 0) < a.dictVer) return a;   // слишком старый формат — оставляем своё
   }
   const o = { ...a };
-  const keys = (x, y) => [...new Set([...Object.keys(x || {}), ...Object.keys(y || {})])];
+  mergeProg(o, a, b);
+  // наборы (неправильные глаголы и др.) — тот же порядок объединения для каждого
+  o.X = {};
+  const blank = { L: {}, T: {}, w: {}, fav: {} };
+  for (const id of keys(a.X, b.X)) {
+    const x = { ...blank, ...((a.X || {})[id] || {}) }, y = { ...blank, ...((b.X || {})[id] || {}) };
+    o.X[id] = { ...x }; mergeProg(o.X[id], x, y); o.X[id].start = 1;
+  }
+  o.days = { ...(b.days || {}) };
+  for (const d in a.days || {}) o.days[d] = Math.max(o.days[d] || 0, a.days[d]);
+  o.onboarded = Math.max(a.onboarded || 0, b.onboarded || 0);
+  if (b.onboarded && (!a.onboarded || progressOf(b) > progressOf(a))) { o.start = b.start; o.placement = b.placement; }
+  const pa = a.profile || {}, pb = b.profile || {};
+  o.profile = (pb.ts || 0) > (pa.ts || 0) || (!pa.ts && pa.name === 'Профиль' && pb.name) ? pb : pa;
+  o.dictVer = DICT_VER;
+  return o;
+}
+const keys = (x, y) => [...new Set([...Object.keys(x || {}), ...Object.keys(y || {})])];
+// прогресс одного курса: выученные слова, «Мои слова», уроки, мини-тесты
+function mergeProg(o, a, b) {
   o.w = {};
   for (const i of keys(a.w, b.w)) {
     const p = a.w[i] || {}, q = (b.w || {})[i] || {};
@@ -67,15 +86,7 @@ function mergeStates(a, b) {   // a — это устройство, b — се�
     for (const lv in p.best || {}) best[lv] = Math.max(best[lv] || 0, p.best[lv]);
     o.T[id] = { stars: Math.max(p.stars || 0, q.stars || 0), best, d: (p.d || '') > (q.d || '') ? p.d : q.d };
   }
-  o.days = { ...(b.days || {}) };
-  for (const d in a.days || {}) o.days[d] = Math.max(o.days[d] || 0, a.days[d]);
   o.lastStart = (a.lastStart || '') > (b.lastStart || '') ? a.lastStart : b.lastStart || null;
-  o.onboarded = Math.max(a.onboarded || 0, b.onboarded || 0);
-  if (b.onboarded && (!a.onboarded || progressOf(b) > progressOf(a))) { o.start = b.start; o.placement = b.placement; }
-  const pa = a.profile || {}, pb = b.profile || {};
-  o.profile = (pb.ts || 0) > (pa.ts || 0) || (!pa.ts && pa.name === 'Профиль' && pb.name) ? pb : pa;
-  o.dictVer = DICT_VER;
-  return o;
 }
 
 /* ---------------- синхронизация ---------------- */

@@ -1,13 +1,13 @@
 'use strict';
 /* 5555 слов (5555words.com) — веб-версия по ТЗ (TZ.md). Прогресс хранится в localStorage устройства. */
 
-const W = window.WORDS;               // [en, ru, ipa, пример, перевод примера, глагол]
+let W = window.WORDS;                 // [en, ru, ipa, пример, перевод примера, глагол]; во вкладке набора — его элементы (sets.js)
 const PER_LESSON = 10;
-const TOTAL = Math.ceil(W.length / PER_LESSON);   // 562 урока (5620 слов)
+let TOTAL = Math.ceil(W.length / PER_LESSON);     // 562 урока (5620 слов)
 const CORE = 300;                      // курс 1 — уроки 1–300 (3000 слов); курс 2 (301–562) открывается в лиге «Грандмастер»
 const PAGE = 50;                       // уроков на странице
 const ROW = 4;                         // уроков в ряду, 5-я ячейка — тест
-const PAGES = Math.ceil(TOTAL / PAGE);
+let PAGES = Math.ceil(TOTAL / PAGE);
 // подсказок на одно прохождение этапа, как в оригинале: «Запоминание» — 1, буквенные этапы — 3; тест — 1
 const HINTS = { memo: 1, audio: 3, write: 3, fix: 3, test: 3 };   // test — только на лёгком уровне мини-теста
 const TEST_WORDS = 20, TEST_SEC_PER_LETTER = 1;                   // мини-тест: 20 слов; на 3 звезды — не дольше 1 с на букву
@@ -50,6 +50,8 @@ const defaults = () => ({
   start: 1,       // стартовый урок: все уроки до него условно пройдены
   placement: null,   // {self: 'B1+', known, rec, start, d}
   dictVer: DICT_VER,
+  X: {},         // прогресс наборов (sets.js): id -> {L, T, w, fav, start, lastStart, page}
+  tab: 'words',  // открытая вкладка главного экрана
 });
 let S = load();
 function load() {
@@ -93,6 +95,20 @@ function migrateV4(r) {
   if (touched) r.dictNote = 1;
   return r;
 }
+/* ---------------- вкладки: слова и наборы ---------------- */
+// P — прогресс открытой вкладки: у «Слов» это сам S (как раньше), у набора — S.X[id].
+// Через Proxy, чтобы после синхронизации (S заменяется целиком) P сразу указывал на новые данные.
+const SETS = window.SETS || {};
+const curSet = () => (S.tab !== 'words' && SETS[S.tab]) || null;
+const newSetState = () => ({ L: {}, T: {}, w: {}, fav: {}, start: 1, lastStart: null, page: 0 });
+const prog = () => { const x = curSet(); if (!x) return S; S.X = S.X || {}; return S.X[S.tab] || (S.X[S.tab] = newSetState()); };
+const P = new Proxy({}, { get: (_, k) => prog()[k], set: (_, k, v) => { prog()[k] = v; return true; } });
+function applyTab() {
+  if (!SETS[S.tab]) S.tab = 'words';
+  W = curSet() ? curSet().items : window.WORDS;
+  TOTAL = Math.ceil(W.length / PER_LESSON); PAGES = Math.ceil(TOTAL / PAGE);
+}
+applyTab();
 function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast('Не удалось сохранить прогресс'); } }
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
 
@@ -114,7 +130,8 @@ const plural = (n, a, b, c) => { const m = n % 10, h = n % 100; return m === 1 &
 const en = i => W[i][0];
 const ru = i => W[i][1];
 const ipa = i => W[i][2] ? `[${W[i][2]}]` : '';
-const disp = i => (W[i][5] ? 'to ' : '') + W[i][0];
+const chip = i => W[i][8] ? W[i][0] : disp(i);   // короткая подпись в списках: у глагола — 1-я форма
+const disp = i => W[i][8] ? W[i][8].join(' — ') : (W[i][5] ? 'to ' : '') + W[i][0];   // у глаголов набора — три формы
 const exEn = i => W[i][3] || '';
 const exRu = i => W[i][4] || '';
 const plain = s => s.replace(/[\[\]]/g, '');
@@ -127,9 +144,9 @@ const synPair = (i, j) => { const a = en(i).toLowerCase(), b = en(j).toLowerCase
 const overlaps = (i, j) => { const a = meanings(i); return meanings(j).some(m => a.includes(m)) || synPair(i, j); };
 
 const lessonIds = n => range((n - 1) * PER_LESSON, Math.min(n * PER_LESSON, W.length));
-const L = n => S.L[n];
+const L = n => P.L[n];
 const learnIds = n => (L(n) && L(n).learn) || lessonIds(n);
-const wmut = i => S.w[i] || (S.w[i] = { learned: 0, err: 0 });
+const wmut = i => P.w[i] || (P.w[i] = { learned: 0, err: 0 });
 const newLesson = () => ({ started: Date.now(), dec: {}, learn: null, st: STAGES.map(() => ({ done: 0, passes: 0, pts: {}, ok: {}, err: {}, rep: {} })), errs: {}, hints: 0, time: 0, complete: null, rep: null });
 
 function stageInfo(n, k) {
@@ -142,7 +159,7 @@ function stageInfo(n, k) {
   const repCount = ids.filter(i => !st.ok[i] && onRep[i]).length;
   return { done: !!st.done, credited, repCount, total: ids.length, full: !!st.done && credited + repCount === ids.length, avail: !!l.st[k - 1].done };
 }
-const isSkipped = n => n < S.start && !L(n);   // урок до стартового, который не открывали, — условно пройден
+const isSkipped = n => n < P.start && !L(n);   // урок до стартового, который не открывали, — условно пройден
 const lessonComplete = n => !!(L(n) && L(n).complete) || isSkipped(n);
 const stagesFull = n => STAGES.every((_, k) => stageInfo(n, k).full);
 const wordPts = (n, i) => { const l = L(n); if (!l) return 0; let s = 0; for (let k = 1; k < 6; k++) s += l.st[k].pts[i] || 0; return s; };
@@ -294,20 +311,20 @@ const rowsOnPage = p => Math.ceil(Math.min(PAGE, TOTAL - p * PAGE) / ROW);
 const testId = (p, r) => `${p}.${r}`;
 
 const MAX_UNREPEATED = 2;              // больше 2 неповторённых уроков — новый урок не начать
-const unrepeated = () => Object.keys(S.L).map(Number).filter(n => L(n).complete && repState(n) && repState(n) !== 'done').sort((a, b) => a - b);
+const unrepeated = () => Object.keys(P.L).map(Number).filter(n => L(n).complete && repState(n) && repState(n) !== 'done').sort((a, b) => a - b);
 const repBlocked = () => unrepeated().length > MAX_UNREPEATED;
 const GRANDMASTER = () => LEAGUES[GM_INDEX].from;
 const extraLocked = n => n > CORE && level() < GRANDMASTER();   // курс 2 — только в лиге «Грандмастер»
-const canStartNew = () => (!S.set.daily || S.lastStart !== today()) && !repBlocked();
+const canStartNew = () => (!S.set.daily || P.lastStart !== today()) && !repBlocked();
 function nextToStart() {
-  let max = S.start - 1;
-  for (const n in S.L) if (+n >= S.start) max = Math.max(max, +n);
+  let max = P.start - 1;
+  for (const n in P.L) if (+n >= P.start) max = Math.max(max, +n);
   return max < TOTAL ? max + 1 : null;
 }
 function repState(n) {
   const l = L(n);
   if (!l || !l.complete || !l.learn.length) return null;
-  if (n < S.start) return 'done';   // уроки ниже стартового засчитаны по тесту уровня — повторение не требуется
+  if (n < P.start) return 'done';   // уроки ниже стартового засчитаны по тесту уровня — повторение не требуется
   if (!l.rep) return 'inactive';
   if (l.rep.done) return 'done';
   return Date.now() >= l.rep.due ? 'ready' : 'waiting';
@@ -370,7 +387,7 @@ function speak(text, rate) {
     else speechSynthesis.speak(u);
   } catch (e) { /* озвучка недоступна */ }
 }
-const sayWord = i => speak(disp(i));
+const sayWord = i => speak(disp(i).replace(/\//g, ', '));
 const sayEx = i => speak(plain(exEn(i)));
 let actx = null;
 function sfx(ok) {
@@ -557,11 +574,11 @@ function refreshRing(i) {
   r.querySelector('.arc').setAttribute('stroke-dasharray', `${c * f} ${c}`);
 }
 function setFav(i, on) {
-  if (on) { S.fav[i] = Date.now(); if (S.favDel) delete S.favDel[i]; }
-  else { delete S.fav[i]; (S.favDel || (S.favDel = {}))[i] = Date.now(); }
+  if (on) { P.fav[i] = Date.now(); if (P.favDel) delete P.favDel[i]; }
+  else { delete P.fav[i]; (P.favDel || (P.favDel = {}))[i] = Date.now(); }
   save();
 }
-const toggleFav = i => { const on = !S.fav[i]; setFav(i, on); toast(on ? 'Добавлено в «Мои слова»' : 'Убрано из «Моих слов»'); return on; };
+const toggleFav = i => { const on = !P.fav[i]; setFav(i, on); toast(on ? 'Добавлено в «Мои слова»' : 'Убрано из «Моих слов»'); return on; };
 
 /* ---------------- routing ---------------- */
 
@@ -572,16 +589,16 @@ let onKey = null;
 function go(v) { view = v; run = null; onKey = null; closeSheet(); window.scrollTo(0, 0); render(); if (v.name === 'main') scrollToCurrent(); if (swReload) setTimeout(applyUpdate, 300); }
 // урок, к которому прокручиваем главный экран: пора повторить → начатый, но не законченный → следующий по порядку
 function currentLesson() {
-  const ready = Object.keys(S.L).map(Number).filter(n => repState(n) === 'ready');
+  const ready = Object.keys(P.L).map(Number).filter(n => repState(n) === 'ready');
   if (ready.length) return Math.min(...ready);
-  const open = Object.keys(S.L).map(Number).filter(n => n >= S.start && !S.L[n].complete);
+  const open = Object.keys(P.L).map(Number).filter(n => n >= P.start && !P.L[n].complete);
   return open.length ? Math.min(...open) : nextToStart() || TOTAL;
 }
 // главный экран сразу показывает этот урок посередине — без прокрутки вручную
 function scrollToCurrent() {
   if (view.name !== 'main' || run) return;
   const n = currentLesson();
-  if (Math.floor((n - 1) / PAGE) !== S.page) return;   // пользователь сам листает другую страницу — не мешаем
+  if (Math.floor((n - 1) / PAGE) !== P.page) return;   // пользователь сам листает другую страницу — не мешаем
   requestAnimationFrame(() => { const el = $(`.cell[data-n="${n}"]`); if (el) el.scrollIntoView({ block: 'center' }); });
 }
 function render() {
@@ -590,7 +607,7 @@ function render() {
   app.classList.remove('fit');
   if (run) return renderRun(app);
   onKey = null;
-  if (!S.onboarded || view.name === 'onb') return renderOnb(app);
+  if (!S.onboarded || view.name === 'onb') { if (curSet()) { S.tab = 'words'; applyTab(); } return renderOnb(app); }
   if (view.name === 'lesson') return renderLesson(app, view.n);
   if (view.name === 'fav') return renderFavs(app);
   renderMain(app);
@@ -602,7 +619,7 @@ function render() {
 const FAV_STEPS = ['memo', 'match', 'audio', 'write', 'fix'];   // стандартные упражнения урока, без «Изучения»
 const FAV_SESSION = 10;
 let favQ = '', favLetter = '';
-const favIds = () => Object.keys(S.fav).map(Number).filter(i => i < W.length);
+const favIds = () => Object.keys(P.fav).map(Number).filter(i => i < W.length);
 
 function favBar() {
   const n = favIds().length;
@@ -611,7 +628,7 @@ function favBar() {
 }
 // слова для тренировки: сначала ещё не тренированные, потом с большей долей ошибок, потом давно не тренированные
 function pickFavs() {
-  const st = S.favStat || {};
+  const st = P.favStat || {};
   const score = i => { const x = st[i]; return x ? [1, -(x.err / Math.max(1, x.n)), x.last] : [0, 0, 0]; };
   return shuffle(favIds().sort((a, b) => { const p = score(a), q = score(b); return p[0] - q[0] || p[1] - q[1] || p[2] - q[2]; }).slice(0, FAV_SESSION));
 }
@@ -629,7 +646,7 @@ function favStep(f) {
 }
 function favNextStep(r) {
   if (r.step + 1 < r.steps.length) return favStep({ words: r.words, steps: r.steps, step: r.step + 1, werr: r.werr, t0: r.ft0 });
-  const st = S.favStat || (S.favStat = {}), now = Date.now();
+  const st = P.favStat || (P.favStat = {}), now = Date.now();
   r.words.forEach(i => { const x = st[i] || (st[i] = { n: 0, err: 0, last: 0 }); x.n++; x.err += r.werr[i] || 0; x.last = now; });
   save();
   view = { name: 'fav' }; render();
@@ -645,7 +662,7 @@ function favNextStep(r) {
 
 function favRow(i, mode) {
   const btn = mode === 'search'
-    ? `<button class="heart ${S.fav[i] ? 'on' : ''}" data-tfav="${i}" aria-label="${S.fav[i] ? 'Убрать' : 'Добавить'}">${S.fav[i] ? I.heartOn : I.heart}</button>`
+    ? `<button class="heart ${P.fav[i] ? 'on' : ''}" data-tfav="${i}" aria-label="${P.fav[i] ? 'Убрать' : 'Добавить'}">${P.fav[i] ? I.heartOn : I.heart}</button>`
     : `<button class="x" data-unfav="${i}" aria-label="Убрать">×</button>`;
   return `<div class="fav"><button class="spk dark" data-say="${i}" aria-label="Произнести">${I.spk}</button><div class="t"><b>${esc(disp(i))}</b> ${esc(ipa(i))}<div>${esc(ru(i))}</div></div>${btn}</div>`;
 }
@@ -688,7 +705,7 @@ function renderFavs(app) {
   app.onclick = e => {
     const say = e.target.closest('[data-say]'); if (say) return sayWord(+say.dataset.say);
     const tf = e.target.closest('[data-tfav]');
-    if (tf) { setFav(+tf.dataset.tfav, !S.fav[+tf.dataset.tfav]); const y = scrollY; render(); window.scrollTo(0, y); return; }
+    if (tf) { setFav(+tf.dataset.tfav, !P.fav[+tf.dataset.tfav]); const y = scrollY; render(); window.scrollTo(0, y); return; }
     const uf = e.target.closest('[data-unfav]');
     if (uf) { setFav(+uf.dataset.unfav, false); const y = scrollY; render(); window.scrollTo(0, y); return; }
     const lt = e.target.closest('[data-letter]'); if (lt) { favLetter = lt.dataset.letter; return render(); }
@@ -699,8 +716,9 @@ function renderFavs(app) {
 /* ================= главный экран ================= */
 
 function renderMain(app) {
-  const p = S.page;
-  const lc = learnedCount(), pc = pendingCount();
+  const p = P.page;
+  const X = curSet(), lc = learnedCount(), pc = pendingCount();
+  const xc = X ? Object.keys(P.w).filter(i => P.w[i].learned).length : 0;   // выучено в наборе
   const nts = nextToStart();
   const a = p * PAGE + 1, b = Math.min((p + 1) * PAGE, TOTAL);
   let cells = '';
@@ -715,9 +733,13 @@ function renderMain(app) {
       <button class="st-item" data-act="profile"><span class="avatar">${esc(S.profile.avatar)}</span><small>${esc(S.profile.name)}</small></button>
       <button class="st-item" data-act="leagues">${badgeSVG(leagueOf(level()), level(), 48)}<small>${LEAGUES[leagueOf(level())].name}<span class="lv-txt"> · ур. ${level()}</span></small></button>
       <button class="st-item" data-act="favs" aria-label="Мои слова"><span class="fav-circle">${I.heartOn}${favIds().length ? `<span class="fav-n">${favIds().length}</span>` : ''}</span><small>Мои слова</small></button>
-      <button class="st-item grow" data-act="profile"><span class="learned-pill">${lc}</span><small>Выучено слов: ${lc}<b>+${pc}</b></small></button>
+      ${X ? `<button class="st-item grow" data-act="profile"><span class="learned-pill">${xc}</span><small>Выучено: ${xc} из ${W.length}</small></button>`
+        : `<button class="st-item grow" data-act="profile"><span class="learned-pill">${lc}</span><small>Выучено слов: ${lc}<b>+${pc}</b></small></button>`}
     </div>
-    <div class="brand"><h1>5555 слов</h1><div class="brand-sub">самых используемых в английском</div><p>95% любого текста можно понять, зная всего 3000 слов</p></div>
+    <div class="tabs" role="tablist">${[['words', 'Слова'], ...Object.entries(SETS).map(([id, x]) => [id, x.tab])].map(([id, name]) =>
+      `<button class="tabb ${S.tab === id ? 'on' : ''}" role="tab" aria-selected="${S.tab === id}" data-tab="${id}">${esc(name)}</button>`).join('')}</div>
+    ${X ? `<div class="brand"><h1>${esc(X.title)}</h1><div class="brand-sub">${esc(X.sub)}</div><p>${esc(X.note)}</p></div>`
+      : '<div class="brand"><h1>5555 слов</h1><div class="brand-sub">самых используемых в английском</div><p>95% любого текста можно понять, зная всего 3000 слов</p></div>'}
     <div class="pager">
       <button class="arrow" data-act="prev" ${p === 0 ? 'disabled' : ''} aria-label="Предыдущая страница">${I.back}</button>
       <h2>Уроки ${a}–${b}${a > CORE ? '<small>Курс 2 · продвинутый</small>' : ''}</h2>
@@ -728,9 +750,10 @@ function renderMain(app) {
     ${repBanner()}
     ${typeof syncBanner === 'function' ? syncBanner() : ''}
     <div class="grid">${cells}</div>`;
-  const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== S.page) { S.page = np; save(); render(); window.scrollTo(0, 0); } };
+  const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== P.page) { P.page = np; save(); render(); window.scrollTo(0, 0); } };
   app.onclick = e => {
-    const t = e.target.closest('[data-act],[data-n],[data-test]'); if (!t) return;
+    const t = e.target.closest('[data-act],[data-n],[data-test],[data-tab]'); if (!t) return;
+    if (t.dataset.tab) { if (t.dataset.tab !== S.tab) { S.tab = t.dataset.tab; applyTab(); save(); go({ name: 'main' }); } return; }
     if (t.dataset.act && t.dataset.act.startsWith('sync-') && window.syncAction) return syncAction(t.dataset.act);   // вход и синхронизация — sync.js
     if (t.dataset.act === 'favs') return go({ name: 'fav' });
     if (t.dataset.act === 'prev') return turn(p - 1);
@@ -755,7 +778,7 @@ function renderMain(app) {
 
 // все пройденные, но ещё не повторённые уроки — списком над плиткой
 function repBanner() {
-  const due = Object.keys(S.L).map(Number).filter(n => ['inactive', 'waiting', 'ready'].includes(repState(n))).sort((a, b) => a - b);
+  const due = Object.keys(P.L).map(Number).filter(n => ['inactive', 'waiting', 'ready'].includes(repState(n))).sort((a, b) => a - b);
   if (!due.length) return '';
   const ready = due.filter(n => repState(n) === 'ready');
   // «Ждут повторения: 1 урок — №166»: число уроков и их номера, чтобы номер не читался как количество
@@ -767,9 +790,9 @@ function repBanner() {
 
 function lessonCell(n, nts) {
   const l = L(n);
-  if (!l && extraLocked(n)) return `<button class="cell gm-locked" data-n="${n}">${n % 5 === 0 ? `<span class="ms">${n * PER_LESSON}</span><span class="ms-sub">слов</span>` : `<span class="num">${n}</span>`}<span class="lock-ic">${I.lock}</span></button>`;
+  if (!l && extraLocked(n)) return `<button class="cell gm-locked" data-n="${n}">${n % 5 === 0 ? `<span class="ms">${n * PER_LESSON}</span><span class="ms-sub">${curSet() ? plural(n * PER_LESSON, ...curSet().unit) : 'слов'}</span>` : `<span class="num">${n}</span>`}<span class="lock-ic">${I.lock}</span></button>`;
   if (isSkipped(n)) return `<button class="cell skipped" data-n="${n}"><span class="done-ic">${I.check}</span><span class="tag gray">условно</span><span class="bar"><i style="width:100%"></i></span></button>`;
-  const label = n % 5 === 0 ? `<span class="ms">${n * PER_LESSON}</span><span class="ms-sub">слов</span>` : `<span class="num">${n}</span>`;
+  const label = n % 5 === 0 ? `<span class="ms">${n * PER_LESSON}</span><span class="ms-sub">${curSet() ? plural(n * PER_LESSON, ...curSet().unit) : 'слов'}</span>` : `<span class="num">${n}</span>`;
   if (l && l.complete) {
     const rs = repState(n);
     let under = '', badge = '';
@@ -793,7 +816,7 @@ function lessonCell(n, nts) {
 }
 
 function testCell(p, r, ls) {
-  const id = testId(p, r), t = S.T[id];
+  const id = testId(p, r), t = P.T[id];
   const avail = ls.every(lessonComplete);
   const stars = t ? t.stars : 0;
   return `<button class="cell test ${avail ? '' : 'locked'}" data-test="${id}" aria-label="Тест по урокам ${ls[0]}–${ls[ls.length - 1]}"><span class="box">${I.box}</span>
@@ -808,7 +831,7 @@ function renderLesson(app, n) {
     const known = l && l.dec[i] === 'k';
     const errs = l ? l.errs[i] || 0 : 0;
     const p = known ? 100 : l ? Math.round(wordPts(n, i) / 15 * 100) : 0;
-    return `<button class="wchip ${known ? 'known' : ''}" style="--p:${p}%" data-say="${i}">${esc(disp(i))}${errs ? `<span class="badge">${errs}</span>` : ''}</button>`;
+    return `<button class="wchip ${known ? 'known' : ''}" style="--p:${p}%" data-say="${i}">${esc(chip(i))}${errs ? `<span class="badge">${errs}</span>` : ''}</button>`;
   }).join('');
   const rows = STAGES.map((s, k) => {
     const inf = stageInfo(n, k);
@@ -871,12 +894,12 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if
 function openStage(n, k) {
   if (!L(n)) {
     if (k !== 0) return toast('Начните с этапа «Изучение»');
-    if (n < S.start) { S.L[n] = newLesson(); save(); }   // условно пройденный урок можно повторить без ограничений
+    if (n < P.start) { P.L[n] = newLesson(); save(); }   // условно пройденный урок можно повторить без ограничений
     else if (extraLocked(n)) return toast(`Уроки 301–${TOTAL} (слова 3001–${W.length}) откроются в лиге «Грандмастер» — с уровня ${GRANDMASTER()}. Сейчас: ${LEAGUES[leagueOf(level())].name}, уровень ${level()}.`);
     else {
       if (repBlocked()) return toast(`Сначала повторите пройденные уроки: ${unrepeated().join(', ')}. Новый урок откроется, когда неповторённых останется не больше ${MAX_UNREPEATED}.`);
       if (!canStartNew()) return toast('Новый урок будет доступен завтра. Режим «Один урок в день» можно отключить в профиле.');
-      S.L[n] = newLesson(); S.lastStart = today(); save();
+      P.L[n] = newLesson(); P.lastStart = today(); save();
     }
   }
   const inf = stageInfo(n, k);
@@ -913,7 +936,7 @@ function openTest(id) {
   const [p, r] = id.split('.').map(Number);
   const ls = rowLessons(p, r);
   if (!ls.every(lessonComplete)) return toast(`Мини-тест откроется после уроков ${ls[0]}–${ls[ls.length - 1]}`);
-  const t = S.T[id] || {}, best = t.best || {};
+  const t = P.T[id] || {}, best = t.best || {};
   const star = on => `<span class="${on ? 'on' : ''}">${I.star}</span>`;
   sheet(`<button class="sheet-close left" data-close aria-label="Назад">${I.back}</button>
     <div class="mt-title">МИНИ-ТЕСТ</div>
@@ -959,16 +982,16 @@ function renderRun(app) {
   onKey = null;
   const key = curKey();
   if (key === 'place') renderPlace(app);
-  else if (key === 'study') renderStudy(app);
+  else if (key === 'study') (curSet() && curSet().study || renderStudy)(app);
   else if (key === 'match') renderMatch(app);
-  else if (key === 'memo') renderMemo(app);
+  else if (key === 'memo') (curSet() && curSet().memo || renderMemo)(app);
   else renderLetters(app, key);
   fitPrompts();
   fitHeight();
 }
 
 function header(title, i) {
-  const heart = i === undefined ? '<span></span>' : `<button class="heart ${S.fav[i] ? 'on' : ''}" id="fav" aria-label="В избранное">${S.fav[i] ? I.heartOn : I.heart}</button>`;
+  const heart = i === undefined ? '<span></span>' : `<button class="heart ${P.fav[i] ? 'on' : ''}" id="fav" aria-label="В избранное">${P.fav[i] ? I.heartOn : I.heart}</button>`;
   return `<div class="xhead"><button class="back" id="xback" aria-label="Назад">${I.back}</button><h2>${title}</h2>${heart}</div>`;
 }
 function pbar() {
@@ -1038,7 +1061,7 @@ function answerSheet(i, ok) {
   const ex = exEn(i) ? `<div class="ans-row"><div class="grow ans-ex">${hl(exEn(i))}</div><button class="spk dark" data-sayex aria-label="Произнести пример">${I.spk}</button></div>
     <div class="ans-exru">${hl(exRu(i))}</div>` : '';
   const s = sheet(`<div class="verdict ${ok ? 'ok' : 'bad'}">${ok ? 'ПРАВИЛЬНО!' : 'НЕВЕРНО'}</div>
-    <div class="ans-row"><div class="grow"><div class="ans-word">${esc(disp(i))}</div><div class="ans-ipa">${esc(ipa(i))}</div></div><button class="heart ${S.fav[i] ? 'on' : ''}" data-afav aria-label="В «Мои слова»">${S.fav[i] ? I.heartOn : I.heart}</button><button class="spk dark" data-say aria-label="Произнести">${I.spk}</button></div>
+    <div class="ans-row"><div class="grow"><div class="ans-word">${esc(disp(i))}</div><div class="ans-ipa">${esc(ipa(i))}</div></div><button class="heart ${P.fav[i] ? 'on' : ''}" data-afav aria-label="В «Мои слова»">${P.fav[i] ? I.heartOn : I.heart}</button><button class="spk dark" data-say aria-label="Произнести">${I.spk}</button></div>
     <div class="ans-ru">${esc(ru(i))}</div>${ex}
     <div class="sticky"><button class="btn" data-ok>ОК</button></div>`, {
     // длинный пример — мельче шрифт, чтобы окно не росло и не закрывало кольцо прогресса
@@ -1091,12 +1114,12 @@ function finishRun() {
       <p class="rep-text">Слова урока ${r.n} закреплены. Выучено слов: <span>+${l.learn.length}</span></p>
       <button class="btn" data-close>ОК</button>`);
   } else {
-    const prev = S.T[r.id] || {}, best = { ...(prev.best || {}) };
+    const prev = P.T[r.id] || {}, best = { ...(prev.best || {}) };
     const passed = r.level < 3 || !r.failed;   // уровни 1–2 проходятся до 100%; уровень 3 — без ошибок и быстрее 1 с/букву
     const correct = r.level === 3 ? r.res.filter(x => x.ok).length : r.total;
     best[r.level] = Math.max(best[r.level] || 0, correct);
     const stars = Math.max(prev.stars || 0, passed ? r.level : 0);
-    S.T[r.id] = { stars, best, d: today() };
+    P.T[r.id] = { stars, best, d: today() };
     save(); view = { name: 'main' }; render();
     const big = on => `<span class="${on ? 'on' : ''}">${I.star.replace('<svg', '<svg style="width:52px;height:52px"')}</span>`;
     const got = passed ? r.level : 0;
@@ -1105,12 +1128,12 @@ function finishRun() {
       const rows = Object.entries(r.speed).map(([i, v]) => ({ i: +i, ...v })).sort((a, b) => (a.ok === b.ok ? 0 : a.ok ? -1 : 1) || a.s - b.s);
       body = `<div class="mt-rt">Рейтинг слов по скорости набора</div><p class="mt-sub">На одну букву дается ${TEST_SEC_PER_LETTER} сек</p>
         <div class="speed">${rows.map(x => { const good = x.ok && x.s <= TEST_SEC_PER_LETTER;
-          return `<div class="sp-row"><span class="sp-bar ${good ? 'ok' : 'bad'}" style="width:${Math.min(100, Math.max(22, x.s / 2 * 100))}%">${esc(disp(x.i))}</span>
+          return `<div class="sp-row"><span class="sp-bar ${good ? 'ok' : 'bad'}" style="width:${Math.min(100, Math.max(22, x.s / 2 * 100))}%">${esc(chip(x.i))}</span>
             <span class="sp-val">${x.ok ? x.s.toFixed(2).replace('.', ',') + ' с/буква' : 'ошибка'}</span></div>`; }).join('')}</div>`;
     } else {
       const wrong = [...new Set(r.res.filter(x => !x.ok).map(x => x.i))];
       body = `<p class="rep-text">Ошибок: <span>${r.errors}</span>${r.level === 1 ? `, подсказок: <span>${r.hintsUsed}</span>` : ''}</p>
-        ${wrong.length ? `<p class="sub">Слова с ошибками были пересданы:</p><div class="rating">${wrong.map(i => `<span class="wchip">${esc(disp(i))}</span>`).join('')}</div>` : ''}`;
+        ${wrong.length ? `<p class="sub">Слова с ошибками были пересданы:</p><div class="rating">${wrong.map(i => `<span class="wchip">${esc(chip(i))}</span>`).join('')}</div>` : ''}`;
     }
     sheet(`<div class="mt-result">${passed ? 'Тест пройден!' : 'Тест не пройден'}</div>
       ${passed ? '' : '<p class="mt-sub">В этот раз вам не удалось пройти тест. Некоторые слова вы набрали с ошибкой или медленнее, чем необходимо. Попробуйте еще раз.</p>'}
@@ -1123,7 +1146,7 @@ function finishRun() {
 
 function stageResults(r, then) {
   const l = L(r.n), st = l.st[r.k];
-  const cells = learnIds(r.n).map(i => `<div class="res ${st.ok[i] ? 'ok' : ''}">${esc(disp(i))}<span class="pts">${st.pts[i] ?? 0}</span>${st.err[i] ? `<span class="badge">${st.err[i]}</span>` : ''}</div>`).join('');
+  const cells = learnIds(r.n).map(i => `<div class="res ${st.ok[i] ? 'ok' : ''}">${esc(chip(i))}<span class="pts">${st.pts[i] ?? 0}</span>${st.err[i] ? `<span class="badge">${st.err[i]}</span>` : ''}</div>`).join('');
   const s = sheet(`<button class="sheet-close" data-close aria-label="Закрыть">${I.close}</button>
     <h2>Упражнение выполнено</h2>
     <p class="note">Для того, чтобы слово считалось изученным, вам нужно набрать по 3 балла в каждом упражнении. Использование подсказки отнимает 1 балл.</p>
@@ -1137,7 +1160,7 @@ function completeLesson(n) {
   statBump('lessons');
   const l = L(n);
   l.complete = Date.now();
-  if (n < S.start) l.rep = { due: 0, done: Date.now() };   // условно пройденный урок: повторение не требуется
+  if (n < P.start) l.rep = { due: 0, done: Date.now() };   // условно пройденный урок: повторение не требуется
   lessonIds(n).forEach(i => { if (l.dec[i] === 'k' || (wordPts(n, i) >= 5 * STAGE_PTS && !(l.flawed || {})[i])) wmut(i).learned = 1; });
   save(); render();
   const ids = l.learn;
@@ -1146,7 +1169,7 @@ function completeLesson(n) {
   const avg = errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : 0;
   const cols = ids.map((i, k) => `<span class="col" title="${esc(disp(i))}: ${errs[k]}"><i style="height:${errs[k] / maxE * 100}%"></i></span>`).join('');
   const rating = ids.slice().sort((a, b) => (l.errs[b] || 0) - (l.errs[a] || 0))
-    .map(i => `<button class="wchip ${S.fav[i] ? 'fav' : ''}" data-fav="${i}">${esc(disp(i))}${l.errs[i] ? `<span class="badge">${l.errs[i]}</span>` : ''}</button>`).join('');
+    .map(i => `<button class="wchip ${P.fav[i] ? 'fav' : ''}" data-fav="${i}">${esc(chip(i))}${l.errs[i] ? `<span class="badge">${l.errs[i]}</span>` : ''}</button>`).join('');
   const mins = Math.max(1, Math.round(l.time / 60000));
   sheet(`<div class="done-title">УРОК ЗАВЕРШЁН!</div>
     <div class="kpis"><div class="kpi">Время<div class="circle">${mins}<small>${plural(mins, 'Минута', 'Минуты', 'Минут')}</small></div></div>
@@ -1160,7 +1183,7 @@ function completeLesson(n) {
     onClick: (e, close) => {
       const f = e.target.closest('[data-fav]');
       if (f) return f.classList.toggle('fav', toggleFav(+f.dataset.fav));
-      if (e.target.closest('[data-ok]')) { close(); if (ids.length && n >= S.start) repOffer(n); else go({ name: 'main' }); }
+      if (e.target.closest('[data-ok]')) { close(); if (ids.length && n >= P.start) repOffer(n); else go({ name: 'main' }); }
     },
   });
 }
@@ -1284,27 +1307,28 @@ function renderMemo(app) {
 function renderMatch(app) {
   const ids = run.queue;
   if (!run.m) run.m = { L: shuffle(ids), R: shuffle(ids), done: [], errs: {} };
-  const m = run.m;
+  const m = run.m, X = curSet();
+  const mL = X ? X.matchL : disp, mR = X ? X.matchR : ru;
   const lRest = m.L.filter(i => !m.done.includes(i)), rRest = m.R.filter(i => !m.done.includes(i));
   let cells = '';
   // сопоставленные пары — зелёные, наверху, слово напротив перевода
-  m.done.forEach(i => { cells += `<button class="mb done">${esc(disp(i))}</button><button class="mb done">${esc(ru(i))}</button>`; });
+  m.done.forEach(i => { cells += `<button class="mb done">${esc(mL(i))}</button><button class="mb done">${esc(mR(i))}</button>`; });
   lRest.forEach((i, k) => {
-    cells += `<button class="mb" data-side="L" data-i="${i}">${esc(disp(i))}</button><button class="mb" data-side="R" data-i="${rRest[k]}">${esc(ru(rRest[k]))}</button>`;
+    cells += `<button class="mb" data-side="L" data-i="${i}">${esc(mL(i))}</button><button class="mb" data-side="R" data-i="${rRest[k]}">${esc(mR(rRest[k]))}</button>`;
   });
   const total = ids.length, w = 100 / total;
   app.classList.add('fit');
   app.innerHTML = `<div class="xfit">` + header('Повторение') + `<div class="pbar">${m.done.map((_, k) => `<span class="seg ok" style="left:${k * w}%;width:${w + .3}%"></span>`).join('')}<span class="cnt">${m.done.length}</span><span class="tot">${total}</span></div>
-    <div class="xbody"><div class="match-cap">Соедините слово с переводом</div><div class="match" id="match" style="grid-template-rows:repeat(${total}, minmax(0, 58px))">${cells}</div></div></div>`;
+    <div class="xbody"><div class="match-cap">${X ? X.matchCap : 'Соедините слово с переводом'}</div><div class="match" id="match" style="grid-template-rows:repeat(${total}, minmax(0, 58px))">${cells}</div></div></div>`;
   $('#xback').onclick = exitRun;
   let sel = null;
   $('#match').onclick = e => {
     const b = e.target.closest('.mb[data-i]'); if (!b) return;
-    if (b.dataset.side === 'L' && S.set.auto) sayWord(+b.dataset.i);
+    if (b.dataset.side === 'L' && S.set.auto) X ? speak(mL(+b.dataset.i)) : sayWord(+b.dataset.i);
     if (!sel || sel.dataset.side === b.dataset.side) { if (sel) sel.classList.remove('sel'); sel = b; b.classList.add('sel'); return; }
     const a = sel; sel = null; a.classList.remove('sel');
     const li = +(a.dataset.side === 'L' ? a : b).dataset.i, ri = +(a.dataset.side === 'R' ? a : b).dataset.i;
-    if (li === ri || overlaps(li, ri)) {
+    if (li === ri || (!X && overlaps(li, ri))) {
       sfx(true); m.done.push(li);
       if (m.done.length === total) {
         // каждая ошибка в паре отнимает 1 балл; при 0 баллов слово не засчитано
@@ -1324,22 +1348,27 @@ function renderMatch(app) {
 
 function renderLetters(app, key) {
   const i = curI(), tStart = performance.now();
-  const word = en(i), target = word.toLowerCase();
+  // у набора ответ может быть из нескольких слов (went gone): пробелы не набираются, ячейки идут строками по словам
+  const X = curSet(), groups = (X ? X.target(i, key) : en(i)).split(' ').filter(Boolean);
+  const multi = !!X && groups.length > 1;
+  const word = multi ? groups.join('') : X ? groups[0] : en(i), target = word.toLowerCase();
   const kb = key === 'fix';
   const title = run.kind === 'test' ? 'Мини-тест' : run.kind === 'rep' ? 'Повторение' : STAGES[run.k].name;
   let pos = 0, wrong = 0, hintsHere = 0, done = false;
   const letters = shuffle([...word].map(ch => ch.toUpperCase()));
-  const prompt = key === 'audio'
+  const prompt = X && X.prompt ? X.prompt(i, key) : key === 'audio'
     ? `<div class="listen-cap">Коснитесь, чтобы прослушать</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
     : `<div class="bigword ru">${esc(ru(i))}</div>`;
-  const cells = `<div class="cells" id="cells">${[...word].map((_, k) => `<span class="c ${k === 0 ? 'cur' : ''}"></span>`).join('')}</div><p class="kbd-hint">Можно печатать на клавиатуре компьютера</p>`;
+  let ci = 0;
+  const cellRow = g => [...g].map(() => `<span class="c ${ci++ === 0 ? 'cur' : ''}"></span>`).join('');
+  const cells = `<div class="cells ${multi ? 'multi' : ''}" id="cells">${multi ? groups.map(g => `<span class="cw">${cellRow(g)}</span>`).join('') : cellRow(word)}</div><p class="kbd-hint">Можно печатать на клавиатуре компьютера</p>`;
   const pad = kb ? keyboardHTML() : `<div class="tiles" id="tiles">${letters.map((ch, k) => `<button class="tile" data-t="${k}">${esc(ch)}</button>`).join('')}</div>`;
   const tl = tools(i, true);
   // в «Аудировании» кнопки под динамиком, в «Написании» и «Закреплении» — под ячейками
   const body = key === 'audio' ? prompt + tl + cells + pad : prompt + cells + tl + pad;
   app.innerHTML = header(title, run.kind === 'test' ? undefined : i) + pbar() + `<div class="xbody">${body}</div>${kb ? '<div class="kbd-space"></div>' : ''}`;
   bindCommon(i);
-  fitLetters(word.length);
+  fitLetters(multi ? Math.max(...groups.map(g => g.length)) : word.length, word.length, multi);
   const cellEls = $$('#cells .c');
   const listen = $('#listen'); if (listen) listen.onclick = () => sayWord(i);
   $('#snd').onclick = () => {
@@ -1389,7 +1418,7 @@ function renderLetters(app, key) {
   };
   if (kb) {
     bindTaps($('#kbd'), '.key', k => {
-      if (k.dataset.k === 'del') return;   // принятые буквы всегда верные — стирать нечего
+      if (k.dataset.k === 'del' || (multi && k.dataset.k === ' ')) return;   // принятые буквы всегда верные — стирать нечего; пробел между формами ставится сам
       press(k.dataset.k, k);
     });
   } else {
@@ -1398,6 +1427,7 @@ function renderLetters(app, key) {
   onKey = e => {
     const ch = latinKey(e); if (!ch) return;
     e.preventDefault();
+    if (multi && ch === ' ') return;   // пробел между формами ставится сам
     keyClick(ch === ' ' || ch === '-' ? 'mod' : 'key');
     const el = kb ? $(`.key[data-k="${ch}"]`)
       : $$('#tiles .tile').find(t => !t.classList.contains('used') && letters[+t.dataset.t].toLowerCase() === ch) || null;
@@ -1451,13 +1481,13 @@ function fitHeight() {
 // (до 10 букв на обычных iPhone, до 8 на iPhone SE, больше на iPad); длиннее — две ровные строки
 // (communication: 7 + 6). Средняя длина слова — 6 букв, самое длинное — 14.
 const MIN_LETTER = 32;
-function fitLetters(n) {
+function fitLetters(n, nTiles = n, cellsOneRow = false) {   // cellsOneRow — у форм глагола каждое слово в своей строке
   const body = $('.xbody'); if (!body) return;
   const bs = getComputedStyle(body);   // ширина содержимого — без внутренних отступов экрана
   const avail = body.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight) - 2, gap = 4;
   const perRowMax = Math.max(1, Math.floor((avail + gap) / (MIN_LETTER + gap)));
-  const rows = Math.min(2, Math.ceil(n / perRowMax)), perRow = Math.ceil(n / rows);   // максимум 2 строки
-  const size = (el, base, kh, kf, minH) => {
+  const size = (el, base, kh, kf, minH, n, oneRow) => {
+    const rows = oneRow ? 1 : Math.min(2, Math.ceil(n / perRowMax)), perRow = Math.ceil(n / rows);   // максимум 2 строки
     if (!el) return;
     // если и в две строки буква не влезает шириной 32 px (очень узкое окно) — буквы уже, но третьей строки нет
     const w = Math.max(16, Math.min(base, Math.floor((avail - gap * (perRow - 1)) / perRow)));
@@ -1470,8 +1500,8 @@ function fitLetters(n) {
     el.style.maxWidth = rows > 1 ? (perRow * w + (perRow - 1) * gap) + 'px' : '';   // ровно perRow букв в строке
     el.style.marginLeft = el.style.marginRight = rows > 1 ? 'auto' : '';
   };
-  size($('#cells'), 38, 1.5, 0.74, 40);
-  size($('#tiles'), 46, 1.45, 0.66, 48);
+  size($('#cells'), 38, 1.5, 0.74, 40, n, cellsOneRow);
+  size($('#tiles'), 46, 1.45, 0.66, 48, nTiles);
 }
 function keyboardHTML() {
   const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
@@ -1920,7 +1950,7 @@ if (S.dictNote) { delete S.dictNote; save(); setTimeout(() => toast('Курс 2 
 if (S.dictReset) { delete S.dictReset; save(); setTimeout(() => toast('Словарь обновлён: слова упорядочены по современной частотности. Прогресс начат заново'), 600); }
 (function initPage() {
   const cur = currentLesson();
-  if (cur) S.page = Math.floor((cur - 1) / PAGE);
+  if (cur) P.page = Math.floor((cur - 1) / PAGE);
 })();
 render();
 scrollToCurrent();
