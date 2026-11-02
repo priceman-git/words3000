@@ -231,7 +231,9 @@ h1, h2, h3 { margin: 0; }
 .cells .c.flash { background: #fde3e7; }
 .tiles { display: flex; flex-wrap: nowrap; justify-content: center; gap: 4px; margin-top: 36px; width: 100%; }
 .tile { flex: none; width: var(--w, 46px); height: var(--h, 67px); padding: 0; border-radius: 6px; background: #fff; font-size: var(--fs, 30px); color: var(--title); transition: background .12s; }
-.tile.used { visibility: hidden; }
+/* нажатая плитка исчезает сразу (opacity), но ещё 0,4 с остаётся под пальцем — iPhone даёт вибрацию по завершённому касанию (click),
+   и если плитка пропадала в момент касания, отклика не было — особенно заметно на последней букве */
+.tile.used { opacity: 0; visibility: hidden; transition: visibility 0s .4s; }
 .tile.bad { background: var(--red); color: #fff; }
 .tile.good { background: var(--lime); color: #fff; }
 
