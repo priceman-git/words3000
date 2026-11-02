@@ -175,7 +175,7 @@ function setStudy(app, { cls, top, onTop, exs = 2 }) {
   if (S.set.auto) sayWord(i);
 }
 // «Запоминание»: задание (top) и 4 варианта; подсказка убирает 2 неверных
-function setMemo(app, { top, opts, ok, say }) {
+function setMemo(app, { top, opts, ok, say, silent }) {
   const i = curI();
   let hinted = false, answered = false;
   app.innerHTML = header('Запоминание', i) + pbar() + `<div class="xbody">${top}
@@ -200,6 +200,7 @@ function setMemo(app, { top, opts, ok, say }) {
   };
   $('#opts').onclick = e => choose(e.target.closest('.opt'));
   onKey = e => { const n = +e.key; if (n >= 1 && n <= 4) choose($$('.opt')[n - 1]); };
+  if (S.set.auto && !silent) say();   // автоозвучка — как в «Запоминании» основного курса
 }
 
 // карточка глагола: три формы с озвучкой каждой
@@ -367,7 +368,8 @@ function prepMemo(app) {
   const i = curI();
   setMemo(app, {
     top: `<div class="ask">Какой предлог на схеме?</div><div class="sch">${scheme(i, 220, 176)}</div>`,
-    opts: prepOptions(i), ok: en(i), say: () => speak(plain(W[i][3])),
+    // озвучить нечего: звук предлога или фразы выдал бы ответ — он прозвучит после выбора
+    opts: prepOptions(i), ok: en(i), silent: true, say: () => toast('Предлог прозвучит после ответа'),
   });
 }
 
@@ -709,7 +711,7 @@ window.SETS = {
     unit: ['предлог', 'предлога', 'предлогов'], items: PREP,
     study: prepStudy, memo: prepMemo,
     matchCap: 'Соедините схему с предлогом',
-    matchL: i => en(i), matchR: i => en(i), matchLHtml: i => scheme(i, 120, 96), matchRow: 104,
+    matchSilent: true, matchL: i => en(i), matchR: i => en(i), matchLHtml: i => scheme(i, 120, 96), matchRow: 104,
     // «Аудирование»: услышать фразу и собрать пропущенный предлог; «Написание»: по схеме и переводу;
     // «Закрепление» и мини-тест: фраза с пропуском и перевод — напечатать предлог
     target: i => en(i),

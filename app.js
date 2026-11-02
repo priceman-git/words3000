@@ -477,8 +477,8 @@ function unlockAudio() {
   } catch (e) {}
 }
 ['touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, true));
-const CLICKABLE = '.key, .tile, .opt, .mb, .bbtn, .btn, .stage, .cell, .spk, .listen, .tool, .back, .heart, .arrow, .wchip, .rb';
-const HAPTIC_TARGETS = '.linkbtn, .key, .tile, .opt, .mb, .bbtn, .btn, .stage, .cell:not(.empty), .spk, .listen, button.tool, .back, .heart, .arrow, .rb, .mute';
+const CLICKABLE = '.key, .tile, .opt, .mb, .bbtn, .btn, .stage, .cell, .spk, .listen, .tool, .back, .heart, .arrow, .wchip, .rb, .tabb, .form, .trtog, .peek';
+const HAPTIC_TARGETS = '.linkbtn, .key, .tile, .opt, .mb, .bbtn, .btn, .stage, .cell:not(.empty), .spk, .listen, button.tool, .back, .heart, .arrow, .rb, .mute, .tabb, .form, .trtog, .peek';
 const clickType = el => { const k = el.dataset.k; return el.classList.contains('key') || el.classList.contains('tile') ? (k === 'del' ? 'del' : k === ' ' || k === '-' ? 'mod' : 'key') : 'mod'; };
 // звук и вибрация — только на завершённое нажатие кнопки, буквы или клавиши (событие click):
 // касание с прокруткой страницы нажатием не считается и не звучит
@@ -1329,7 +1329,7 @@ function renderMatch(app) {
   let sel = null;
   $('#match').onclick = e => {
     const b = e.target.closest('.mb[data-i]'); if (!b) return;
-    if (b.dataset.side === 'L' && S.set.auto) X ? speak(mL(+b.dataset.i)) : sayWord(+b.dataset.i);
+    if (b.dataset.side === 'L' && S.set.auto && !(X && X.matchSilent)) X ? speak(mL(+b.dataset.i)) : sayWord(+b.dataset.i);   // у предлогов слева схема — озвучка выдала бы ответ
     if (!sel || sel.dataset.side === b.dataset.side) { if (sel) sel.classList.remove('sel'); sel = b; b.classList.add('sel'); return; }
     const a = sel; sel = null; a.classList.remove('sel');
     const li = +(a.dataset.side === 'L' ? a : b).dataset.i, ri = +(a.dataset.side === 'R' ? a : b).dataset.i;
