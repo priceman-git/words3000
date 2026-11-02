@@ -68,12 +68,12 @@ def card(i):
         for seg in re.split(r'(\[[^\]]+\])', text):
             if not seg: continue
             hl = seg.startswith('[')
-            for w in re.findall(r'\S+\s*', seg.strip('[]') if hl else seg):
+            for w in re.findall(r'\s*\S+\s*', seg.strip('[]') if hl else seg):   # пробелы с обеих сторон, иначе «of him» склеивалось в «ofhim»
                 parts.append((w, HL if hl else base))
         line, lines = [], []
         for w, c in parts:
             if line and d.textlength(''.join(x for x, _ in line) + w.rstrip(), font=f) > maxw: lines.append(line); line = []
-            line.append((w, c))
+            line.append((w.lstrip() if not line else w, c))   # в начале строки пробел не нужен
         if line: lines.append(line)
         for ln in lines:
             x = x0
