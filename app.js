@@ -2,7 +2,8 @@
 /* 5555 слов (5555words.com) — веб-версия по ТЗ (TZ.md). Прогресс хранится в localStorage устройства. */
 
 let W = window.WORDS;                 // [en, ru, ipa, пример, перевод примера, глагол]; во вкладке набора — его элементы (sets.js)
-const PER_LESSON = 10;
+const WORD_LESSON = 10;                // слов в уроке основного курса
+let PER_LESSON = WORD_LESSON;          // в уроке открытой вкладки: у набора может быть меньше (предлоги — по 5)
 let TOTAL = Math.ceil(W.length / PER_LESSON);     // 562 урока (5620 слов)
 const CORE = 300;                      // курс 1 — уроки 1–300 (3000 слов); курс 2 (301–562) открывается в лиге «Грандмастер»
 const PAGE = 50;                       // уроков на странице
@@ -106,6 +107,7 @@ const P = new Proxy({}, { get: (_, k) => prog()[k], set: (_, k, v) => { prog()[k
 function applyTab() {
   if (!SETS[S.tab]) S.tab = 'words';
   W = curSet() ? curSet().items : window.WORDS;
+  PER_LESSON = curSet() ? curSet().per || WORD_LESSON : WORD_LESSON;
   TOTAL = Math.ceil(W.length / PER_LESSON); PAGES = Math.ceil(TOTAL / PAGE);
 }
 applyTab();
@@ -166,7 +168,7 @@ const wordPts = (n, i) => { const l = L(n); if (!l) return 0; let s = 0; for (le
 const lessonFrac = n => L(n) ? STAGES.filter((_, k) => stageInfo(n, k).full).length / STAGES.length : 0;
 
 // выучено: все слова условно пройденных уроков + реально выученные слова дальше
-function learnedCount() { const base = (S.start - 1) * PER_LESSON; let c = base; for (const i in S.w) if (+i >= base && S.w[i].learned) c++; return c; }
+function learnedCount() { const base = (S.start - 1) * WORD_LESSON; let c = base; for (const i in S.w) if (+i >= base && S.w[i].learned) c++; return c; }
 function pendingCount() {
   let c = 0;
   for (const n in S.L) { const l = S.L[n]; if (+n >= S.start && l.complete && !(l.rep && l.rep.done)) c += l.learn.filter(i => !(S.w[i] && S.w[i].learned)).length; }
@@ -750,6 +752,7 @@ function renderMain(app) {
     ${repBanner()}
     ${typeof syncBanner === 'function' ? syncBanner() : ''}
     <div class="grid">${cells}</div>`;
+  const on = $('.tabb.on'); if (on) on.parentNode.scrollLeft = on.offsetLeft - (on.parentNode.clientWidth - on.offsetWidth) / 2;   // открытая вкладка — на виду
   const turn = np => { np = Math.min(PAGES - 1, Math.max(0, np)); if (np !== P.page) { P.page = np; save(); render(); window.scrollTo(0, 0); } };
   app.onclick = e => {
     const t = e.target.closest('[data-act],[data-n],[data-test],[data-tab]'); if (!t) return;
@@ -1309,17 +1312,18 @@ function renderMatch(app) {
   if (!run.m) run.m = { L: shuffle(ids), R: shuffle(ids), done: [], errs: {} };
   const m = run.m, X = curSet();
   const mL = X ? X.matchL : disp, mR = X ? X.matchR : ru;
+  const mLh = X && X.matchLHtml ? X.matchLHtml : i => esc(mL(i));   // у предлогов слева — схема
   const lRest = m.L.filter(i => !m.done.includes(i)), rRest = m.R.filter(i => !m.done.includes(i));
   let cells = '';
   // сопоставленные пары — зелёные, наверху, слово напротив перевода
-  m.done.forEach(i => { cells += `<button class="mb done">${esc(mL(i))}</button><button class="mb done">${esc(mR(i))}</button>`; });
+  m.done.forEach(i => { cells += `<button class="mb done">${mLh(i)}</button><button class="mb done">${esc(mR(i))}</button>`; });
   lRest.forEach((i, k) => {
-    cells += `<button class="mb" data-side="L" data-i="${i}">${esc(mL(i))}</button><button class="mb" data-side="R" data-i="${rRest[k]}">${esc(mR(rRest[k]))}</button>`;
+    cells += `<button class="mb" data-side="L" data-i="${i}">${mLh(i)}</button><button class="mb" data-side="R" data-i="${rRest[k]}">${esc(mR(rRest[k]))}</button>`;
   });
   const total = ids.length, w = 100 / total;
   app.classList.add('fit');
   app.innerHTML = `<div class="xfit">` + header('Повторение') + `<div class="pbar">${m.done.map((_, k) => `<span class="seg ok" style="left:${k * w}%;width:${w + .3}%"></span>`).join('')}<span class="cnt">${m.done.length}</span><span class="tot">${total}</span></div>
-    <div class="xbody"><div class="match-cap">${X ? X.matchCap : 'Соедините слово с переводом'}</div><div class="match" id="match" style="grid-template-rows:repeat(${total}, minmax(0, 58px))">${cells}</div></div></div>`;
+    <div class="xbody"><div class="match-cap">${X ? X.matchCap : 'Соедините слово с переводом'}</div><div class="match" id="match" style="grid-template-rows:repeat(${total}, minmax(0, ${X && X.matchRow || 58}px))">${cells}</div></div></div>`;
   $('#xback').onclick = exitRun;
   let sel = null;
   $('#match').onclick = e => {
@@ -1355,7 +1359,7 @@ function renderLetters(app, key) {
   const kb = key === 'fix';
   const title = run.kind === 'test' ? 'Мини-тест' : run.kind === 'rep' ? 'Повторение' : STAGES[run.k].name;
   let pos = 0, wrong = 0, hintsHere = 0, done = false;
-  const letters = shuffle([...word].map(ch => ch.toUpperCase()));
+  const letters = shuffle([...word + (X && X.extra && !kb ? X.extra(i) : '')].map(ch => ch.toUpperCase()));   // у коротких предлогов — лишние буквы, чтобы было из чего выбирать
   const prompt = X && X.prompt ? X.prompt(i, key) : key === 'audio'
     ? `<div class="listen-cap">Коснитесь, чтобы прослушать</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
     : `<div class="bigword ru">${esc(ru(i))}</div>`;
@@ -1368,9 +1372,9 @@ function renderLetters(app, key) {
   const body = key === 'audio' ? prompt + tl + cells + pad : prompt + cells + tl + pad;
   app.innerHTML = header(title, run.kind === 'test' ? undefined : i) + pbar() + `<div class="xbody">${body}</div>${kb ? '<div class="kbd-space"></div>' : ''}`;
   bindCommon(i);
-  fitLetters(multi ? Math.max(...groups.map(g => g.length)) : word.length, word.length, multi);
+  fitLetters(multi ? Math.max(...groups.map(g => g.length)) : word.length, letters.length, multi);
   const cellEls = $$('#cells .c');
-  const listen = $('#listen'); if (listen) listen.onclick = () => sayWord(i);
+  const listen = $('#listen'); if (listen) listen.onclick = () => X && X.listen ? X.listen(i) : sayWord(i);
   $('#snd').onclick = () => {
     S.set.auto = !S.set.auto; save();
     const s = $('#snd'); s.classList.toggle('off', !S.set.auto); s.querySelector('.tb').innerHTML = S.set.auto ? I.spk : I.mute;
@@ -1433,7 +1437,7 @@ function renderLetters(app, key) {
       : $$('#tiles .tile').find(t => !t.classList.contains('used') && letters[+t.dataset.t].toLowerCase() === ch) || null;
     press(ch, el);
   };
-  if (key === 'audio' && S.set.auto) sayWord(i);   // иначе — только по кнопке «Коснитесь, чтобы прослушать»
+  if (key === 'audio' && S.set.auto) X && X.listen ? X.listen(i) : sayWord(i);   // иначе — только по кнопке «Коснитесь, чтобы прослушать»
 }
 // буква с физической клавиатуры: при русской раскладке e.key — кириллица, поэтому берём клавишу по её месту (e.code)
 function latinKey(e) {

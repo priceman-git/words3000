@@ -36,7 +36,7 @@ function lessonScore(l) {
   (l.st || []).forEach(st => { s += (st.done ? 1e4 : 0) + Object.keys(st.ok || {}).length * 10; });
   return s;
 }
-const progressOf = x => (x.start - 1) * PER_LESSON + Object.keys(x.w || {}).filter(i => x.w[i].learned && +i >= (x.start - 1) * PER_LESSON).length;
+const progressOf = x => (x.start - 1) * WORD_LESSON + Object.keys(x.w || {}).filter(i => x.w[i].learned && +i >= (x.start - 1) * WORD_LESSON).length;
 function mergeStates(a, b) {   // a — это устройство, b — сервер
   if (!b) return a;
   if (b.dictVer !== a.dictVer) {
