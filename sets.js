@@ -371,6 +371,145 @@ function prepMemo(app) {
   });
 }
 
+
+// ---------- фразовые глаголы: 100 самых частых ----------
+// уроки по частице (up, out, off, on, down, back/away, in/over…), 1–2 главных значения, два примера
+const PV_SRC = `
+get up|вставать (с постели)|I [get up] at seven every day.|Я [встаю] в семь каждый день.|She [got up] early to catch the train.|Она [встала] рано, чтобы успеть на поезд.
+give up|бросать; сдаваться|He [gave up] smoking last year.|В прошлом году он [бросил] курить.|Don't [give up]!|Не [сдавайся]!
+pick up|поднимать; забирать|Can you [pick up] the kids from school?|Можешь [забрать] детей из школы?|She [picked up] the phone.|Она [подняла] трубку.
+look up|искать (в словаре, сети)|[Look up] this word in the dictionary.|[Посмотри] это слово в словаре.|I [looked up] the address online.|Я [нашёл] адрес в интернете.
+make up|выдумывать; мириться|He [made up] an excuse.|Он [придумал] отговорку.|They argued but [made up] the next day.|Они поссорились, но на следующий день [помирились].
+wake up|просыпаться; будить|I [woke up] at six.|Я [проснулся] в шесть.|Please [wake up], it's late!|[Просыпайся], уже поздно!
+set up|основывать; настраивать|She [set up] her own company.|Она [основала] свою компанию.|Can you help me [set up] the printer?|Поможешь [настроить] принтер?
+grow up|вырастать, взрослеть|I [grew up] in a small town.|Я [вырос] в маленьком городе.|What do you want to be when you [grow up]?|Кем ты хочешь стать, когда [вырастешь]?
+turn up|появляться; делать громче|He [turned up] late as usual.|Он, как обычно, [явился] поздно.|Can you [turn up] the music?|Можешь [сделать погромче] музыку?
+end up|в итоге оказаться|We [ended up] in a small café.|[В итоге] мы [оказались] в маленьком кафе.|If you don't study, you'll [end up] failing.|Если не будешь учиться, [в итоге] провалишься.
+come up with|придумывать|She [came up with] a great idea.|Она [придумала] отличную идею.|We need to [come up with] a plan.|Нам нужно [придумать] план.
+take up|начинать заниматься (хобби)|I [took up] yoga last year.|В прошлом году я [начал заниматься] йогой.|He [took up] the guitar at forty.|Он [взялся] за гитару в сорок лет.
+put up with|терпеть, мириться|I can't [put up with] this noise.|Я не могу [терпеть] этот шум.|She [puts up with] his bad jokes.|Она [мирится] с его плохими шутками.
+break up|расставаться|They [broke up] last month.|Они [расстались] в прошлом месяце.|Why did you [break up] with him?|Почему ты [рассталась] с ним?
+show up|приходить, появляться|Only five people [showed up].|[Пришли] всего пять человек.|He didn't [show up] for work.|Он не [явился] на работу.
+bring up|воспитывать; заводить разговор|She [brought up] three children alone.|Она одна [вырастила] троих детей.|Don't [bring up] politics at dinner.|Не [заводи] разговор о политике за ужином.
+catch up|догонять; наверстать|Go ahead, I'll [catch up] with you.|Иди, я тебя [догоню].|I need to [catch up] on my work.|Мне нужно [наверстать] работу.
+hurry up|торопиться|[Hurry up], we're late!|[Поторопись], мы опаздываем!|Tell him to [hurry up].|Скажи ему, чтобы [поторопился].
+cheer up|подбодрить; не унывать|[Cheer up]! It's not so bad.|[Не унывай]! Всё не так плохо.|A good film will [cheer up] anyone.|Хороший фильм [поднимет настроение] кому угодно.
+speak up|говорить громче; высказываться|Could you [speak up], please?|Не могли бы вы [говорить погромче]?|Don't be afraid to [speak up].|Не бойся [высказываться].
+find out|узнавать, выяснять|I [found out] the truth.|Я [узнал] правду.|Let's [find out] what happened.|Давай [выясним], что случилось.
+go out|выходить куда-то; гаснуть|Let's [go out] tonight.|Давай [сходим куда-нибудь] вечером.|The lights [went out].|Свет [погас].
+work out|тренироваться; найти решение|I [work out] three times a week.|Я [тренируюсь] три раза в неделю.|We'll [work out] a solution.|Мы [найдём] решение.
+figure out|понять, разобраться|I can't [figure out] this map.|Не могу [разобраться] в этой карте.|She [figured out] the answer.|Она [догадалась], какой ответ.
+carry out|выполнять, проводить|They [carried out] an experiment.|Они [провели] эксперимент.|The plan was [carried out] perfectly.|План был [выполнен] идеально.
+point out|указывать, отмечать|She [pointed out] my mistake.|Она [указала] на мою ошибку.|He [pointed out] that it was late.|Он [заметил], что уже поздно.
+run out of|закончиться (о запасах)|We've [run out of] milk.|У нас [закончилось] молоко.|I'm [running out of] time.|У меня [заканчивается] время.
+turn out|оказаться|The film [turned out] to be boring.|Фильм [оказался] скучным.|It [turned out] that he was right.|[Оказалось], что он был прав.
+check out|выписаться; заценить|We [checked out] of the hotel at noon.|Мы [выехали] из отеля в полдень.|[Check out] this new song!|[Зацени] эту новую песню!
+hang out|проводить время, тусоваться|We [hang out] at the park after school.|После школы мы [тусуемся] в парке.|Do you want to [hang out] this weekend?|Хочешь [встретиться] на выходных?
+take off|взлетать; снимать (одежду)|The plane [took off] on time.|Самолёт [взлетел] вовремя.|[Take off] your shoes, please.|[Сними] обувь, пожалуйста.
+turn off|выключать|[Turn off] the light, please.|[Выключи] свет, пожалуйста.|Did you [turn off] the oven?|Ты [выключил] духовку?
+put off|откладывать|Don't [put off] until tomorrow what you can do today.|Не [откладывай] на завтра то, что можно сделать сегодня.|The meeting was [put off] till Friday.|Собрание [перенесли] на пятницу.
+set off|отправляться (в путь)|We [set off] early in the morning.|Мы [отправились] рано утром.|When do you [set off]?|Когда вы [выезжаете]?
+get off|выходить (из транспорта)|[Get off] the bus at the next stop.|[Выйди] из автобуса на следующей остановке.|We [got off] the train in Paris.|Мы [сошли] с поезда в Париже.
+show off|хвастаться|He likes to [show off] his new car.|Он любит [хвастаться] новой машиной.|Stop [showing off]!|Хватит [выпендриваться]!
+call off|отменять|They [called off] the match because of rain.|Матч [отменили] из-за дождя.|The wedding was [called off].|Свадьбу [отменили].
+pay off|окупаться; выплатить|Hard work always [pays off].|Упорный труд всегда [окупается].|I've finally [paid off] my loan.|Я наконец [выплатил] кредит.
+go off|звенеть (о будильнике); взрываться|My alarm [went off] at six.|Мой будильник [зазвонил] в шесть.|The bomb didn't [go off].|Бомба не [взорвалась].
+drop off|завозить, подвозить|Can you [drop off] the kids at school?|Можешь [завезти] детей в школу?|She [dropped off] the parcel at the post office.|Она [занесла] посылку на почту.
+turn on|включать|[Turn on] the TV.|[Включи] телевизор.|He [turned on] the light.|Он [включил] свет.
+put on|надевать|[Put on] your coat, it's cold.|[Надень] пальто, холодно.|She [put on] her glasses.|Она [надела] очки.
+go on|продолжать; происходить|[Go on], I'm listening.|[Продолжай], я слушаю.|What's [going on] here?|Что здесь [происходит]?
+carry on|продолжать|[Carry on] with your work.|[Продолжайте] работать.|They [carried on] talking.|Они [продолжили] разговаривать.
+get on with|ладить с; продолжать|I [get on with] my neighbours.|Я [лажу] с соседями.|Let's [get on with] the lesson.|Давайте [продолжим] урок.
+hold on|подождать (минутку)|[Hold on], I'll get a pen.|[Подожди], я возьму ручку.|[Hold on] a second, please.|[Подождите] секунду, пожалуйста.
+come on|давай!, ну же!|[Come on], we'll be late!|[Давай], мы опоздаем!|[Come on], you can do it!|[Ну же], у тебя получится!
+take on|брать на себя; нанимать|She [took on] too much work.|Она [взяла на себя] слишком много работы.|The company is [taking on] new staff.|Компания [набирает] новых сотрудников.
+try on|примерять|Can I [try on] this jacket?|Можно [примерить] эту куртку?|She [tried on] five dresses.|Она [примерила] пять платьев.
+keep on|продолжать (упорно)|He [kept on] talking.|Он всё [продолжал] говорить.|[Keep on] trying!|[Продолжай] пытаться!
+sit down|садиться|Please [sit down].|[Садитесь], пожалуйста.|She [sat down] next to me.|Она [села] рядом со мной.
+slow down|замедляться|[Slow down], you're driving too fast!|[Сбавь скорость], ты едешь слишком быстро!|The economy is [slowing down].|Экономика [замедляется].
+turn down|отказывать; делать тише|She [turned down] the job offer.|Она [отказалась] от предложения о работе.|Please [turn down] the music.|[Сделай потише] музыку, пожалуйста.
+break down|ломаться (о технике)|Our car [broke down] on the way.|Наша машина [сломалась] по дороге.|The talks [broke down].|Переговоры [сорвались].
+calm down|успокаиваться|[Calm down], everything is fine.|[Успокойся], всё в порядке.|It took him an hour to [calm down].|Ему понадобился час, чтобы [успокоиться].
+let down|подводить|I felt [let down] by my friends.|Друзья меня [подвели].|Please don't [let down] the people who trust you.|Пожалуйста, не [подводи] тех, кто тебе доверяет.
+write down|записывать|[Write down] my phone number.|[Запиши] мой номер телефона.|I [wrote down] everything he said.|Я [записал] всё, что он сказал.
+cut down on|сокращать (потребление)|I'm trying to [cut down on] sugar.|Я стараюсь [есть меньше] сахара.|You should [cut down on] coffee.|Тебе стоит [пить меньше] кофе.
+settle down|остепениться; обустроиться|They got married and [settled down].|Они поженились и [остепенились].|It took us a month to [settle down] in the new city.|Нам понадобился месяц, чтобы [обустроиться] в новом городе.
+look down on|смотреть свысока|He [looks down on] people without money.|Он [смотрит свысока] на людей без денег.|Don't [look down on] others.|Не [смотри свысока] на других.
+come back|возвращаться|When will you [come back]?|Когда ты [вернёшься]?|He [came back] from London.|Он [вернулся] из Лондона.
+give back|возвращать (вещь)|Please [give back] the book you borrowed.|Пожалуйста, [верни] книгу, которую брал.|I'll [give back] the money tomorrow.|Я [верну] деньги завтра.
+call back|перезванивать|Can you [call back] in an hour?|Можете [перезвонить] через час?|She never [called back].|Она так и не [перезвонила].
+get back|вернуться; получить обратно|We [got back] home at midnight.|Мы [вернулись] домой в полночь.|Did you [get back] your money?|Тебе [вернули] деньги?
+look back|оглядываться (на прошлое)|[Looking back], I was happy then.|[Оглядываясь назад], понимаю: я был тогда счастлив.|Don't [look back]!|Не [оглядывайся]!
+go away|уходить, уезжать|[Go away]! I'm busy.|[Уходи]! Я занят.|We're [going away] for the weekend.|Мы [уезжаем] на выходные.
+give away|отдавать (даром), раздавать|She [gave away] her old clothes.|Она [отдала] свою старую одежду.|They're [giving away] free tickets.|Они [раздают] бесплатные билеты.
+put away|убирать (на место)|[Put away] your toys.|[Убери] свои игрушки.|She [put away] the dishes.|Она [убрала] посуду.
+throw away|выбрасывать|Don't [throw away] the receipt.|Не [выбрасывай] чек.|I [threw away] my old shoes.|Я [выбросил] старые туфли.
+run away|убегать|The dog [ran away].|Собака [убежала].|Don't [run away] from your problems.|Не [убегай] от проблем.
+come in|входить|[Come in], please!|[Входите], пожалуйста!|She [came in] without knocking.|Она [вошла] без стука.
+get in|садиться (в машину); проникать|[Get in], I'll drive you home.|[Садись], я отвезу тебя домой.|How did the thief [get in]?|Как вор [проник] внутрь?
+fill in|заполнять (анкету)|Please [fill in] this form.|Пожалуйста, [заполните] эту анкету.|I [filled in] the application.|Я [заполнил] заявление.
+check in|регистрироваться, заселяться|We [checked in] at the hotel at three.|Мы [заселились] в отель в три часа.|You must [check in] two hours before the flight.|Нужно [зарегистрироваться] за два часа до вылета.
+give in|уступать, поддаваться|He finally [gave in] and said yes.|В конце концов он [уступил] и согласился.|Never [give in] to fear.|Никогда не [поддавайся] страху.
+break into|вламываться|Someone [broke into] our house.|Кто-то [вломился] в наш дом.|Thieves [broke into] the car.|Воры [взломали] машину.
+run into|случайно встретить; столкнуться|I [ran into] an old friend yesterday.|Вчера я [случайно встретил] старого друга.|We [ran into] some problems.|Мы [столкнулись] с проблемами.
+look into|изучать, разбираться|The police are [looking into] the case.|Полиция [расследует] это дело.|I'll [look into] it.|Я [разберусь] с этим.
+get over|оправиться, пережить|It took her months to [get over] the illness.|Ей понадобились месяцы, чтобы [оправиться] от болезни.|You'll [get over] it.|Ты это [переживёшь].
+think over|обдумывать|Let me [think over] your offer.|Дай мне [обдумать] твоё предложение.|I need time to [think over] the plan.|Мне нужно время, чтобы [обдумать] план.
+look after|присматривать, заботиться|Can you [look after] my cat?|Можешь [присмотреть] за моей кошкой?|She [looks after] her old parents.|Она [заботится] о пожилых родителях.
+look for|искать|I'm [looking for] my keys.|Я [ищу] ключи.|What are you [looking for]?|Что ты [ищешь]?
+look forward to|ждать с нетерпением|I'm [looking forward to] the holidays.|Я [с нетерпением жду] каникул.|We [look forward to] seeing you.|Мы [с нетерпением ждём] встречи с вами.
+come across|случайно найти, наткнуться|I [came across] an old photo.|Я [случайно нашёл] старое фото.|Have you ever [come across] this word?|Тебе [попадалось] это слово?
+go through|пережить; просмотреть|She [went through] a hard time.|Она [пережила] трудные времена.|Let's [go through] the plan again.|Давай ещё раз [пройдёмся] по плану.
+get through|дозвониться; справиться|I couldn't [get through] to him.|Я не смог до него [дозвониться].|We'll [get through] this together.|Мы [справимся] с этим вместе.
+turn around|поворачиваться|[Turn around] and look at me.|[Повернись] и посмотри на меня.|He [turned around] and left.|Он [развернулся] и ушёл.
+take after|быть похожим (на родителя)|She [takes after] her mother.|Она [похожа] на маму.|Who do you [take after]?|На кого ты [похож]?
+stand for|означать; терпеть|What does "UN" [stand for]?|Что [означает] «ООН»?|I won't [stand for] this!|Я этого не [потерплю]!
+deal with|иметь дело; разобраться|I'll [deal with] the problem.|Я [разберусь] с проблемой.|She [deals with] customers all day.|Она весь день [имеет дело] с клиентами.
+get along|ладить|Do you [get along] with your sister?|Ты [ладишь] с сестрой?|We [get along] well.|Мы хорошо [ладим].
+fall apart|разваливаться|My old shoes are [falling apart].|Мои старые туфли [разваливаются].|The plan [fell apart].|План [развалился].
+hand in|сдавать (работу)|[Hand in] your homework on Monday.|[Сдайте] домашнее задание в понедельник.|He [handed in] his notice.|Он [подал] заявление об уходе.
+pass away|скончаться|His grandfather [passed away] last year.|Его дедушка [скончался] в прошлом году.|She [passed away] peacefully.|Она [ушла из жизни] спокойно.
+keep up with|не отставать, успевать|I can't [keep up with] you!|Я не [успеваю] за тобой!|It's hard to [keep up with] the news.|Трудно [следить] за новостями.
+count on|рассчитывать на|You can [count on] me.|Ты можешь [рассчитывать] на меня.|Don't [count on] good weather.|Не [рассчитывай] на хорошую погоду.
+look out|осторожно!, берегись|[Look out]! A car!|[Осторожно]! Машина!|[Look out] for pickpockets.|[Остерегайтесь] карманников.
+take over|подменить; взять под контроль|Can you [take over] while I'm away?|Можешь [подменить] меня, пока меня нет?|A big company [took over] the shop.|Крупная компания [купила] этот магазин.
+get by|сводить концы с концами; обходиться|We [get by] on one salary.|Мы [живём] на одну зарплату.|I [get by] with my English.|Мне [хватает] моего английского.
+mess up|испортить, напортачить|I [messed up] the exam.|Я [завалил] экзамен.|Don't [mess up] my hair!|Не [порть] мне причёску!`;
+
+const PV = PV_SRC.trim().split('\n').map(s => {
+  const [p, r, e1, r1, e2, r2] = s.split('|');
+  return [p, r, '', e1, r1, 0, 'pv', [], null, e2, r2];
+});
+const pvVerb = i => en(i).split(' ')[0], pvPart = i => en(i).split(' ').slice(1).join(' ');
+const pvRu = i => ru(i).split(';')[0];   // в парах — первое значение, чтобы помещалось
+// «Запоминание»: варианты перевода — сначала у глаголов с той же частицей или тем же глаголом (их и путают)
+function pvOptions(i) {
+  const out = [ru(i)];
+  const near = shuffle(range(0, W.length).filter(j => j !== i && (pvPart(j) === pvPart(i) || pvVerb(j) === pvVerb(i))));
+  for (const j of near.concat(shuffle(range(0, W.length)))) if (out.length < 4 && !out.includes(ru(j))) out.push(ru(j));
+  return shuffle(out);
+}
+// «Написание»: в примере видна только форма глагола, частицу нужно собрать: «She came ___ a great idea.»
+function pvCloze(i) {
+  const m = /\[(.+?)\]/.exec(W[i][3]), shown = m[1].split(' ')[0];
+  return esc(W[i][3].slice(0, m.index) + shown + ' ').replace(/[\[\]]/g, '') + '<span class="gap">&nbsp;</span>' + esc(W[i][3].slice(m.index + m[0].length)).replace(/[\[\]]/g, '');
+}
+const pvBig = i => `${esc(pvVerb(i))} <em>${esc(pvPart(i))}</em>`;
+function pvStudy(app) {
+  const i = curI();
+  setStudy(app, {
+    cls: 'pv',
+    top: `<div class="pword pvword"><b>${pvBig(i)}</b><button class="spk" id="say" aria-label="Произнести">${I.spk}</button></div>`,
+    onTop: e => { if (e.target.closest('#say')) { sayWord(i); return true; } },
+  });
+  const b = $('.pword b'), box = $('.pword');
+  let fs = 48; b.style.fontSize = fs + 'px'; while (box.scrollWidth > box.clientWidth + 1 && fs > 24) b.style.fontSize = --fs + 'px';
+}
+function pvMemo(app) {
+  const i = curI();
+  setMemo(app, { top: `<div class="bigword pvbig">${pvBig(i)}</div>`, opts: pvOptions(i), ok: ru(i), say: () => sayWord(i) });
+}
+
 window.SETS = {
   irr: {
     name: 'Неправильные глаголы', tab: 'Неправильные глаголы', title: 'Неправильные глаголы',
@@ -405,5 +544,20 @@ window.SETS = {
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте фразу и соберите предлог</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
       : key === 'write' ? `<div class="sch small">${scheme(i, 150, 120)}</div><div class="ask">${esc(ru(i))}</div>`
       : `<div class="cloze">${gap(W[i][3])}</div><div class="cloze-ru">${hl(W[i][4])}</div>`,
+  },
+  pv: {
+    name: 'Фразовые глаголы', tab: 'Фразовые глаголы', title: 'Фразовые глаголы',
+    sub: '100 самых частых в английском', note: 'give up, find out, look after… — по частицам',
+    unit: ['глагол', 'глагола', 'глаголов'], items: PV,
+    study: pvStudy, memo: pvMemo,
+    matchCap: 'Соедините глагол с переводом',
+    matchL: i => en(i), matchR: i => pvRu(i),
+    // «Аудирование»: услышать и собрать весь глагол; «Написание»: собрать частицу в примере;
+    // «Закрепление» и мини-тест: по переводу напечатать весь глагол
+    target: (i, key) => key === 'write' ? pvPart(i) : en(i),
+    extra: i => { const o = shuffle(range(0, W.length).filter(j => pvPart(j) !== pvPart(i)))[0]; return pvPart(o).replace(/ /g, '').slice(0, 4); },
+    prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте и соберите глагол</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
+      : key === 'write' ? `<div class="cloze">${pvCloze(i)}</div><div class="cloze-ru">${hl(W[i][4])}</div>`
+      : `<div class="bigword ru">${esc(ru(i))}</div>`,
   },
 };

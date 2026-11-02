@@ -615,3 +615,10 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
 .pword b, .pword .ipa { white-space: nowrap; }
 .pword .ipa { font-size: 18px; }
 @media (max-width: 360px) { .setcard .bbtn { font-size: 17px; } .pword .ipa { display: none; } }
+
+/* фразовые глаголы: частица выделена цветом */
+.pvword b em, .pvbig em { font-style: normal; color: var(--accent, #f0592b); }
+.study.pv .pvword { margin-top: 64px; }
+.study.pv .ru { height: auto; min-height: 44px; margin-top: 14px; font-size: 28px; }
+.study.pv .ex { margin-top: 16px; font-size: 19px; }
+@media (max-height: 660px) { .study.pv .pvword { margin-top: 12px; } .study.pv .ex { margin-top: 6px; font-size: 16px; } .study.pv .ru { font-size: 24px; } }
