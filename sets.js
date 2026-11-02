@@ -749,7 +749,6 @@ window.SETS = {
     matchL: i => en(i), matchR: i => ru(i),
     // «Аудирование»: услышать идиому и вписать пропущенное слово; «Закрепление» и мини-тест: по значению вписать слово
     target: i => idKey(i),
-    extra: i => { const o = shuffle(lessonIds(lessonOf(i)).filter(j => j !== i))[0]; return idKey(i).length >= 7 ? '' : idKey(o).slice(0, Math.max(3, 7 - idKey(i).length)); },
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте и впишите пропущенное слово</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button><div class="cloze idgap">${idGap(i)}</div>`
       : `<div class="bigword ru idru">${esc(ru(i))}</div><div class="cloze idgap">${idGap(i)}</div>`,
   },
