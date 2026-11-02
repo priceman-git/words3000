@@ -644,12 +644,10 @@ function idMemo(app) {
   const i = curI();
   setMemo(app, { top: `<div class="bigword idbig">${esc(en(i))}</div>`, opts: idOptions(i), ok: ru(i), say: () => sayWord(i) });
 }
-// «Написание»: собрать идиому из слов-плиток по значению; среди плиток — 2 лишних слова из другой идиомы урока
+// «Написание»: собрать идиому из слов-плиток по значению
 function idWords(app) {
   const i = curI(), words = en(i).split(' ');
-  const other = shuffle(lessonIds(lessonOf(i)).filter(j => j !== i))[0];
-  const decoys = shuffle(en(other).split(' ').filter(w => !words.includes(w))).slice(0, 2);
-  const tiles = shuffle(words.concat(decoys));
+  const tiles = shuffle(words);
   let pos = 0, wrong = 0, hintsHere = 0, done = false;
   app.innerHTML = header('Написание', i) + pbar() + `<div class="xbody">
     <div class="bigword ru idru">${esc(ru(i))}</div><div class="ask">соберите идиому</div>
@@ -730,7 +728,6 @@ window.SETS = {
     // «Аудирование»: услышать и собрать весь глагол; «Написание»: собрать частицу в примере;
     // «Закрепление» и мини-тест: по переводу напечатать весь глагол
     target: (i, key) => key === 'write' ? pvPart(i) : en(i),
-    extra: i => { const o = shuffle(range(0, W.length).filter(j => pvPart(j) !== pvPart(i)))[0]; return pvPart(o).replace(/ /g, '').slice(0, 4); },
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте и соберите глагол</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
       : key === 'write' ? `<div class="cloze">${pvCloze(i)}</div><div class="cloze-ru">${hl(W[i][4])}</div>`
       : `<div class="bigword ru">${esc(ru(i))}</div>`,

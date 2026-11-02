@@ -1362,7 +1362,7 @@ function renderLetters(app, key) {
   const kb = key === 'fix';
   const title = run.kind === 'test' ? 'Мини-тест' : run.kind === 'rep' ? 'Повторение' : STAGES[run.k].name;
   let pos = 0, wrong = 0, hintsHere = 0, done = false;
-  const letters = shuffle([...word + (X && X.extra && key === 'write' ? X.extra(i) : '')].map(ch => ch.toUpperCase()));   // у фразовых глаголов в «Написании» — буквы чужой частицы
+  const letters = shuffle([...word].map(ch => ch.toUpperCase()));
   const prompt = X && X.prompt ? X.prompt(i, key) : key === 'audio'
     ? `<div class="listen-cap">Коснитесь, чтобы прослушать</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
     : `<div class="bigword ru">${esc(ru(i))}</div>`;
@@ -1375,7 +1375,7 @@ function renderLetters(app, key) {
   const body = key === 'audio' ? prompt + tl + cells + pad : prompt + cells + tl + pad;
   app.innerHTML = header(title, run.kind === 'test' ? undefined : i) + pbar() + `<div class="xbody">${body}</div>${kb ? '<div class="kbd-space"></div>' : ''}`;
   bindCommon(i);
-  fitLetters(multi ? Math.max(...groups.map(g => g.length)) : word.length, letters.length, multi);
+  fitLetters(multi ? Math.max(...groups.map(g => g.length)) : word.length, word.length, multi);
   const cellEls = $$('#cells .c');
   const listen = $('#listen'); if (listen) listen.onclick = () => X && X.listen ? X.listen(i) : sayWord(i);
   $('#snd').onclick = () => {
