@@ -268,7 +268,27 @@ for|в течение, на (срок)|fɔr|t_for|I lived there [for] two years.
 since|с (и до сих пор)|sɪns|t_since|I've lived here [since] 2015.|Я живу здесь [с] 2015 года.|She has been waiting [since] morning.|Она ждёт [с] утра.
 during|во время|ˈdʊrɪŋ|t_during|Don't talk [during] the film.|Не разговаривай [во время] фильма.|He slept [during] the lesson.|Он спал [во время] урока.
 until|до (какого-то момента)|ənˈtɪl|t_until|Wait [until] six.|Подожди [до] шести.|The shop is open [until] 9 pm.|Магазин открыт [до] 9 вечера.
-by|к (не позже)|baɪ|t_by|Finish it [by] Friday.|Закончи это [к] пятнице.|I'll be home [by] 8.|Я буду дома [к] 8 часам.`;
+by|к (не позже)|baɪ|t_by|Finish it [by] Friday.|Закончи это [к] пятнице.|I'll be home [by] 8.|Я буду дома [к] 8 часам.
+inside|внутри|ɪnˈsaɪd|inside|The children are playing [inside] the house.|Дети играют [внутри] дома.|It's warm [inside].|[Внутри] тепло.
+on top of|на самом верху, поверх|ɑn ˈtɑp əv|ontop|The cat is sleeping [on top of] the fridge.|Кошка спит [на] холодильнике.|Put this book [on top of] the others.|Положи эту книгу [поверх] остальных.
+far from|далеко от|ˈfɑr frəm|farfrom|We live [far from] the city centre.|Мы живём [далеко от] центра города.|The station isn't [far from] here.|Вокзал не [далеко] отсюда.
+ahead of|впереди|əˈhɛd əv|ahead|She was running [ahead of] me.|Она бежала [впереди] меня.|We have a long day [ahead of] us.|[Впереди] у нас долгий день.
+beyond|за, по ту сторону|biˈjɑnd|beyond|There is a village [beyond] the hills.|[За] холмами есть деревня.|The town is just [beyond] the bridge.|Город сразу [за] мостом.
+away from|прочь от, подальше от|əˈweɪ frəm|away|Keep [away from] the fire!|Держись [подальше от] огня!|He walked [away from] the house.|Он ушёл [прочь от] дома.
+via|через (по пути)|ˈvaɪə|via|We flew to Rome [via] Paris.|Мы летели в Рим [через] Париж.|Send it [via] email.|Пришли это [по] электронной почте.
+by|на (о транспорте)|baɪ|bybus|I go to work [by] bus.|Я езжу на работу [на] автобусе.|They travelled [by] train.|Они путешествовали [на] поезде.
+despite|несмотря на|dɪˈspaɪt|despite|We went out [despite] the rain.|Мы вышли [несмотря на] дождь.|[Despite] the cold, she wore a dress.|[Несмотря на] холод, она надела платье.
+against|против|əˈɡɛnst|versus|We played [against] a strong team.|Мы играли [против] сильной команды.|Are you for or [against] the plan?|Ты за или [против] этого плана?
+with|с (вместе)|wɪð|with|I went to the cinema [with] my sister.|Я ходил в кино [с] сестрой.|Do you want coffee [with] milk?|Хочешь кофе [с] молоком?
+without|без|wɪˈðaʊt|without|I can't live [without] music.|Я не могу жить [без] музыки.|Coffee [without] sugar, please.|Кофе [без] сахара, пожалуйста.
+about|о, про|əˈbaʊt|about|Tell me [about] your trip.|Расскажи мне [о] своей поездке.|This book is [about] love.|Эта книга [про] любовь.
+for|для|fɔr|forwho|This gift is [for] you.|Этот подарок [для] тебя.|I bought flowers [for] my mum.|Я купил цветы [для] мамы.
+like|как, похожий на|laɪk|like|She sings [like] a bird.|Она поёт [как] птица.|You look [like] your father.|Ты [похож на] своего отца.
+except|кроме|ɪkˈsɛpt|except|Everyone came [except] Tom.|Пришли все, [кроме] Тома.|I eat everything [except] fish.|Я ем всё, [кроме] рыбы.
+instead of|вместо|ɪnˈstɛd əv|instead|I'll have tea [instead of] coffee.|Я буду чай [вместо] кофе.|She went [instead of] me.|Она пошла [вместо] меня.
+around|около (о времени)|əˈraʊnd|t_around|Let's meet [around] six.|Давай встретимся [около] шести.|I'll be back [around] noon.|Я вернусь [около] полудня.
+within|в течение, не позже чем через|wɪˈðɪn|t_within|I'll answer [within] a week.|Я отвечу [в течение] недели.|The parcel will arrive [within] two days.|Посылка придёт [в течение] двух дней.
+throughout|на протяжении всего|θruˈaʊt|t_throughout|It rained [throughout] the day.|Дождь шёл [на протяжении всего] дня.|The shop is open [throughout] the year.|Магазин работает [на протяжении всего] года.`;
 
 const PREP = PREP_SRC.trim().split('\n').map(s => {
   const [p, r, ip, sch, e1, r1, e2, r2] = s.split('|');
@@ -276,7 +296,7 @@ const PREP = PREP_SRC.trim().split('\n').map(s => {
 });
 
 // схемы: виды сбоку (коробка и шарик), сверху (дорога, река, дом) и шкала времени
-const SC = { ball: '#f0592b', arr: '#2c6a8c', g: '#b9c0c5', water: '#cfe3ef', road: '#e1e5e8' };
+const SC = { ball: '#f0592b', blue: '#5b8db8', arr: '#2c6a8c', g: '#b9c0c5', water: '#cfe3ef', road: '#e1e5e8', no: '#d2334a' };
 const box = (x, y, s = 1, op = 1) => {
   const w = 56 * s, h = 46 * s, d = 14 * s;
   return `<polygon points="${x},${y} ${x + d},${y - d} ${x + w + d},${y - d} ${x + w},${y}" fill="#e6e9eb" stroke="#9aa3a9" stroke-width="1.5"/>
@@ -285,6 +305,8 @@ const box = (x, y, s = 1, op = 1) => {
 };
 const boxDash = (x, y, s = 1) => box(x, y, s, .55).replace(/fill="#e6e9eb"|fill="#c9cfd3"/g, 'fill="#d7dcdf" fill-opacity=".55"').replace(/stroke-width="1.5"/g, 'stroke-width="2" stroke-dasharray="5 4"');
 const ball = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${SC.ball}"/>`;
+const bball = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${SC.blue}"/>`;   // второй шарик — другого цвета
+const cross = (x, y, d = 12) => `<path d="M${x - d},${y - d} L${x + d},${y + d} M${x + d},${y - d} L${x - d},${y + d}" stroke="${SC.no}" stroke-width="3.5" stroke-linecap="round"/>`;
 const ghost = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${SC.ball}" stroke-width="2" stroke-dasharray="3 3"/>`;
 const ground = `<line x1="6" y1="118" x2="154" y2="118" stroke="${SC.g}" stroke-width="2"/>`;
 const arrow = (d, dash) => `<path d="${d}" fill="none" stroke="${SC.arr}" stroke-width="3" ${dash ? 'stroke-dasharray="6 5"' : ''} marker-end="url(#MK)"/>`;
@@ -324,6 +346,23 @@ const SCHEMES = {
   against: ground + `<rect x="106" y="16" width="16" height="102" fill="#c9cfd3" stroke="#9aa3a9" stroke-width="1.5"/><line x1="46" y1="116" x2="104" y2="34" stroke="${SC.ball}" stroke-width="8" stroke-linecap="round"/>`,
   outside: `<rect x="18" y="20" width="84" height="84" rx="4" fill="#eef0f1" stroke="#9aa3a9" stroke-width="3"/>` + ball(132, 62),
   below: `<rect x="0" y="62" width="160" height="66" fill="${SC.water}"/><line x1="0" y1="62" x2="160" y2="62" stroke="${SC.arr}" stroke-width="2"/>` + box(56, 50, .6) + ball(80, 100),
+  inside: `<rect x="30" y="20" width="100" height="88" rx="4" fill="#eef0f1" stroke="#9aa3a9" stroke-width="3"/><path d="M70,108 L90,108" stroke="#eef0f1" stroke-width="4"/>` + ball(80, 64),
+  ontop: ground + box(52, 90, .6) + box(52, 62, .6) + box(52, 34, .6) + ball(74, 15, 9),
+  farfrom: ground + box(8, 72, .8) + `<path d="M70,96 L130,96" stroke="${SC.arr}" stroke-width="2.5" stroke-dasharray="5 4" marker-start="url(#MK)" marker-end="url(#MK)"/>` + ball(146, 107, 9),
+  ahead: `<rect x="0" y="80" width="160" height="28" fill="${SC.road}"/><line x1="0" y1="94" x2="160" y2="94" stroke="#fff" stroke-width="2" stroke-dasharray="8 6"/>` + arrow('M24,66 L136,66') + bball(52, 94, 11) + ball(112, 94, 11),
+  beyond: ground + bball(18, 107, 9) + [56, 70, 84].map(x => `<rect x="${x}" y="80" width="6" height="38" fill="#c9cfd3" stroke="#9aa3a9"/>`).join('') + `<line x1="50" y1="92" x2="96" y2="92" stroke="#9aa3a9" stroke-width="3"/><line x1="50" y1="106" x2="96" y2="106" stroke="#9aa3a9" stroke-width="3"/>` + ball(138, 107),
+  away: ground + box(8, 72) + ghost(90, 107, 9) + arrow('M102,107 L130,107') + ball(146, 107, 9),
+  via: `<circle cx="16" cy="104" r="6" fill="${SC.g}"/><circle cx="80" cy="36" r="9" fill="none" stroke="${SC.arr}" stroke-width="3"/>` + arrow('M22,98 Q46,40 72,38', true) + arrow('M88,38 Q118,40 136,92', true) + ball(144, 104, 9),
+  bybus: ground + `<rect x="24" y="44" width="112" height="58" rx="10" fill="${SC.blue}"/>` + [36, 64, 92].map(x => `<rect x="${x}" y="54" width="22" height="18" rx="3" fill="#fff"/>`).join('') + `<rect x="120" y="54" width="10" height="30" rx="2" fill="#fff"/><circle cx="52" cy="106" r="10" fill="#444"/><circle cx="110" cy="106" r="10" fill="#444"/>` + ball(75, 64, 7),
+  despite: ground + [[20, 8], [50, 4], [80, 10], [110, 2], [140, 8], [34, 40], [96, 38], [126, 44], [64, 50]].map(([x, y]) => `<line x1="${x}" y1="${y}" x2="${x - 7}" y2="${y + 16}" stroke="${SC.blue}" stroke-width="2.5" stroke-linecap="round"/>`).join('') + ball(56, 105) + arrow('M72,105 L132,105'),
+  versus: bball(26, 72, 15) + arrow('M46,72 L70,72') + ball(134, 72, 15) + arrow('M114,72 L90,72'),
+  with: ground + `<ellipse cx="80" cy="102" rx="42" ry="22" fill="none" stroke="${SC.arr}" stroke-width="2" stroke-dasharray="5 4"/>` + bball(66, 105, 13) + ball(94, 105, 13),
+  without: ground + bball(56, 105, 13) + ghost(98, 105, 13) + cross(98, 105, 14),
+  about: `<path d="M24,14 H136 a10,10 0 0 1 10,10 V70 a10,10 0 0 1 -10,10 H58 L36,100 L40,80 H24 a10,10 0 0 1 -10,-10 V24 a10,10 0 0 1 10,-10 Z" fill="#fff" stroke="${SC.arr}" stroke-width="2.5"/>` + box(62, 46, .5) + bball(30, 114, 10),
+  forwho: ground + box(14, 80, .7) + `<line x1="34" y1="80" x2="34" y2="112" stroke="${SC.ball}" stroke-width="4"/><line x1="14" y1="96" x2="53" y2="96" stroke="${SC.ball}" stroke-width="4"/>` + arrow('M74,100 L118,100') + bball(136, 104, 13),
+  like: ball(42, 70, 18) + `<text x="80" y="82" text-anchor="middle" font-size="34" font-weight="700" fill="${SC.arr}" font-family="Roboto Condensed, sans-serif">=</text>` + ball(118, 70, 18),
+  except: [22, 52, 82, 138].map(x => bball(x, 70, 12)).join('') + ball(110, 70, 12) + cross(110, 70, 15),
+  instead: ghost(56, 92, 14).replace(SC.ball, SC.blue) + cross(56, 92, 13) + ball(124, 92, 14) + arrow('M112,74 Q92,34 66,70'),
   t_at: tline + ball(80, 80, 9) + lbl(80, '7:00'),
   t_on: tline + `<rect x="58" y="68" width="44" height="24" rx="5" fill="${SC.ball}" fill-opacity=".85"/>` + lbl(80, 'Monday'),
   t_in: tline + `<rect x="18" y="68" width="124" height="24" rx="6" fill="${SC.ball}" fill-opacity=".55"/>` + lbl(80, 'July'),
@@ -333,6 +372,9 @@ const SCHEMES = {
   t_since: tline + ball(40, 80, 8) + arrow('M48,58 L140,58') + lbl(40, '2015') + lbl(136, 'now', SC.arr),
   t_until: tline + `<rect x="18" y="72" width="102" height="16" rx="4" fill="${SC.ball}" fill-opacity=".4"/>` + arrow('M20,58 L112,58') + mark(120, 'six'),
   t_during: tline + `<rect x="30" y="68" width="100" height="24" rx="6" fill="${SC.arr}" fill-opacity=".2"/>` + ball(80, 80, 9) + lbl(80, 'the film'),
+  t_around: tline + `<rect x="62" y="70" width="36" height="20" rx="10" fill="${SC.ball}" fill-opacity=".25"/>` + ball(80, 80, 8) + lbl(80, '~ six'),
+  t_within: tline + `<path d="M30,52 V60 H130 V52" fill="none" stroke="${SC.arr}" stroke-width="2.5"/>` + mark(30, 'now') + mark(130, 'week') + ball(98, 80, 9),
+  t_throughout: tline + [16, 40, 64, 88, 112, 136].map(x => ball(x, 80, 6)).join('') + `<path d="M12,56 L148,56" stroke="${SC.arr}" stroke-width="3" marker-start="url(#MK)" marker-end="url(#MK)"/>` + lbl(80, 'the whole day'),
   t_by: tline + ball(82, 80, 9) + `<path d="M77,80 l4,4 l7,-8" fill="none" stroke="#fff" stroke-width="2.5"/>` + mark(122, 'Friday') + `<path d="M122,58 L140,64 L122,70 Z" fill="${SC.arr}"/>`,
 };
 let scN = 0;   // у каждой схемы свой id наконечника стрелки — их бывает несколько на экране
@@ -345,7 +387,7 @@ const isTime = i => W[i][11].startsWith('t_');
 const gap = s => esc(s).replace(/\[(.+?)\]/, '<span class="gap">&nbsp;</span>').replace(/[\[\]]/g, '');
 // неверные варианты: другие предлоги того же рода (время — к времени), сначала из этого урока и соседних;
 // у одинаковых предлогов (in — место и время) вариант не повторяется; to/towards и under/below — не вместе
-const PREP_APART = [['to', 'towards'], ['under', 'below'], ['near', 'next to']];
+const PREP_APART = [['to', 'towards'], ['under', 'below'], ['near', 'next to'], ['from', 'away from'], ['in', 'inside']];
 function prepOptions(i) {
   const ok = en(i), out = [ok];
   const apart = v => PREP_APART.some(g => g.includes(v) && g.includes(ok));
@@ -705,7 +747,7 @@ window.SETS = {
   },
   prep: {
     name: 'Предлоги', tab: 'Предлоги', title: 'Предлоги', per: 5,
-    sub: '40 значений в картинках-схемах', note: 'in, on, under, through… — место, движение и время',
+    sub: '60 значений в картинках-схемах', note: 'in, on, under, through… — место, движение и время',
     unit: ['предлог', 'предлога', 'предлогов'], items: PREP,
     study: prepStudy, memo: prepMemo,
     matchCap: 'Соедините схему с предлогом',
