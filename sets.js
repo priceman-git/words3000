@@ -288,7 +288,7 @@ from|с (о времени: с … до)|frʌm|t_from|I work [from] 9 to 5.|Я �
 around|около (о времени)|əˈraʊnd|t_around|Let's meet [around] six.|Давай встретимся [около] шести.|I'll be back [around] noon.|Я вернусь [около] полудня.
 within|в течение, не позже чем через|wɪˈðɪn|t_within|I'll answer [within] a week.|Я отвечу [в течение] недели.|The parcel will arrive [within] two days.|Посылка придёт [в течение] двух дней.
 throughout|на протяжении всего|θruˈaʊt|t_throughout|It rained [throughout] the day.|Дождь шёл [на протяжении всего] дня.|The shop is open [throughout] the year.|Магазин работает [на протяжении всего] года.
-past|после (о времени: ten past six)|pæst|t_past|It's ten [past] six.|Сейчас десять минут [седьмого].|We left at half [past] eight.|Мы ушли [в половине] девятого.
+past|после (о времени: ten past…)|pæst|t_past|It's ten [past] six.|Сейчас десять минут [седьмого].|We left at half [past] eight.|Мы ушли [в половине] девятого.
 `;
 
 const PREP = PREP_SRC.trim().split('\n').map(s => {
@@ -362,7 +362,7 @@ const SCHEMES = {
   with: ground + `<ellipse cx="80" cy="102" rx="42" ry="22" fill="none" stroke="${SC.arr}" stroke-width="2" stroke-dasharray="5 4"/>` + bball(66, 105, 13) + ball(94, 105, 13),
   without: ground + bball(56, 105, 13) + ghost(98, 105, 13) + cross(98, 105, 14),
   about: `<path d="M24,14 H136 a10,10 0 0 1 10,10 V70 a10,10 0 0 1 -10,10 H58 L36,100 L40,80 H24 a10,10 0 0 1 -10,-10 V24 a10,10 0 0 1 10,-10 Z" fill="#fff" stroke="${SC.arr}" stroke-width="2.5"/>` + box(62, 46, .5) + bball(30, 114, 10),
-  forwho: ground + box(20, 78, .9) + `<line x1="45" y1="78" x2="45" y2="119" stroke="${SC.ball}" stroke-width="5"/><line x1="20" y1="98" x2="70" y2="98" stroke="${SC.ball}" stroke-width="5"/><path d="M45,66 q-14,-14 -2,-16 q6,0 2,16 q4,-16 10,-16 q12,2 -10,16" fill="none" stroke="${SC.ball}" stroke-width="3"/><path d="M70,78 Q96,58 104,40" fill="none" stroke="#9aa3a9" stroke-width="1.5"/><rect x="98" y="12" width="48" height="34" rx="5" fill="#fff" stroke="#9aa3a9" stroke-width="2"/>` + bball(122, 29, 10),
+  forwho: ground + box(14, 78, .9) + `<line x1="39" y1="78" x2="39" y2="119" stroke="${SC.ball}" stroke-width="5"/><line x1="14" y1="98" x2="64" y2="98" stroke="${SC.ball}" stroke-width="5"/><path d="M39,66 q-14,-14 -2,-16 q6,0 2,16 q4,-16 10,-16 q12,2 -10,16" fill="none" stroke="${SC.ball}" stroke-width="3"/>` + arrow('M88,100 L118,100') + ball(138, 104, 14),
   like: ball(42, 70, 18) + `<text x="80" y="82" text-anchor="middle" font-size="34" font-weight="700" fill="${SC.arr}" font-family="Roboto Condensed, sans-serif">=</text>` + ball(118, 70, 18),
   except: [22, 52, 82, 138].map(x => bball(x, 70, 12)).join('') + ball(110, 70, 12) + cross(110, 70, 15),
   instead: ghost(56, 92, 14).replace(SC.ball, SC.blue) + cross(56, 92, 13) + ball(124, 92, 14) + arrow('M112,74 Q92,34 66,70'),
@@ -379,7 +379,7 @@ const SCHEMES = {
   t_within: tline + `<path d="M30,52 V60 H130 V52" fill="none" stroke="${SC.arr}" stroke-width="2.5"/>` + mark(30, 'now') + mark(130, 'week') + ball(98, 80, 9),
   t_throughout: tline + [16, 40, 64, 88, 112, 136].map(x => ball(x, 80, 6)).join('') + `<path d="M12,56 L148,56" stroke="${SC.arr}" stroke-width="3" marker-start="url(#MK)" marker-end="url(#MK)"/>` + lbl(80, 'the whole day'),
   t_from: tline + `<rect x="30" y="72" width="100" height="16" rx="4" fill="${SC.ball}" fill-opacity=".55"/>` + mark(30, '9:00') + mark(130, '5:00'),
-  t_past: `<circle cx="80" cy="64" r="50" fill="#fff" stroke="#9aa3a9" stroke-width="3"/>` + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(k => { const a = k * Math.PI / 6; return `<line x1="${80 + 44 * Math.sin(a)}" y1="${64 - 44 * Math.cos(a)}" x2="${80 + 50 * Math.sin(a)}" y2="${64 - 50 * Math.cos(a)}" stroke="#9aa3a9" stroke-width="2"/>`; }).join('') + `<path d="M80,64 L80,26 A38,38 0 0 1 113,45 Z" fill="${SC.ball}" fill-opacity=".35"/><line x1="80" y1="64" x2="113" y2="45" stroke="${SC.arr}" stroke-width="3.5" stroke-linecap="round"/><line x1="80" y1="64" x2="82" y2="92" stroke="${SC.arr}" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="64" r="4" fill="${SC.arr}"/>`,
+  t_past: `<circle cx="80" cy="64" r="50" fill="#fff" stroke="#9aa3a9" stroke-width="3"/>` + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(k => { const a = k * Math.PI / 6; return `<line x1="${80 + 44 * Math.sin(a)}" y1="${64 - 44 * Math.cos(a)}" x2="${80 + 50 * Math.sin(a)}" y2="${64 - 50 * Math.cos(a)}" stroke="#9aa3a9" stroke-width="2"/>`; }).join('') + `<path d="M80,64 L80,26 A38,38 0 0 1 113,45 Z" fill="${SC.ball}" fill-opacity=".35"/><line x1="80" y1="64" x2="80" y2="38" stroke="${SC.arr}" stroke-width="5" stroke-linecap="round"/><line x1="80" y1="64" x2="115" y2="44" stroke="${SC.ball}" stroke-width="3.5" stroke-linecap="round"/><circle cx="80" cy="64" r="4" fill="${SC.arr}"/>`,
   t_by: tline + ball(82, 80, 9) + `<path d="M77,80 l4,4 l7,-8" fill="none" stroke="#fff" stroke-width="2.5"/>` + mark(122, 'Friday') + `<path d="M122,58 L140,64 L122,70 Z" fill="${SC.arr}"/>`,
 };
 let scN = 0;   // у каждой схемы свой id наконечника стрелки — их бывает несколько на экране
