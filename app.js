@@ -102,7 +102,14 @@ function migrateV4(r) {
 const SETS = window.SETS || {};
 const curSet = () => (S.tab !== 'words' && SETS[S.tab]) || null;
 const newSetState = () => ({ L: {}, T: {}, w: {}, fav: {}, start: 1, lastStart: null, page: 0 });
-const prog = () => { const x = curSet(); if (!x) return S; S.X = S.X || {}; return S.X[S.tab] || (S.X[S.tab] = newSetState()); };
+// ver набора: состав и порядок уроков пересобраны — старый прогресс по номерам больше не верен, начинаем заново
+const prog = () => {
+  const x = curSet(); if (!x) return S;
+  S.X = S.X || {};
+  const st = S.X[S.tab];
+  if (!st || (st.ver || 1) !== (x.ver || 1)) S.X[S.tab] = { ...newSetState(), ver: x.ver || 1 };
+  return S.X[S.tab];
+};
 const P = new Proxy({}, { get: (_, k) => prog()[k], set: (_, k, v) => { prog()[k] = v; return true; } });
 function applyTab() {
   if (!SETS[S.tab]) S.tab = 'words';

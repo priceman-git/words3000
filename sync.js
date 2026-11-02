@@ -49,8 +49,9 @@ function mergeStates(a, b) {   // a — это устройство, b — се�
   o.X = {};
   const blank = { L: {}, T: {}, w: {}, fav: {} };
   for (const id of keys(a.X, b.X)) {
-    const x = { ...blank, ...((a.X || {})[id] || {}) }, y = { ...blank, ...((b.X || {})[id] || {}) };
-    o.X[id] = { ...x }; mergeProg(o.X[id], x, y); o.X[id].start = 1;
+    const v = ((window.SETS || {})[id] || {}).ver || 1, cur = st => st && (st.ver || 1) === v ? st : {};   // прогресс старого состава набора не берём
+    const x = { ...blank, ...cur((a.X || {})[id]) }, y = { ...blank, ...cur((b.X || {})[id]) };
+    o.X[id] = { ...x }; mergeProg(o.X[id], x, y); o.X[id].start = 1; o.X[id].ver = v;
   }
   o.days = { ...(b.days || {}) };
   for (const d in a.days || {}) o.days[d] = Math.max(o.days[d] || 0, a.days[d]);

@@ -226,39 +226,54 @@ function irrMemo(app) {
 }
 
 // ---------- предлоги: 40 значений, уроки по 5 ----------
-// в уроке — предлоги, которые легко перепутать: место, движение, направление, время.
+// сначала место, движение и прочие — от самых частых к редким, в конце — время (уроки 10–12).
 // Для каждого — схема: коробка и шарик (место и движение) или шкала времени.
 const PREP_SRC = `
 in|в, внутри|ɪn|in|The keys are [in] the box.|Ключи [в] коробке.|There is milk [in] the fridge.|[В] холодильнике есть молоко.
+to|в, к (куда)|tu|to|I go [to] school every day.|Я хожу [в] школу каждый день.|Come [to] me.|Иди [ко] мне.
+for|для|fɔr|forwho|This gift is [for] you.|Этот подарок [для] тебя.|I bought flowers [for] my mum.|Я купил цветы [для] мамы.
+with|с (вместе)|wɪð|with|I went to the cinema [with] my sister.|Я ходил в кино [с] сестрой.|Do you want coffee [with] milk?|Хочешь кофе [с] молоком?
 on|на (поверхности)|ɑn|on|The book is [on] the table.|Книга [на] столе.|There's a picture [on] the wall.|[На] стене висит картина.
-under|под|ˈʌndər|under|The cat is [under] the bed.|Кошка [под] кроватью.|I found my phone [under] the sofa.|Я нашёл телефон [под] диваном.
-above|над, выше|əˈbʌv|above|A lamp hangs [above] the table.|[Над] столом висит лампа.|We flew [above] the clouds.|Мы летели [над] облаками.
-next to|рядом с, вплотную|ˈnɛkst tu|nextto|Sit [next to] me.|Сядь [рядом со] мной.|The bank is [next to] the café.|Банк [рядом с] кафе.
-between|между|bɪˈtwin|between|The shop is [between] the bank and the school.|Магазин [между] банком и школой.|Sit [between] us.|Садись [между] нами.
-behind|позади, за|bɪˈhaɪnd|behind|The car is [behind] the house.|Машина [за] домом.|Someone is standing [behind] you.|[Позади] тебя кто-то стоит.
-in front of|перед|ɪn ˈfrʌnt əv|front|Don't stand [in front of] the TV.|Не стой [перед] телевизором.|We met [in front of] the cinema.|Мы встретились [перед] кинотеатром.
-near|недалеко от, около|nɪr|near|I live [near] the park.|Я живу [недалеко от] парка.|Is there a bank [near] here?|Здесь [поблизости] есть банк?
-opposite|напротив|ˈɑpəzɪt|opposite|The pharmacy is [opposite] the bank.|Аптека [напротив] банка.|She sat [opposite] me.|Она села [напротив] меня.
+at|у, в, на (в точке)|æt|at|I'm [at] the bus stop.|Я [на] остановке.|Meet me [at] the station.|Встретимся [на] вокзале.
+from|из, от|frʌm|from|I'm [from] Russia.|Я [из] России.|I got a letter [from] my friend.|Я получил письмо [от] друга.
+about|о, про|əˈbaʊt|about|Tell me [about] your trip.|Расскажи мне [о] своей поездке.|This book is [about] love.|Эта книга [про] любовь.
 into|в (внутрь)|ˈɪntu|into|He jumped [into] the water.|Он прыгнул [в] воду.|Put the milk [into] the fridge.|Поставь молоко [в] холодильник.
+like|как, похожий на|laɪk|like|She sings [like] a bird.|Она поёт [как] птица.|You look [like] your father.|Ты [похож на] своего отца.
+through|сквозь, через|θru|through|We walked [through] the forest.|Мы шли [через] лес.|The light came [through] the window.|Свет проникал [сквозь] окно.
+over|через, над (движение)|ˈoʊvər|over|The dog jumped [over] the fence.|Собака перепрыгнула [через] забор.|A plane flew [over] our house.|Самолёт пролетел [над] нашим домом.
+between|между|bɪˈtwin|between|The shop is [between] the bank and the school.|Магазин [между] банком и школой.|Sit [between] us.|Садись [между] нами.
 out of|из (наружу)|ˈaʊt əv|outof|She ran [out of] the room.|Она выбежала [из] комнаты.|Take the cake [out of] the oven.|Достань торт [из] духовки.
+against|против|əˈɡɛnst|versus|We played [against] a strong team.|Мы играли [против] сильной команды.|Are you for or [against] the plan?|Ты за или [против] этого плана?
+without|без|wɪˈðaʊt|without|I can't live [without] music.|Я не могу жить [без] музыки.|Coffee [without] sugar, please.|Кофе [без] сахара, пожалуйста.
+under|под|ˈʌndər|under|The cat is [under] the bed.|Кошка [под] кроватью.|I found my phone [under] the sofa.|Я нашёл телефон [под] диваном.
+around|вокруг|əˈraʊnd|around|The Earth goes [around] the Sun.|Земля вращается [вокруг] Солнца.|We sat [around] the fire.|Мы сидели [вокруг] костра.
+among|среди (многих)|əˈmʌŋ|among|The house is [among] the trees.|Дом [среди] деревьев.|She was [among] the best students.|Она была [среди] лучших студентов.
+behind|позади, за|bɪˈhaɪnd|behind|The car is [behind] the house.|Машина [за] домом.|Someone is standing [behind] you.|[Позади] тебя кто-то стоит.
+across|через (на другую сторону)|əˈkrɔs|across|We swam [across] the river.|Мы переплыли [через] реку.|Walk [across] the bridge.|Перейди [через] мост.
+towards|по направлению к|təˈwɔrdz|towards|He walked [towards] the door.|Он пошёл [к] двери.|The dog ran [towards] me.|Собака побежала [ко] мне.
+above|над, выше|əˈbʌv|above|A lamp hangs [above] the table.|[Над] столом висит лампа.|We flew [above] the clouds.|Мы летели [над] облаками.
+near|недалеко от, около|nɪr|near|I live [near] the park.|Я живу [недалеко от] парка.|Is there a bank [near] here?|Здесь [поблизости] есть банк?
+along|вдоль, по|əˈlɔŋ|along|We walked [along] the beach.|Мы гуляли [вдоль] пляжа.|Go [along] this street.|Идите [по] этой улице.
+inside|внутри|ɪnˈsaɪd|inside|The children are playing [inside] the house.|Дети играют [внутри] дома.|It's warm [inside].|[Внутри] тепло.
+outside|снаружи, за пределами|ˌaʊtˈsaɪd|outside|There's a taxi [outside] the hotel.|[У] отеля, на улице, стоит такси.|The dog sleeps [outside] the house.|Собака спит [снаружи], не в доме.
+by|на (о транспорте)|baɪ|bybus|I go to work [by] bus.|Я езжу на работу [на] автобусе.|They travelled [by] train.|Они путешествовали [на] поезде.
+below|ниже, под (уровнем)|bɪˈloʊ|below|The fish swim [below] the surface.|Рыбы плавают [под] поверхностью воды.|The temperature is [below] zero.|Температура [ниже] нуля.
 onto|на (движение)|ˈɑntu|onto|The cat jumped [onto] the table.|Кошка запрыгнула [на] стол.|He climbed [onto] the roof.|Он залез [на] крышу.
 off|с (поверхности)|ɔf|off|The cup fell [off] the table.|Чашка упала [со] стола.|Get [off] the bus at the next stop.|Выйди [из] автобуса на следующей остановке.
-through|сквозь, через|θru|through|We walked [through] the forest.|Мы шли [через] лес.|The light came [through] the window.|Свет проникал [сквозь] окно.
-across|через (на другую сторону)|əˈkrɔs|across|We swam [across] the river.|Мы переплыли [через] реку.|Walk [across] the bridge.|Перейди [через] мост.
-along|вдоль, по|əˈlɔŋ|along|We walked [along] the beach.|Мы гуляли [вдоль] пляжа.|Go [along] this street.|Идите [по] этой улице.
-around|вокруг|əˈraʊnd|around|The Earth goes [around] the Sun.|Земля вращается [вокруг] Солнца.|We sat [around] the fire.|Мы сидели [вокруг] костра.
-over|через, над (движение)|ˈoʊvər|over|The dog jumped [over] the fence.|Собака перепрыгнула [через] забор.|A plane flew [over] our house.|Самолёт пролетел [над] нашим домом.
-past|мимо|pæst|past|She walked [past] me.|Она прошла [мимо] меня.|Drive [past] the church and turn left.|Проезжайте [мимо] церкви и поверните налево.
 up|вверх по, на|ʌp|up|We walked [up] the hill.|Мы поднялись [на] холм.|The cat ran [up] the tree.|Кошка взбежала [на] дерево.
 down|вниз по, с|daʊn|down|The ball rolled [down] the hill.|Мяч скатился [с] холма.|Go [down] the stairs.|Спуститесь [по] лестнице.
-towards|по направлению к|təˈwɔrdz|towards|He walked [towards] the door.|Он пошёл [к] двери.|The dog ran [towards] me.|Собака побежала [ко] мне.
-from|из, от|frʌm|from|I'm [from] Russia.|Я [из] России.|I got a letter [from] my friend.|Я получил письмо [от] друга.
-to|в, к (куда)|tu|to|I go [to] school every day.|Я хожу [в] школу каждый день.|Come [to] me.|Иди [ко] мне.
-at|у, в, на (в точке)|æt|at|I'm [at] the bus stop.|Я [на] остановке.|Meet me [at] the station.|Встретимся [на] вокзале.
-among|среди (многих)|əˈmʌŋ|among|The house is [among] the trees.|Дом [среди] деревьев.|She was [among] the best students.|Она была [среди] лучших студентов.
-against|к, о (опираясь)|əˈɡɛnst|against|The bike is [against] the wall.|Велосипед прислонён [к] стене.|Don't lean [against] the door.|Не облокачивайся [на] дверь.
-outside|снаружи, за пределами|ˌaʊtˈsaɪd|outside|There's a taxi [outside] the hotel.|[У] отеля, на улице, стоит такси.|The dog sleeps [outside] the house.|Собака спит [снаружи], не в доме.
-below|ниже, под (уровнем)|bɪˈloʊ|below|The fish swim [below] the surface.|Рыбы плавают [под] поверхностью воды.|The temperature is [below] zero.|Температура [ниже] нуля.
+past|мимо|pæst|past|She walked [past] me.|Она прошла [мимо] меня.|Drive [past] the church and turn left.|Проезжайте [мимо] церкви и поверните налево.
+next to|рядом с, вплотную|ˈnɛkst tu|nextto|Sit [next to] me.|Сядь [рядом со] мной.|The bank is [next to] the café.|Банк [рядом с] кафе.
+in front of|перед|ɪn ˈfrʌnt əv|front|Don't stand [in front of] the TV.|Не стой [перед] телевизором.|We met [in front of] the cinema.|Мы встретились [перед] кинотеатром.
+opposite|напротив|ˈɑpəzɪt|opposite|The pharmacy is [opposite] the bank.|Аптека [напротив] банка.|She sat [opposite] me.|Она села [напротив] меня.
+except|кроме|ɪkˈsɛpt|except|Everyone came [except] Tom.|Пришли все, [кроме] Тома.|I eat everything [except] fish.|Я ем всё, [кроме] рыбы.
+despite|несмотря на|dɪˈspaɪt|despite|We went out [despite] the rain.|Мы вышли [несмотря на] дождь.|[Despite] the cold, she wore a dress.|[Несмотря на] холод, она надела платье.
+beyond|за, по ту сторону|biˈjɑnd|beyond|There is a village [beyond] the hills.|[За] холмами есть деревня.|The town is just [beyond] the bridge.|Город сразу [за] мостом.
+instead of|вместо|ɪnˈstɛd əv|instead|I'll have tea [instead of] coffee.|Я буду чай [вместо] кофе.|She went [instead of] me.|Она пошла [вместо] меня.
+away from|прочь от, подальше от|əˈweɪ frəm|away|Keep [away from] the fire!|Держись [подальше от] огня!|He walked [away from] the house.|Он ушёл [прочь от] дома.
+on top of|на самом верху, поверх|ɑn ˈtɑp əv|ontop|The cat is sleeping [on top of] the fridge.|Кошка спит [на] холодильнике.|Put this book [on top of] the others.|Положи эту книгу [поверх] остальных.
+ahead of|впереди|əˈhɛd əv|ahead|She was running [ahead of] me.|Она бежала [впереди] меня.|We have a long day [ahead of] us.|[Впереди] у нас долгий день.
+far from|далеко от|ˈfɑr frəm|farfrom|We live [far from] the city centre.|Мы живём [далеко от] центра города.|The station isn't [far from] here.|Вокзал не [далеко] отсюда.
 at|в (момент времени)|æt|t_at|The film starts [at] 7 o'clock.|Фильм начинается [в] 7 часов.|I'll see you [at] noon.|Увидимся [в] полдень.
 on|в (день, дата)|ɑn|t_on|My birthday is [on] Monday.|Мой день рождения [в] понедельник.|The shop is closed [on] Sundays.|Магазин закрыт [по] воскресеньям.
 in|в (месяц, год, период)|ɪn|t_in|I was born [in] July.|Я родился [в] июле.|We moved here [in] 2020.|Мы переехали сюда [в] 2020 году.
@@ -269,26 +284,12 @@ since|с (и до сих пор)|sɪns|t_since|I've lived here [since] 2015.|Я 
 during|во время|ˈdʊrɪŋ|t_during|Don't talk [during] the film.|Не разговаривай [во время] фильма.|He slept [during] the lesson.|Он спал [во время] урока.
 until|до (какого-то момента)|ənˈtɪl|t_until|Wait [until] six.|Подожди [до] шести.|The shop is open [until] 9 pm.|Магазин открыт [до] 9 вечера.
 by|к (не позже)|baɪ|t_by|Finish it [by] Friday.|Закончи это [к] пятнице.|I'll be home [by] 8.|Я буду дома [к] 8 часам.
-inside|внутри|ɪnˈsaɪd|inside|The children are playing [inside] the house.|Дети играют [внутри] дома.|It's warm [inside].|[Внутри] тепло.
-on top of|на самом верху, поверх|ɑn ˈtɑp əv|ontop|The cat is sleeping [on top of] the fridge.|Кошка спит [на] холодильнике.|Put this book [on top of] the others.|Положи эту книгу [поверх] остальных.
-far from|далеко от|ˈfɑr frəm|farfrom|We live [far from] the city centre.|Мы живём [далеко от] центра города.|The station isn't [far from] here.|Вокзал не [далеко] отсюда.
-ahead of|впереди|əˈhɛd əv|ahead|She was running [ahead of] me.|Она бежала [впереди] меня.|We have a long day [ahead of] us.|[Впереди] у нас долгий день.
-beyond|за, по ту сторону|biˈjɑnd|beyond|There is a village [beyond] the hills.|[За] холмами есть деревня.|The town is just [beyond] the bridge.|Город сразу [за] мостом.
-away from|прочь от, подальше от|əˈweɪ frəm|away|Keep [away from] the fire!|Держись [подальше от] огня!|He walked [away from] the house.|Он ушёл [прочь от] дома.
-via|через (по пути)|ˈvaɪə|via|We flew to Rome [via] Paris.|Мы летели в Рим [через] Париж.|Send it [via] email.|Пришли это [по] электронной почте.
-by|на (о транспорте)|baɪ|bybus|I go to work [by] bus.|Я езжу на работу [на] автобусе.|They travelled [by] train.|Они путешествовали [на] поезде.
-despite|несмотря на|dɪˈspaɪt|despite|We went out [despite] the rain.|Мы вышли [несмотря на] дождь.|[Despite] the cold, she wore a dress.|[Несмотря на] холод, она надела платье.
-against|против|əˈɡɛnst|versus|We played [against] a strong team.|Мы играли [против] сильной команды.|Are you for or [against] the plan?|Ты за или [против] этого плана?
-with|с (вместе)|wɪð|with|I went to the cinema [with] my sister.|Я ходил в кино [с] сестрой.|Do you want coffee [with] milk?|Хочешь кофе [с] молоком?
-without|без|wɪˈðaʊt|without|I can't live [without] music.|Я не могу жить [без] музыки.|Coffee [without] sugar, please.|Кофе [без] сахара, пожалуйста.
-about|о, про|əˈbaʊt|about|Tell me [about] your trip.|Расскажи мне [о] своей поездке.|This book is [about] love.|Эта книга [про] любовь.
-for|для|fɔr|forwho|This gift is [for] you.|Этот подарок [для] тебя.|I bought flowers [for] my mum.|Я купил цветы [для] мамы.
-like|как, похожий на|laɪk|like|She sings [like] a bird.|Она поёт [как] птица.|You look [like] your father.|Ты [похож на] своего отца.
-except|кроме|ɪkˈsɛpt|except|Everyone came [except] Tom.|Пришли все, [кроме] Тома.|I eat everything [except] fish.|Я ем всё, [кроме] рыбы.
-instead of|вместо|ɪnˈstɛd əv|instead|I'll have tea [instead of] coffee.|Я буду чай [вместо] кофе.|She went [instead of] me.|Она пошла [вместо] меня.
+from|с (о времени: с … до)|frʌm|t_from|I work [from] 9 to 5.|Я работаю [с] 9 до 5.|The shop is open [from] Monday to Friday.|Магазин открыт [с] понедельника по пятницу.
 around|около (о времени)|əˈraʊnd|t_around|Let's meet [around] six.|Давай встретимся [около] шести.|I'll be back [around] noon.|Я вернусь [около] полудня.
 within|в течение, не позже чем через|wɪˈðɪn|t_within|I'll answer [within] a week.|Я отвечу [в течение] недели.|The parcel will arrive [within] two days.|Посылка придёт [в течение] двух дней.
-throughout|на протяжении всего|θruˈaʊt|t_throughout|It rained [throughout] the day.|Дождь шёл [на протяжении всего] дня.|The shop is open [throughout] the year.|Магазин работает [на протяжении всего] года.`;
+throughout|на протяжении всего|θruˈaʊt|t_throughout|It rained [throughout] the day.|Дождь шёл [на протяжении всего] дня.|The shop is open [throughout] the year.|Магазин работает [на протяжении всего] года.
+past|после (о времени: ten past six)|pæst|t_past|It's ten [past] six.|Сейчас десять минут [седьмого].|We left at half [past] eight.|Мы ушли [в половине] девятого.
+`;
 
 const PREP = PREP_SRC.trim().split('\n').map(s => {
   const [p, r, ip, sch, e1, r1, e2, r2] = s.split('|');
@@ -296,7 +297,7 @@ const PREP = PREP_SRC.trim().split('\n').map(s => {
 });
 
 // схемы: виды сбоку (коробка и шарик), сверху (дорога, река, дом) и шкала времени
-const SC = { ball: '#f0592b', blue: '#5b8db8', arr: '#2c6a8c', g: '#b9c0c5', water: '#cfe3ef', road: '#e1e5e8', no: '#d2334a' };
+const SC = { ball: '#f0592b', blue: '#5b8db8', arr: '#2c6a8c', g: '#b9c0c5', water: '#cfe3ef', road: '#e1e5e8', asph: '#a7b0b6', no: '#d2334a' };
 const box = (x, y, s = 1, op = 1) => {
   const w = 56 * s, h = 46 * s, d = 14 * s;
   return `<polygon points="${x},${y} ${x + d},${y - d} ${x + w + d},${y - d} ${x + w},${y}" fill="#e6e9eb" stroke="#9aa3a9" stroke-width="1.5"/>
@@ -307,6 +308,10 @@ const boxDash = (x, y, s = 1) => box(x, y, s, .55).replace(/fill="#e6e9eb"|fill=
 const ball = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${SC.ball}"/>`;
 const bball = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${SC.blue}"/>`;   // второй шарик — другого цвета
 const cross = (x, y, d = 12) => `<path d="M${x - d},${y - d} L${x + d},${y + d} M${x + d},${y - d} L${x - d},${y + d}" stroke="${SC.no}" stroke-width="3.5" stroke-linecap="round"/>`;
+const roadH = (y, h = 30) => `<rect x="0" y="${y}" width="160" height="${h}" fill="${SC.asph}"/><line x1="0" y1="${y + 2}" x2="160" y2="${y + 2}" stroke="#fff" stroke-width="2"/><line x1="0" y1="${y + h - 2}" x2="160" y2="${y + h - 2}" stroke="#fff" stroke-width="2"/><line x1="0" y1="${y + h / 2}" x2="160" y2="${y + h / 2}" stroke="#fff" stroke-width="2.5" stroke-dasharray="10 7"/>`;
+const roadV = (x, w = 48) => `<rect x="${x}" y="0" width="${w}" height="128" fill="${SC.asph}"/><line x1="${x + 2}" y1="0" x2="${x + 2}" y2="128" stroke="#fff" stroke-width="2"/><line x1="${x + w - 2}" y1="0" x2="${x + w - 2}" y2="128" stroke="#fff" stroke-width="2"/><line x1="${x + w / 2}" y1="0" x2="${x + w / 2}" y2="128" stroke="#fff" stroke-width="2.5" stroke-dasharray="10 7"/>`;
+const zebra = (x, w, y, h) => Array.from({ length: Math.floor(h / 8) }, (_, k) => `<rect x="${x + 4}" y="${y + k * 8}" width="${w - 8}" height="4" fill="#fff"/>`).join('');
+const gball = (x, y, r = 10) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${SC.g}"/>`;
 const ghost = (x, y, r = 11) => `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${SC.ball}" stroke-width="2" stroke-dasharray="3 3"/>`;
 const ground = `<line x1="6" y1="118" x2="154" y2="118" stroke="${SC.g}" stroke-width="2"/>`;
 const arrow = (d, dash) => `<path d="${d}" fill="none" stroke="${SC.arr}" stroke-width="3" ${dash ? 'stroke-dasharray="6 5"' : ''} marker-end="url(#MK)"/>`;
@@ -316,50 +321,48 @@ const lbl = (x, t, c = '#555', y = 108) => `<text x="${x}" y="${y}" text-anchor=
 const mark = (x, t) => `<line x1="${x}" y1="58" x2="${x}" y2="92" stroke="${SC.arr}" stroke-width="3"/>` + lbl(x, t, SC.arr);
 const slope = `<path d="M10,118 L150,30 L150,118 Z" fill="#e6e9eb" stroke="#9aa3a9" stroke-width="1.5"/>`;
 const SCHEMES = {
-  in: ground + box(45, 72, 1, 0) + ball(73, 100) + box(45, 72, 1, .45),
-  on: ground + box(45, 72) + ball(80, 47),
+  in: ground + ball(73, 96) + boxDash(45, 72),
+  on: ground + box(45, 72) + ball(80, 57),
   under: ground + box(45, 40) + ball(73, 107),
   above: ground + box(45, 72) + ball(80, 18),
   nextto: ground + box(30, 72) + ball(112, 107),
   between: ground + box(8, 72, .8) + box(100, 72, .8) + ball(80, 107),
-  behind: ground + ball(82, 62, 13) + boxDash(40, 72),
+  behind: ground + ball(80, 60, 14) + boxDash(45, 72) + arrow('M22,112 Q12,30 62,50', true),   // шарик за коробкой — выглядывает над ней, стрелка «заходит» за коробку
   front: ground + box(45, 64) + ball(68, 108, 13),
   near: ground + box(12, 72) + ball(140, 107),
-  opposite: `<rect x="0" y="54" width="160" height="28" fill="${SC.road}"/><line x1="0" y1="68" x2="160" y2="68" stroke="#fff" stroke-width="2" stroke-dasharray="8 6"/>` + topBox(60, 12) + ball(80, 106),
+  opposite: roadH(52, 32) + topBox(60, 10) + `<rect x="52" y="90" width="56" height="34" rx="6" fill="${SC.ball}" fill-opacity=".1" stroke="${SC.ball}" stroke-width="2" stroke-dasharray="5 4"/>` + ball(80, 107),
   into: ground + ball(18, 50) + box(55, 72, 1, 0) + arrow('M30,54 Q70,40 82,92', true) + box(55, 72, 1, .45),
   outof: ground + box(30, 72, 1, .45) + arrow('M58,92 Q80,40 118,56', true) + ball(132, 60),
   onto: ground + box(55, 72) + ghost(90, 47) + ball(16, 107) + arrow('M24,96 Q40,30 78,44', true),
   off: ground + box(20, 72) + ghost(55, 47) + arrow('M66,42 Q118,30 126,90', true) + ball(134, 107),
   through: ground + arrow('M10,95 L150,95', true) + box(52, 72, 1, .55) + ball(18, 95, 9),
-  across: `<rect x="58" y="0" width="44" height="128" fill="${SC.water}"/>` + ghost(16, 64, 9) + arrow('M26,64 L136,64', true) + ball(146, 64, 9),
-  along: `<rect x="0" y="78" width="160" height="26" fill="${SC.road}"/>` + ghost(14, 91, 9) + arrow('M24,91 L134,91', true) + ball(146, 91, 9),
+  across: roadV(56) + zebra(56, 48, 48, 32) + ghost(18, 64, 9) + arrow('M28,64 L134,64', true) + ball(144, 64, 9),
+  along: roadH(76, 32) + ghost(14, 92, 9) + arrow('M24,92 L134,92', true) + ball(146, 92, 9),
   around: ground + `<ellipse cx="80" cy="88" rx="62" ry="30" fill="none" stroke="${SC.arr}" stroke-width="3" stroke-dasharray="6 5"/>` + box(52, 76, .9) + ball(140, 88, 9) + arrow('M126,62 L134,70'),
   over: ground + box(52, 72) + ghost(14, 108, 9) + arrow('M22,98 Q80,-24 138,98', true) + ball(146, 108, 9),
-  past: topBox(60, 22) + ghost(14, 82, 9) + arrow('M24,82 L136,82', true) + ball(148, 82, 9),
+  past: roadH(70, 32) + topBox(60, 24) + ghost(14, 86, 9) + arrow('M24,86 L136,86', true) + ball(148, 86, 9),
   up: slope + ghost(30, 96, 9) + arrow('M42,86 L108,45', true) + ball(124, 38, 9),
   down: slope + ghost(128, 36, 9) + arrow('M116,48 L44,92', true) + ball(26, 100, 9),
-  towards: ground + ball(16, 107) + arrow('M30,107 L66,107') + box(98, 72),
-  from: ground + box(8, 72) + arrow('M84,100 L124,100') + ball(138, 100),
+  towards: roadH(96, 26) + box(104, 64, .8) + ball(18, 109, 10) + arrow('M32,109 L66,109'),
+  from: ground + box(8, 72) + arrow('M54,100 L124,100') + ball(138, 100),
   to: ground + ball(14, 100) + arrow('M26,100 L90,100') + box(96, 72),
   at: `<circle cx="80" cy="66" r="44" fill="none" stroke="${SC.g}" stroke-width="2"/><circle cx="80" cy="66" r="26" fill="none" stroke="${SC.g}" stroke-width="2"/>` + ball(80, 66),
-  among: box(8, 96, .5) + box(112, 96, .5) + box(28, 54, .5) + box(94, 54, .5) + box(60, 24, .5) + ball(80, 86, 9),
-  against: ground + `<rect x="106" y="16" width="16" height="102" fill="#c9cfd3" stroke="#9aa3a9" stroke-width="1.5"/><line x1="46" y1="116" x2="104" y2="34" stroke="${SC.ball}" stroke-width="8" stroke-linecap="round"/>`,
+  among: gball(26, 104) + gball(134, 104) + gball(44, 62) + gball(116, 62) + gball(80, 30) + gball(58, 106) + gball(102, 106) + ball(80, 80, 11),
   outside: `<rect x="18" y="20" width="84" height="84" rx="4" fill="#eef0f1" stroke="#9aa3a9" stroke-width="3"/>` + ball(132, 62),
   below: `<rect x="0" y="62" width="160" height="66" fill="${SC.water}"/><line x1="0" y1="62" x2="160" y2="62" stroke="${SC.arr}" stroke-width="2"/>` + box(56, 50, .6) + ball(80, 100),
   inside: `<rect x="30" y="20" width="100" height="88" rx="4" fill="#eef0f1" stroke="#9aa3a9" stroke-width="3"/><path d="M70,108 L90,108" stroke="#eef0f1" stroke-width="4"/>` + ball(80, 64),
   ontop: ground + box(52, 90, .6) + box(52, 62, .6) + box(52, 34, .6) + ball(74, 15, 9),
   farfrom: ground + box(8, 72, .8) + `<path d="M70,96 L130,96" stroke="${SC.arr}" stroke-width="2.5" stroke-dasharray="5 4" marker-start="url(#MK)" marker-end="url(#MK)"/>` + ball(146, 107, 9),
-  ahead: `<rect x="0" y="80" width="160" height="28" fill="${SC.road}"/><line x1="0" y1="94" x2="160" y2="94" stroke="#fff" stroke-width="2" stroke-dasharray="8 6"/>` + arrow('M24,66 L136,66') + bball(52, 94, 11) + ball(112, 94, 11),
-  beyond: ground + bball(18, 107, 9) + [56, 70, 84].map(x => `<rect x="${x}" y="80" width="6" height="38" fill="#c9cfd3" stroke="#9aa3a9"/>`).join('') + `<line x1="50" y1="92" x2="96" y2="92" stroke="#9aa3a9" stroke-width="3"/><line x1="50" y1="106" x2="96" y2="106" stroke="#9aa3a9" stroke-width="3"/>` + ball(138, 107),
+  ahead: roadH(78, 32) + arrow('M24,62 L136,62') + bball(52, 94, 11) + ball(112, 94, 11),
+  beyond: ground + bball(18, 108, 9) + `<polygon points="52,118 64,62 104,46 92,104" fill="#c9cfd3" fill-opacity=".9" stroke="#9aa3a9" stroke-width="2"/>` + ball(134, 92, 9),
   away: ground + box(8, 72) + ghost(90, 107, 9) + arrow('M102,107 L130,107') + ball(146, 107, 9),
-  via: `<circle cx="16" cy="104" r="6" fill="${SC.g}"/><circle cx="80" cy="36" r="9" fill="none" stroke="${SC.arr}" stroke-width="3"/>` + arrow('M22,98 Q46,40 72,38', true) + arrow('M88,38 Q118,40 136,92', true) + ball(144, 104, 9),
   bybus: ground + `<rect x="24" y="44" width="112" height="58" rx="10" fill="${SC.blue}"/>` + [36, 64, 92].map(x => `<rect x="${x}" y="54" width="22" height="18" rx="3" fill="#fff"/>`).join('') + `<rect x="120" y="54" width="10" height="30" rx="2" fill="#fff"/><circle cx="52" cy="106" r="10" fill="#444"/><circle cx="110" cy="106" r="10" fill="#444"/>` + ball(75, 64, 7),
-  despite: ground + [[20, 8], [50, 4], [80, 10], [110, 2], [140, 8], [34, 40], [96, 38], [126, 44], [64, 50]].map(([x, y]) => `<line x1="${x}" y1="${y}" x2="${x - 7}" y2="${y + 16}" stroke="${SC.blue}" stroke-width="2.5" stroke-linecap="round"/>`).join('') + ball(56, 105) + arrow('M72,105 L132,105'),
-  versus: bball(26, 72, 15) + arrow('M46,72 L70,72') + ball(134, 72, 15) + arrow('M114,72 L90,72'),
+  despite: ground + `<path d="M30,44 a16,16 0 0 1 22,-22 a20,20 0 0 1 36,-4 a16,16 0 0 1 22,26 Z" fill="#8a96a0"/><path d="M74,46 L64,66 L76,66 L66,88" fill="none" stroke="#f5c400" stroke-width="4" stroke-linejoin="round"/>` + ball(40, 107) + arrow('M56,107 L136,107'),
+  versus: arrow('M10,72 L38,72') + bball(62, 72, 17) + ball(98, 72, 17) + arrow('M150,72 L122,72') + `<path d="M80,44 V52 M68,48 L72,54 M92,48 L88,54 M80,100 V92 M68,96 L72,90 M92,96 L88,90" stroke="${SC.arr}" stroke-width="2.5" stroke-linecap="round"/>`,
   with: ground + `<ellipse cx="80" cy="102" rx="42" ry="22" fill="none" stroke="${SC.arr}" stroke-width="2" stroke-dasharray="5 4"/>` + bball(66, 105, 13) + ball(94, 105, 13),
   without: ground + bball(56, 105, 13) + ghost(98, 105, 13) + cross(98, 105, 14),
   about: `<path d="M24,14 H136 a10,10 0 0 1 10,10 V70 a10,10 0 0 1 -10,10 H58 L36,100 L40,80 H24 a10,10 0 0 1 -10,-10 V24 a10,10 0 0 1 10,-10 Z" fill="#fff" stroke="${SC.arr}" stroke-width="2.5"/>` + box(62, 46, .5) + bball(30, 114, 10),
-  forwho: ground + box(14, 80, .7) + `<line x1="34" y1="80" x2="34" y2="112" stroke="${SC.ball}" stroke-width="4"/><line x1="14" y1="96" x2="53" y2="96" stroke="${SC.ball}" stroke-width="4"/>` + arrow('M74,100 L118,100') + bball(136, 104, 13),
+  forwho: ground + box(20, 78, .9) + `<line x1="45" y1="78" x2="45" y2="119" stroke="${SC.ball}" stroke-width="5"/><line x1="20" y1="98" x2="70" y2="98" stroke="${SC.ball}" stroke-width="5"/><path d="M45,66 q-14,-14 -2,-16 q6,0 2,16 q4,-16 10,-16 q12,2 -10,16" fill="none" stroke="${SC.ball}" stroke-width="3"/><path d="M70,78 Q96,58 104,40" fill="none" stroke="#9aa3a9" stroke-width="1.5"/><rect x="98" y="12" width="48" height="34" rx="5" fill="#fff" stroke="#9aa3a9" stroke-width="2"/>` + bball(122, 29, 10),
   like: ball(42, 70, 18) + `<text x="80" y="82" text-anchor="middle" font-size="34" font-weight="700" fill="${SC.arr}" font-family="Roboto Condensed, sans-serif">=</text>` + ball(118, 70, 18),
   except: [22, 52, 82, 138].map(x => bball(x, 70, 12)).join('') + ball(110, 70, 12) + cross(110, 70, 15),
   instead: ghost(56, 92, 14).replace(SC.ball, SC.blue) + cross(56, 92, 13) + ball(124, 92, 14) + arrow('M112,74 Q92,34 66,70'),
@@ -375,6 +378,8 @@ const SCHEMES = {
   t_around: tline + `<rect x="62" y="70" width="36" height="20" rx="10" fill="${SC.ball}" fill-opacity=".25"/>` + ball(80, 80, 8) + lbl(80, '~ six'),
   t_within: tline + `<path d="M30,52 V60 H130 V52" fill="none" stroke="${SC.arr}" stroke-width="2.5"/>` + mark(30, 'now') + mark(130, 'week') + ball(98, 80, 9),
   t_throughout: tline + [16, 40, 64, 88, 112, 136].map(x => ball(x, 80, 6)).join('') + `<path d="M12,56 L148,56" stroke="${SC.arr}" stroke-width="3" marker-start="url(#MK)" marker-end="url(#MK)"/>` + lbl(80, 'the whole day'),
+  t_from: tline + `<rect x="30" y="72" width="100" height="16" rx="4" fill="${SC.ball}" fill-opacity=".55"/>` + mark(30, '9:00') + mark(130, '5:00'),
+  t_past: `<circle cx="80" cy="64" r="50" fill="#fff" stroke="#9aa3a9" stroke-width="3"/>` + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(k => { const a = k * Math.PI / 6; return `<line x1="${80 + 44 * Math.sin(a)}" y1="${64 - 44 * Math.cos(a)}" x2="${80 + 50 * Math.sin(a)}" y2="${64 - 50 * Math.cos(a)}" stroke="#9aa3a9" stroke-width="2"/>`; }).join('') + `<path d="M80,64 L80,26 A38,38 0 0 1 113,45 Z" fill="${SC.ball}" fill-opacity=".35"/><line x1="80" y1="64" x2="113" y2="45" stroke="${SC.arr}" stroke-width="3.5" stroke-linecap="round"/><line x1="80" y1="64" x2="82" y2="92" stroke="${SC.arr}" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="64" r="4" fill="${SC.arr}"/>`,
   t_by: tline + ball(82, 80, 9) + `<path d="M77,80 l4,4 l7,-8" fill="none" stroke="#fff" stroke-width="2.5"/>` + mark(122, 'Friday') + `<path d="M122,58 L140,64 L122,70 Z" fill="${SC.arr}"/>`,
 };
 let scN = 0;   // у каждой схемы свой id наконечника стрелки — их бывает несколько на экране
@@ -387,7 +392,7 @@ const isTime = i => W[i][11].startsWith('t_');
 const gap = s => esc(s).replace(/\[(.+?)\]/, '<span class="gap">&nbsp;</span>').replace(/[\[\]]/g, '');
 // неверные варианты: другие предлоги того же рода (время — к времени), сначала из этого урока и соседних;
 // у одинаковых предлогов (in — место и время) вариант не повторяется; to/towards и under/below — не вместе
-const PREP_APART = [['to', 'towards'], ['under', 'below'], ['near', 'next to'], ['from', 'away from'], ['in', 'inside']];
+const PREP_APART = [['to', 'towards'], ['under', 'below'], ['near', 'next to'], ['from', 'away from'], ['in', 'inside'], ['near', 'far from']];
 function prepOptions(i) {
   const ok = en(i), out = [ok];
   const apart = v => PREP_APART.some(g => g.includes(v) && g.includes(ok));
@@ -746,7 +751,7 @@ window.SETS = {
       : `<div class="bigword ru">${esc(ru(i))}</div><div class="ask">все три формы</div>`,
   },
   prep: {
-    name: 'Предлоги', tab: 'Предлоги', title: 'Предлоги', per: 5,
+    name: 'Предлоги', tab: 'Предлоги', title: 'Предлоги', per: 5, ver: 2,
     sub: '60 значений в картинках-схемах', note: 'in, on, under, through… — место, движение и время',
     unit: ['предлог', 'предлога', 'предлогов'], items: PREP,
     study: prepStudy, memo: prepMemo,
