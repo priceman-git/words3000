@@ -138,8 +138,8 @@ function irrOptions(i, k) {
 
 // ---------- общие экраны наборов ----------
 // «Изучение»: верх карточки (top) задаёт набор; ниже — перевод, два примера с озвучкой, «Знаю» / «Выучить»
-function setStudy(app, { cls, top, onTop }) {
-  const i = curI(), all = lessonIds(run.n), k = all.indexOf(i) + 1, unit = curSet().unit[0];
+function setStudy(app, { cls, top, onTop, exs = 2 }) {
+  const i = curI(), all = lessonIds(run.n), k = all.indexOf(i) + 1, unit = curSet().acc || curSet().unit[0];   // «Знаю глагол», «Знаю идиому»
   const hide = S.set.hideRu;
   const exHTML = (e, r, n) => `<div class="ex"><div class="en">${hl(e)}</div>
     <div class="sline"><button class="spk" data-sayex="${n}" aria-label="Произнести пример">${I.spk}</button></div><div class="ruex">${hl(r)}</div></div>`;
@@ -150,7 +150,7 @@ function setStudy(app, { cls, top, onTop }) {
     <div class="pbar"><span class="seg ok" style="left:0;width:${k / all.length * 100}%"></span><span class="cnt">${k}</span><span class="tot">${all.length}</span></div>
     <div class="xbody study setcard ${cls} ${hide ? 'hide-tr' : ''}" id="study">${top}
       <div class="ru"><span class="tr">${esc(ru(i))}</span><button class="peek" id="peek">Показать перевод</button></div>
-      <div class="ex-box">${exHTML(W[i][3], W[i][4], 1)}${exHTML(W[i][9], W[i][10], 2)}</div>
+      <div class="ex-box">${exHTML(W[i][3], W[i][4], 1)}${exs > 1 ? exHTML(W[i][9], W[i][10], 2) : ''}</div>
       <div class="big-btns"><button class="bbtn teal" id="know">Знаю ${unit}</button><button class="bbtn lime" id="learn">Выучить ${unit}</button></div></div></div>`;
   $('#xback').onclick = exitRun;
   $('#study').onclick = e => {
@@ -510,6 +510,184 @@ function pvMemo(app) {
   setMemo(app, { top: `<div class="bigword pvbig">${pvBig(i)}</div>`, opts: pvOptions(i), ok: ru(i), say: () => sayWord(i) });
 }
 
+
+// ---------- идиомы: 100 популярных ----------
+// уроки по темам; у каждой — значение, дословный перевод, русский аналог, пример; [слово] — ключевое, его вписывают в заданиях
+const ID_SRC = `
+once in a blue [moon]|очень редко|однажды при голубой луне|раз в сто лет|I only see him [once in a blue moon].|Я вижу его [раз в сто лет].
+in the [nick] of time|как раз вовремя|в зарубку времени|в последнюю минуту|We arrived [in the nick of time].|Мы приехали [в последнюю минуту].
+better late than [never]|лучше поздно, чем никогда|лучше поздно, чем никогда|лучше поздно, чем никогда|You finally called! Well, [better late than never].|Наконец-то позвонил! Что ж, [лучше поздно, чем никогда].
+call it a [day]|закончить на сегодня|назвать это днём|на сегодня хватит|I'm tired, let's [call it a day].|Я устал, [на сегодня хватит].
+the time of your [life]|лучшее время в жизни|время твоей жизни|незабываемое время|We had [the time of our lives] in Italy.|В Италии мы [провели незабываемое время].
+around the [corner]|скоро, не за горами|за углом|на носу|Summer is just [around the corner].|Лето уже [на носу].
+time [flies]|время летит|время летит|время летит незаметно|[Time flies] when you're having fun.|Когда весело, [время летит незаметно].
+at the drop of a [hat]|сразу, не раздумывая|при падении шляпы|в два счёта|He'd help you [at the drop of a hat].|Он поможет тебе [не раздумывая].
+on the [spot]|сразу, на месте|на месте|не сходя с места|They hired him [on the spot].|Его взяли на работу [не сходя с места].
+from [scratch]|с нуля|от черты|с нуля|I built the website [from scratch].|Я сделал сайт [с нуля].
+cost an arm and a [leg]|стоить целое состояние|стоить руку и ногу|стоить бешеных денег|This car [cost an arm and a leg].|Эта машина [стоила бешеных денег].
+break the [bank]|стоить слишком дорого|сломать банк|влететь в копеечку|A cup of coffee won't [break the bank].|Чашка кофе [не разорит].
+make ends [meet]|сводить концы с концами|соединить концы|сводить концы с концами|It's hard to [make ends meet] on one salary.|На одну зарплату трудно [сводить концы с концами].
+money doesn't grow on [trees]|деньги не растут на деревьях|деньги не растут на деревьях|деньги с неба не падают|Turn off the lights — [money doesn't grow on trees]!|Выключай свет — [деньги с неба не падают]!
+on a [shoestring]|почти без денег|на шнурке|на копейки|They travelled [on a shoestring].|Они путешествовали [на копейки].
+pay through the [nose]|сильно переплатить|платить через нос|заплатить втридорога|We [paid through the nose] for the tickets.|Мы [заплатили втридорога] за билеты.
+save for a rainy [day]|копить на чёрный день|копить на дождливый день|на чёрный день|I [save] a little money [for a rainy day].|Я откладываю немного денег [на чёрный день].
+tighten your [belt]|экономить|затянуть ремень|затянуть пояс|We have to [tighten our belts] this year.|В этом году нам придётся [затянуть пояса].
+bring home the [bacon]|зарабатывать на жизнь|приносить домой бекон|кормить семью|She's the one who [brings home the bacon].|Именно она [кормит семью].
+in the [red]|в долгах, в минусе|в красном|в минусе|The company is [in the red].|Компания [в минусе].
+get the [ball] rolling|начать дело|запустить мяч|сдвинуть с мёртвой точки|Let's [get the ball rolling].|Давайте [начнём].
+back to the drawing [board]|начать всё сначала|назад к чертёжной доске|начать с чистого листа|The plan failed, so it's [back to the drawing board].|План провалился — [начинаем с чистого листа].
+cut [corners]|халтурить, экономить на качестве|срезать углы|работать спустя рукава|Don't [cut corners] on safety.|Не [экономь] на безопасности.
+burn the midnight [oil]|работать допоздна|жечь полуночное масло|сидеть до ночи|I [burned the midnight oil] before the exam.|Перед экзаменом я [сидел до ночи].
+hit the [books]|засесть за учёбу|ударить книги|грызть гранит науки|I have to [hit the books] tonight.|Сегодня мне нужно [засесть за учёбу].
+learn the [ropes]|освоиться, изучить азы|выучить верёвки|войти в курс дела|It took me a month to [learn the ropes].|Мне понадобился месяц, чтобы [войти в курс дела].
+think outside the [box]|мыслить нестандартно|думать вне коробки|мыслить нестандартно|We need to [think outside the box].|Нам нужно [мыслить нестандартно].
+on the same [page]|понимать друг друга|на одной странице|на одной волне|Are we all [on the same page]?|Мы все [на одной волне]?
+pull your [weight]|делать свою часть работы|тянуть свой вес|тянуть свою лямку|Everyone must [pull their weight].|Каждый должен [тянуть свою лямку].
+the ball is in your [court]|теперь решать тебе|мяч на твоей стороне|теперь ход за тобой|I've made my offer — [the ball is in your court].|Я сделал предложение — [теперь ход за тобой].
+over the [moon]|очень счастлив|над луной|на седьмом небе|She was [over the moon] about the news.|Она была [на седьмом небе] от этой новости.
+on cloud [nine]|безмерно счастлив|на облаке номер девять|на седьмом небе от счастья|He's been [on cloud nine] since the wedding.|Со свадьбы он [на седьмом небе от счастья].
+under the [weather]|неважно себя чувствовать|под погодой|расклеиться|I'm feeling [under the weather] today.|Сегодня я [неважно себя чувствую].
+butterflies in my [stomach]|волнение, мандраж|бабочки в животе|поджилки трясутся|I had [butterflies in my stomach] before the interview.|Перед собеседованием у меня [тряслись поджилки].
+get cold [feet]|струсить в последний момент|получить холодные ноги|пойти на попятную|He [got cold feet] and cancelled the wedding.|Он [струсил] и отменил свадьбу.
+keep your [chin] up|не унывать|держи подбородок выше|выше нос!|[Keep your chin up]! Things will get better.|[Выше нос]! Всё наладится.
+lose your [temper]|выйти из себя|потерять самообладание|выйти из себя|He [lost his temper] and started shouting.|Он [вышел из себя] и начал кричать.
+blow off [steam]|выпустить пар|выдуть пар|выпустить пар|I go running to [blow off steam].|Я бегаю, чтобы [выпустить пар].
+down in the [dumps]|в унынии|внизу в свалках|повесить нос|Why are you [down in the dumps]?|Почему ты [повесил нос]?
+scared [stiff]|напуган до смерти|напуган до окоченения|душа в пятки ушла|I was [scared stiff] when the lights went out.|Когда погас свет, [душа у меня ушла в пятки].
+a piece of [cake]|проще простого|кусок торта|проще пареной репы|The test was [a piece of cake].|Тест был [проще пареной репы].
+easier said than [done]|легче сказать, чем сделать|легче сказано, чем сделано|легко сказать|Quit smoking? [Easier said than done].|Бросить курить? [Легко сказать].
+hit the [nail] on the head|попасть в точку|ударить гвоздь по шляпке|попасть в точку|You've [hit the nail on the head].|Ты [попал в точку].
+break a [leg]|удачи!|сломай ногу|ни пуха ни пера|[Break a leg] tonight!|[Ни пуха ни пера] сегодня!
+the last [straw]|последняя капля|последняя соломинка|последняя капля|His lie was [the last straw].|Его ложь стала [последней каплей].
+a blessing in [disguise]|нет худа без добра|благословение в маскировке|не было бы счастья, да несчастье помогло|Losing that job was [a blessing in disguise].|Потеря той работы — [нет худа без добра].
+in hot [water]|в неприятностях|в горячей воде|влипнуть|He's [in hot water] with his boss.|У него [неприятности] с начальником.
+bite off more than you can [chew]|взяться за непосильное|откусить больше, чем можешь прожевать|замахнуться не по силам|I [bit off more than I could chew].|Я [взялся за непосильное].
+beat around the [bush]|ходить вокруг да около|бить вокруг куста|ходить вокруг да около|Stop [beating around the bush]!|Хватит [ходить вокруг да около]!
+the best of both [worlds]|все преимущества сразу|лучшее из обоих миров|и волки сыты, и овцы целы|Working from home gives me [the best of both worlds].|Работа из дома даёт мне [все преимущества сразу].
+break the [ice]|разрядить обстановку|сломать лёд|растопить лёд|He told a joke to [break the ice].|Он пошутил, чтобы [растопить лёд].
+spill the [beans]|выдать секрет|рассыпать бобы|проболтаться|Who [spilled the beans]?|Кто [проболтался]?
+let the cat out of the [bag]|случайно выдать секрет|выпустить кошку из мешка|проговориться|She [let the cat out of the bag] about the party.|Она [проговорилась] о вечеринке.
+see eye to [eye]|сходиться во мнениях|видеть глаз в глаз|смотреть в одну сторону|We don't always [see eye to eye].|Мы не всегда [сходимся во мнениях].
+in the same [boat]|в одинаковом положении|в одной лодке|в одной лодке|Don't worry, we're all [in the same boat].|Не переживай, мы все [в одной лодке].
+get on my [nerves]|раздражать|попадать на нервы|действовать на нервы|This noise [gets on my nerves].|Этот шум [действует мне на нервы].
+give the cold [shoulder]|холодно встретить, игнорировать|дать холодное плечо|встретить холодно|She [gave me the cold shoulder].|Она [встретила меня холодно].
+a [pain] in the neck|сплошная морока, зануда|боль в шее|как кость в горле|My neighbour is [a pain in the neck].|Мой сосед — [сплошная морока].
+talk behind your [back]|сплетничать за спиной|говорить за спиной|говорить за глаза|Don't [talk behind her back].|Не [говори] о ней [за глаза].
+pull your [leg]|разыгрывать, подшучивать|тянуть за ногу|морочить голову|Relax, I'm just [pulling your leg].|Расслабься, я тебя просто [разыгрываю].
+the apple of my [eye]|самый любимый человек|яблоко моего глаза|свет в окошке|His daughter is [the apple of his eye].|Дочь для него — [свет в окошке].
+a couch [potato]|лежебока|диванная картошка|лежебока|Don't be [a couch potato], go outside!|Не будь [лежебокой], иди погуляй!
+sell like hot [cakes]|раскупаться мгновенно|продаваться как горячие пирожки|разлетаться как горячие пирожки|The new phones are [selling like hot cakes].|Новые телефоны [разлетаются как горячие пирожки].
+not my cup of [tea]|не по душе|не моя чашка чая|не моё|Football is [not my cup of tea].|Футбол — [не моё].
+in a [nutshell]|в двух словах|в ореховой скорлупе|короче говоря|[In a nutshell], we need more time.|[Короче говоря], нам нужно больше времени.
+with a pinch of [salt]|скептически|со щепоткой соли|делить на десять|Take his stories [with a pinch of salt].|Его рассказы [дели на десять].
+cry over spilt [milk]|жалеть о непоправимом|плакать над пролитым молоком|после драки кулаками не машут|It's no use [crying over spilt milk].|[После драки кулаками не машут].
+the icing on the [cake]|приятное дополнение|глазурь на торте|вишенка на торте|The sunny weather was [the icing on the cake].|Солнечная погода стала [вишенкой на торте].
+bread and [butter]|основной заработок|хлеб и масло|хлеб насущный|Teaching is my [bread and butter].|Преподавание — мой [хлеб насущный].
+go [bananas]|сойти с ума, взбеситься|стать бананами|с ума сойти|The fans [went bananas] when he scored.|Болельщики [сошли с ума], когда он забил.
+rain cats and [dogs]|лить как из ведра|дождь кошками и собаками|льёт как из ведра|It's [raining cats and dogs].|[Льёт как из ведра].
+kill two birds with one [stone]|сделать два дела сразу|убить двух птиц одним камнем|убить двух зайцев|I'll [kill two birds with one stone].|Я [убью двух зайцев].
+the elephant in the [room]|проблема, о которой молчат|слон в комнате|слона-то я и не приметил|Nobody talked about [the elephant in the room].|Никто не говорил о [главной проблеме].
+when pigs [fly]|никогда|когда свиньи полетят|когда рак на горе свистнет|He'll clean his room [when pigs fly].|Он уберёт в комнате, [когда рак на горе свистнет].
+hold your [horses]|не спеши, погоди|придержи лошадей|не гони лошадей|[Hold your horses]! Let me finish.|[Не гони лошадей]! Дай договорить.
+a little bird [told] me|я слышал от кого-то|маленькая птичка сказала мне|сорока на хвосте принесла|[A little bird told me] you're getting married.|[Сорока на хвосте принесла], что ты женишься.
+smell a [rat]|чуять подвох|чуять крысу|чуять неладное|I [smell a rat].|Я [чую подвох].
+let sleeping dogs [lie]|не ворошить прошлое|дай спящим собакам лежать|не буди лихо, пока оно тихо|Don't ask him about it — [let sleeping dogs lie].|Не спрашивай его об этом — [не буди лихо].
+like a fish out of [water]|не в своей тарелке|как рыба без воды|не в своей тарелке|I felt [like a fish out of water] at the party.|На вечеринке я чувствовал себя [не в своей тарелке].
+the lion's [share]|львиная доля|доля льва|львиная доля|He gets [the lion's share] of the profit.|Ему достаётся [львиная доля] прибыли.
+keep an [eye] on|присматривать|держать глаз на|не спускать глаз|Can you [keep an eye on] my bag?|Можешь [присмотреть] за моей сумкой?
+by [heart]|наизусть|сердцем|наизусть|I know this poem [by heart].|Я знаю это стихотворение [наизусть].
+on the tip of my [tongue]|вертится на языке|на кончике языка|вертится на языке|His name is [on the tip of my tongue].|Его имя [вертится у меня на языке].
+give me a [hand]|помочь|дать мне руку|протянуть руку помощи|Can you [give me a hand]?|Можешь [мне помочь]?
+face the [music]|отвечать за последствия|встретить музыку лицом|держать ответ|Sooner or later you'll have to [face the music].|Рано или поздно придётся [держать ответ].
+head over [heels]|по уши (влюбиться)|голова через пятки|по уши|He fell [head over heels] in love.|Он влюбился [по уши].
+all [ears]|весь внимание|все уши|весь внимание|Go on, I'm [all ears].|Продолжай, я [весь внимание].
+turn a blind [eye]|закрывать глаза (на что-то)|повернуть слепой глаз|смотреть сквозь пальцы|The teacher [turned a blind eye] to it.|Учитель [закрыл на это глаза].
+my lips are [sealed]|никому не скажу|мои губы запечатаны|я — могила|Don't worry, [my lips are sealed].|Не волнуйся, [я — могила].
+get it off my [chest]|выговориться|снять это с груди|облегчить душу|I need to [get this off my chest].|Мне нужно [облегчить душу].
+up in the [air]|не решено, под вопросом|в воздухе|вилами по воде писано|Our plans are still [up in the air].|Наши планы пока [под вопросом].
+once bitten, twice [shy]|после неудачи становятся осторожнее|однажды укушенный, дважды робок|обжёгшись на молоке, дуешь на воду|After that scam I'm careful — [once bitten, twice shy].|После того обмана я осторожен — [обжёгшись на молоке, дуешь на воду].
+actions speak louder than [words]|дела важнее слов|действия говорят громче слов|судят не по словам, а по делам|Don't promise — [actions speak louder than words].|Не обещай — [судят по делам, а не по словам].
+the tip of the [iceberg]|лишь малая часть проблемы|верхушка айсберга|верхушка айсберга|These problems are just [the tip of the iceberg].|Эти проблемы — лишь [верхушка айсберга].
+get out of [hand]|выйти из-под контроля|выйти из руки|выйти из-под контроля|The party [got out of hand].|Вечеринка [вышла из-под контроля].
+the [sky] is the limit|нет предела возможностям|небо — предел|всё в твоих руках|With your talent, [the sky is the limit].|С твоим талантом [для тебя нет ничего невозможного].
+a [storm] in a teacup|много шума из ничего|буря в чайной чашке|буря в стакане воды|Their argument was [a storm in a teacup].|Их ссора — [буря в стакане воды].
+go the extra [mile]|сделать больше, чем нужно|пройти лишнюю милю|из кожи вон лезть|She always [goes the extra mile] for her clients.|Ради клиентов она всегда [делает больше, чем нужно].
+speak of the [devil]|лёгок на помине|говоря о дьяволе|лёгок на помине|[Speak of the devil]! Here he is.|[Лёгок на помине]! Вот и он.
+no pain, no [gain]|без труда ничего не добиться|нет боли — нет выгоды|без труда не выловишь и рыбку из пруда|Training is hard, but [no pain, no gain].|Тренироваться тяжело, но [без труда не выловишь и рыбку из пруда].`;
+
+const IDI = ID_SRC.trim().split('\n').map(s => {
+  const [p, r, lit, an, e, er] = s.split('|');
+  return [p.replace(/[\[\]]/g, ''), r, '', e, er, 0, 'id', [], null, an, lit, /\[(.+?)\]/.exec(p)[1]];
+});
+const idKey = i => W[i][11];
+// идиома с пропуском ключевого слова: «break the ___»
+const idGap = i => esc(en(i)).replace(new RegExp(`\\b${idKey(i)}\\b`), '<span class="gap">&nbsp;</span>');
+function idOptions(i) {
+  const out = [ru(i)], near = shuffle(lessonIds(lessonOf(i))).concat(shuffle(range(0, W.length)));
+  for (const j of near) if (out.length < 4 && !out.includes(ru(j))) out.push(ru(j));
+  return shuffle(out);
+}
+function idStudy(app) {
+  const i = curI(), an = W[i][9], lit = W[i][10];
+  setStudy(app, {
+    cls: 'idm', exs: 1,
+    top: `<div class="pword idword"><b>${esc(en(i))}</b><button class="spk" id="say" aria-label="Произнести">${I.spk}</button></div>
+      <div class="lit">дословно: «${esc(lit)}»</div>`,
+    onTop: e => { if (e.target.closest('#say')) { sayWord(i); return true; } },
+  });
+  // русский аналог — под значением, если отличается
+  if (an !== ru(i)) $('.study .ru').insertAdjacentHTML('afterend', `<div class="analog"><span>по-русски:</span> ${esc(an)}</div>`);
+}
+function idMemo(app) {
+  const i = curI();
+  setMemo(app, { top: `<div class="bigword idbig">${esc(en(i))}</div>`, opts: idOptions(i), ok: ru(i), say: () => sayWord(i) });
+}
+// «Написание»: собрать идиому из слов-плиток по значению; среди плиток — 2 лишних слова из другой идиомы урока
+function idWords(app) {
+  const i = curI(), words = en(i).split(' ');
+  const other = shuffle(lessonIds(lessonOf(i)).filter(j => j !== i))[0];
+  const decoys = shuffle(en(other).split(' ').filter(w => !words.includes(w))).slice(0, 2);
+  const tiles = shuffle(words.concat(decoys));
+  let pos = 0, wrong = 0, hintsHere = 0, done = false;
+  app.innerHTML = header('Написание', i) + pbar() + `<div class="xbody">
+    <div class="bigword ru idru">${esc(ru(i))}</div><div class="ask">соберите идиому</div>
+    <div class="wslots" id="ws">${words.map((_, k) => `<span class="ws ${k ? '' : 'cur'}"></span>`).join('')}</div>
+    ${tools(i, true)}
+    <div class="wtiles" id="wt">${tiles.map((w, k) => `<button class="tile wt" data-t="${k}">${esc(w)}</button>`).join('')}</div></div>`;
+  bindCommon(i);
+  $('#snd').onclick = () => { S.set.auto = !S.set.auto; save(); const s = $('#snd'); s.classList.toggle('off', !S.set.auto); s.querySelector('.tb').innerHTML = S.set.auto ? I.spk : I.mute; };
+  const slots = $$('#ws .ws');
+  const place = (cls, tile) => {
+    slots[pos].textContent = words[pos]; slots[pos].classList.remove('cur'); slots[pos].classList.add('on'); if (cls) slots[pos].classList.add(cls);
+    const t = tile || $$('#wt .wt').find(t => !t.classList.contains('used') && tiles[+t.dataset.t] === words[pos]);
+    if (t) t.classList.add('used');
+    pos++; if (pos < words.length) slots[pos].classList.add('cur');
+  };
+  const finish = failed => {
+    done = true;
+    if (failed) while (pos < words.length) { slots[pos].textContent = words[pos]; slots[pos].classList.add('on', 'fail'); slots[pos].classList.remove('cur'); pos++; }
+    const pts = failed ? 0 : Math.max(0, STAGE_PTS - wrong - hintsHere), ok = pts > 0;
+    commit(i, pts, ok, wrong, hintsHere > 0);
+    setTimeout(() => answerSheet(i, ok), 350);
+  };
+  const press = t => {
+    if (done || !t || t.classList.contains('used')) return;
+    if (tiles[+t.dataset.t] === words[pos]) { place(null, t); sfx(true); if (pos === words.length) finish(false); }
+    else {
+      wrong++; sfx(false); t.classList.add('bad', 'shake'); setTimeout(() => t.classList.remove('bad', 'shake'), 400);
+      if (wrong + hintsHere >= STAGE_PTS) finish(true);
+    }
+  };
+  const h = $('#hint');
+  if (h) h.onclick = () => {
+    if (done || !run.hints) return;
+    useHint(h); hintsHere++; place('hint');
+    if (wrong + hintsHere >= STAGE_PTS) finish(true); else if (pos === words.length) finish(false);
+  };
+  bindTaps($('#wt'), '.wt', press);
+  onKey = e => { const n = +e.key; if (n >= 1 && n <= tiles.length) press($$('#wt .wt')[n - 1]); };
+}
+
 window.SETS = {
   irr: {
     name: 'Неправильные глаголы', tab: 'Неправильные глаголы', title: 'Неправильные глаголы',
@@ -559,5 +737,18 @@ window.SETS = {
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте и соберите глагол</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
       : key === 'write' ? `<div class="cloze">${pvCloze(i)}</div><div class="cloze-ru">${hl(W[i][4])}</div>`
       : `<div class="bigword ru">${esc(ru(i))}</div>`,
+  },
+  idioms: {
+    name: 'Идиомы', tab: 'Идиомы', title: 'Идиомы',
+    sub: '100 популярных выражений', note: 'break the ice, piece of cake… — значение и русский аналог',
+    unit: ['идиома', 'идиомы', 'идиом'], acc: 'идиому', items: IDI,
+    study: idStudy, memo: idMemo, custom: { write: idWords },
+    matchCap: 'Соедините идиому со значением',
+    matchL: i => en(i), matchR: i => ru(i),
+    // «Аудирование»: услышать идиому и вписать пропущенное слово; «Закрепление» и мини-тест: по значению вписать слово
+    target: i => idKey(i),
+    extra: i => { const o = shuffle(lessonIds(lessonOf(i)).filter(j => j !== i))[0]; return idKey(i).length >= 7 ? '' : idKey(o).slice(0, Math.max(3, 7 - idKey(i).length)); },
+    prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте и впишите пропущенное слово</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button><div class="cloze idgap">${idGap(i)}</div>`
+      : `<div class="bigword ru idru">${esc(ru(i))}</div><div class="cloze idgap">${idGap(i)}</div>`,
   },
 };

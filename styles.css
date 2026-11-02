@@ -622,3 +622,30 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
 .study.pv .ru { height: auto; min-height: 44px; margin-top: 14px; font-size: 28px; }
 .study.pv .ex { margin-top: 16px; font-size: 19px; }
 @media (max-height: 660px) { .study.pv .pvword { margin-top: 12px; } .study.pv .ex { margin-top: 6px; font-size: 16px; } .study.pv .ru { font-size: 24px; } }
+
+/* идиомы */
+.idword { flex-wrap: nowrap; }
+.idword b { font-size: 38px; white-space: normal !important; text-align: center; line-height: 1.1; }
+.study.idm .idword { margin-top: 40px; }
+.lit { text-align: center; color: #8a8a8a; font-size: 16px; margin-top: 6px; font-style: italic; flex: none; }
+.study.idm .ru { height: auto; min-height: 40px; margin-top: 14px; font-size: 28px; }
+.analog { text-align: center; font-size: 18px; color: var(--title); margin-top: 4px; flex: none; }
+.analog span { color: #8a8a8a; }
+.study.idm .ex { margin-top: 16px; font-size: 19px; }
+.bigword.idbig { font-size: 38px; }
+.bigword.idru { font-size: 30px; }
+.cloze.idgap { font-style: normal; font-weight: 700; margin-top: 14px; }
+.wslots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 6px; }
+.ws { min-width: 54px; height: 42px; padding: 0 6px; border-bottom: 3px solid #cfcfcf; font-size: 22px; font-weight: 700; display: flex; align-items: flex-end; justify-content: center; }
+.ws.cur { border-color: var(--teal); }
+.ws.on { border-color: var(--lime); }
+.ws.hint { color: var(--lime-dark); }
+.ws.fail { color: var(--red); border-color: var(--red); }
+.wtiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
+.tile.wt { width: auto; height: 50px; padding: 0 16px; font-size: 21px; border-radius: 12px; }
+@media (max-height: 660px) {
+  .study.idm .idword { margin-top: 10px; } .idword b { font-size: 30px; }
+  .study.idm .ex { margin-top: 6px; font-size: 16px; } .study.idm .ru { font-size: 24px; }
+  .bigword.idru { font-size: 24px; } .wtiles { margin-top: 12px; } .tile.wt { height: 44px; font-size: 19px; }
+}
+.study.hide-tr .analog, .study.hide-tr .lit { visibility: hidden; }

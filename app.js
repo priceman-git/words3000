@@ -987,6 +987,7 @@ function renderRun(app) {
   if (key === 'place') renderPlace(app);
   else if (key === 'study') (curSet() && curSet().study || renderStudy)(app);
   else if (key === 'match') renderMatch(app);
+  else if (curSet() && curSet().custom && curSet().custom[key]) curSet().custom[key](app);   // своё задание набора (идиомы: слова-плитки)
   else if (key === 'memo') (curSet() && curSet().memo || renderMemo)(app);
   else renderLetters(app, key);
   fitPrompts();
