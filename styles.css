@@ -649,3 +649,23 @@ input[type=range] { accent-color: var(--lime-dark); width: 150px; }
   .bigword.idru { font-size: 24px; } .wtiles { margin-top: 12px; } .tile.wt { height: 44px; font-size: 19px; }
 }
 .study.hide-tr .analog, .study.hide-tr .lit { visibility: hidden; }
+
+/* предлоги: компоновка — схема меньше, блок по центру между шапкой и кнопками */
+.study.prep .sch { margin-top: auto; }
+.study.prep .ex-box { flex: none; }
+.study.prep .big-btns { margin-top: auto; }
+.study.prep .pword { margin-top: 14px; }
+.study.prep .ru { margin-top: 8px; }
+.study.prep .ex { margin-top: 16px; font-size: 19px; }
+.study.prep .ex + .ex { margin-top: 20px; }
+.ask.pask { margin-top: 22px; font-size: 21px; }
+.sch.msch { margin-top: 14px; }
+.ask.pru { font-size: 24px; margin-top: 14px; }
+.sch.small { margin-top: 26px; }
+.match.pics .mb { border-radius: 18px; }
+.xfit .match.pics .mb[data-side="R"], .xfit .match.pics .mb.done:nth-child(2n) { font-size: 21px; }
+@media (max-height: 700px) {
+  .study.prep .sch svg { width: 140px; height: 112px; } .study.prep .ex { font-size: 16px; margin-top: 8px; } .study.prep .ex + .ex { margin-top: 8px; }
+  .sch.msch svg { width: 150px; height: 120px; } .ask.pask { margin-top: 10px; }
+  .sch.small svg { width: 130px; height: 104px; } .sch.small { margin-top: 12px; }
+}

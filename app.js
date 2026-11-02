@@ -1326,7 +1326,7 @@ function renderMatch(app) {
   const total = ids.length, w = 100 / total;
   app.classList.add('fit');
   app.innerHTML = `<div class="xfit">` + header('Повторение') + `<div class="pbar">${m.done.map((_, k) => `<span class="seg ok" style="left:${k * w}%;width:${w + .3}%"></span>`).join('')}<span class="cnt">${m.done.length}</span><span class="tot">${total}</span></div>
-    <div class="xbody"><div class="match-cap">${X ? X.matchCap : 'Соедините слово с переводом'}</div><div class="match" id="match" style="grid-template-rows:repeat(${total}, minmax(0, ${X && X.matchRow || 58}px))">${cells}</div></div></div>`;
+    <div class="xbody"><div class="match-cap">${X ? X.matchCap : 'Соедините слово с переводом'}</div><div class="match ${X && X.matchLHtml ? 'pics' : ''}" id="match" style="grid-template-rows:repeat(${total}, minmax(0, ${X && X.matchRow || 58}px))">${cells}</div></div></div>`;
   $('#xback').onclick = exitRun;
   let sel = null;
   $('#match').onclick = e => {

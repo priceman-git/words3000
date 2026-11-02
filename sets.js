@@ -357,7 +357,7 @@ function prepStudy(app) {
   const i = curI();
   setStudy(app, {
     cls: 'prep',
-    top: `<div class="sch">${scheme(i, 240, 192)}</div><div class="pword"><b>${esc(en(i))}</b><span class="ipa gray">[${esc(W[i][2])}]</span>
+    top: `<div class="sch">${scheme(i, 180, 144)}</div><div class="pword"><b>${esc(en(i))}</b><span class="ipa gray">[${esc(W[i][2])}]</span>
       <button class="spk" id="say" aria-label="Произнести">${I.spk}</button></div>`,
     onTop: e => { if (e.target.closest('#say')) { sayWord(i); return true; } },
   });
@@ -367,7 +367,7 @@ function prepStudy(app) {
 function prepMemo(app) {
   const i = curI();
   setMemo(app, {
-    top: `<div class="ask">Какой предлог на схеме?</div><div class="sch">${scheme(i, 220, 176)}</div>`,
+    top: `<div class="ask pask">Какой предлог на схеме?</div><div class="sch msch">${scheme(i, 190, 152)}</div>`,
     // озвучить нечего: звук предлога или фразы выдал бы ответ — он прозвучит после выбора
     opts: prepOptions(i), ok: en(i), silent: true, say: () => toast('Предлог прозвучит после ответа'),
   });
@@ -711,7 +711,7 @@ window.SETS = {
     unit: ['предлог', 'предлога', 'предлогов'], items: PREP,
     study: prepStudy, memo: prepMemo,
     matchCap: 'Соедините схему с предлогом',
-    matchSilent: true, matchL: i => en(i), matchR: i => en(i), matchLHtml: i => scheme(i, 120, 96), matchRow: 104,
+    matchSilent: true, matchL: i => en(i), matchR: i => en(i), matchLHtml: i => scheme(i, 100, 80), matchRow: 86,
     // «Аудирование»: услышать фразу и собрать пропущенный предлог; «Написание»: по схеме и переводу;
     // «Закрепление» и мини-тест: фраза с пропуском и перевод — напечатать предлог
     target: i => en(i),
@@ -722,7 +722,7 @@ window.SETS = {
     },
     listen: i => speak(plain(W[i][3])),
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте фразу и соберите предлог</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
-      : key === 'write' ? `<div class="sch small">${scheme(i, 150, 120)}</div><div class="ask">${esc(ru(i))}</div>`
+      : key === 'write' ? `<div class="sch small">${scheme(i, 160, 128)}</div><div class="ask pru">${esc(ru(i))}</div>`
       : `<div class="cloze">${gap(W[i][3])}</div><div class="cloze-ru">${hl(W[i][4])}</div>`,
   },
   pv: {
