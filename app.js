@@ -1362,7 +1362,7 @@ function renderLetters(app, key) {
   const kb = key === 'fix';
   const title = run.kind === 'test' ? 'Мини-тест' : run.kind === 'rep' ? 'Повторение' : STAGES[run.k].name;
   let pos = 0, wrong = 0, hintsHere = 0, done = false;
-  const letters = shuffle([...word + (X && X.extra && key === 'write' ? X.extra(i) : '')].map(ch => ch.toUpperCase()));   // в «Написании» у предлогов, частиц и идиом — несколько лишних букв; в «Аудировании» — только буквы ответа
+  const letters = shuffle([...word + (X && X.extra && key === 'write' ? X.extra(i) : '')].map(ch => ch.toUpperCase()));   // у фразовых глаголов в «Написании» — буквы чужой частицы
   const prompt = X && X.prompt ? X.prompt(i, key) : key === 'audio'
     ? `<div class="listen-cap">Коснитесь, чтобы прослушать</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
     : `<div class="bigword ru">${esc(ru(i))}</div>`;
