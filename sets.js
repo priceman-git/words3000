@@ -720,7 +720,7 @@ window.SETS = {
       const w = en(i).replace(/ /g, ''), other = shuffle(lessonIds(lessonOf(i)).filter(j => en(j) !== en(i)))[0];
       return w.length >= 7 || other === undefined ? '' : en(other).replace(/ /g, '').slice(0, Math.max(3, 7 - w.length));
     },
-    listen: i => speak(plain(W[i][3])),
+    listen: i => speak(plain(W[i][3]), S.set.rate * 0.75),   // фразу — медленнее обычного, чтобы расслышать предлог
     prompt: (i, key) => key === 'audio' ? `<div class="listen-cap">Прослушайте фразу и соберите предлог</div><button class="listen" id="listen" aria-label="Прослушать">${I.spk}</button>`
       : key === 'write' ? `<div class="sch small">${scheme(i, 160, 128)}</div><div class="ask pru">${esc(ru(i))}</div>`
       : `<div class="cloze">${gap(W[i][3])}</div><div class="cloze-ru">${hl(W[i][4])}</div>`,
